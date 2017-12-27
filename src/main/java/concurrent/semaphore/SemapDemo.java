@@ -27,6 +27,7 @@ public class SemapDemo implements Runnable {
         for (int i = 0; i < 20; i++) {
             exec.submit(demo);
         }
+        exec.shutdown();
     }
 }
 
