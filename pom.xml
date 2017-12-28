@@ -27,6 +27,14 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
         </dependency>
+
+        <!--for high performance -> producer-consumer pattern-->
+        <dependency>
+            <groupId>com.lmax</groupId>
+            <artifactId>disruptor</artifactId>
+            <version>3.3.7</version>
+        </dependency>
     </dependencies>
+
 
 </project>
