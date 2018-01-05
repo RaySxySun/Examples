@@ -1,0 +1,348 @@
+*********************************************************************************
+*					                    SHELL               					*
+*********************************************************************************
+
+---------------------------------------------------------------------------------
+|                           IF Condition Flags                 					|
+---------------------------------------------------------------------------------
+-n
+   string is not null.
+
+-z
+   string is null, that is, has zero length
+
+==> Primary expressions
+    [ -a FILE ]	True if FILE exists.
+    [ -b FILE ]	True if FILE exists and is a block-special file.
+    [ -c FILE ]	True if FILE exists and is a character-special file.
+    [ -d FILE ]	True if FILE exists and is a directory.
+    [ -e FILE ]	True if FILE exists.
+    [ -f FILE ]	True if FILE exists and is a regular file.
+    [ -g FILE ]	True if FILE exists and its SGID bit is set.
+    [ -h FILE ]	True if FILE exists and is a symbolic link.
+    [ -k FILE ]	True if FILE exists and its sticky bit is set.
+    [ -p FILE ]	True if FILE exists and is a named pipe (FIFO).
+    [ -r FILE ]	True if FILE exists and is readable.
+    [ -s FILE ]	True if FILE exists and has a size greater than zero.
+    [ -t FD ]	True if file descriptor FD is open and refers to a terminal.
+    [ -u FILE ]	True if FILE exists and its SUID (set user ID) bit is set.
+    [ -w FILE ]	True if FILE exists and is writable.
+    [ -x FILE ]	True if FILE exists and is executable.
+    [ -O FILE ]	True if FILE exists and is owned by the effective user ID.
+    [ -G FILE ]	True if FILE exists and is owned by the effective group ID.
+    [ -L FILE ]	True if FILE exists and is a symbolic link.
+    [ -N FILE ]	True if FILE exists and has been modified since it was last read.
+    [ -S FILE ]	True if FILE exists and is a socket.
+    [ FILE1 -nt FILE2 ]	True if FILE1 has been changed more recently than FILE2, or if FILE1 exists and FILE2 does not.
+    [ FILE1 -ot FILE2 ]	True if FILE1 is older than FILE2, or is FILE2 exists and FILE1 does not.
+    [ FILE1 -ef FILE2 ]	True if FILE1 and FILE2 refer to the same device and inode numbers.
+    [ -o OPTIONNAME ]	True if shell option "OPTIONNAME" is enabled.
+    [ -z STRING ]	True of the length if "STRING" is zero.
+    [ -n STRING ] or [ STRING ]	True if the length of "STRING" is non-zero.
+    [ STRING1 == STRING2 ]	True if the strings are equal. "=" may be used instead of "==" for strict POSIX compliance.
+    [ STRING1 != STRING2 ]	True if the strings are not equal.
+    [ STRING1 < STRING2 ]	True if "STRING1" sorts before "STRING2" lexicographically in the current locale.
+    [ STRING1 > STRING2 ]	True if "STRING1" sorts after "STRING2" lexicographically in the current locale.
+    [ ARG1 OP ARG2 ]	"OP" is one of -eq, -ne, -lt, -le, -gt or -ge. These arithmetic binary operators return true if "ARG1" is equal to, not equal to, less than, less than or equal to, greater than, or greater than or equal to "ARG2", respectively. "ARG1" and "ARG2" are integers.
+
+==> Combining expressions
+[ ! EXPR ]  True if EXPR is false.
+[ ( EXPR ) ]    Returns the value of EXPR. This may be used to override the normal precedence of operators.
+[ EXPR1 -a EXPR2 ]  True if both EXPR1 and EXPR2 are true.
+[ EXPR1 -o EXPR2 ]  True if either EXPR1 or EXPR2 is true.
+
+---------------------------------------------------------------------------------
+|				               String                        					|
+---------------------------------------------------------------------------------
+# 1 working with string   
+#   'host_name' => 'dudev.test.cn.ds.com'
+    # remove => and then explode to array
+    HN1=(${HN//=>/ })
+    # remove '
+    HN2=${HN1[1]//\'/}
+    # remove ,
+    OLD_HN_LONG=${HN2//,/}
+    # --- getting short version of the host name 
+    # explode the host name to Array
+    HN3=(${OLD_HN_LONG//./ }) 
+    OLD_HN_SHORT=${HN3[0]}
+    
+    # --- getting new host name 
+    echo "[INFO] getting new host name ..."
+    NEW_HN_LONG='testweb.rpd.cd.com'
+    HN4=(${NEW_HN_LONG//./ })
+    NEW_HN_SHORT=${HN4[0]}
+# 2. Clearing Windows Carriage Returns from file:
+tr -d '\r' < "${CONFIG_OVERRIDE}" > "${TMP_CONFIG_OVERRIDE}"
+
+---------------------------------------------------------------------------------
+|				               Array                        					|
+---------------------------------------------------------------------------------
+==> 1. declear
+    SUFFIX=('rtp.raleigh.ibm.com' 'swg.usma.ibm.com')
+
+==> 2. array loop
+    for i in ${SUFFIX[@]};
+    do
+        ...
+    done
+
+==> 3. explode, break down, split
+
+    # Set component Name
+    COMPONENT_NAME='ibmsugarplugin.db2_30'
+ 
+    # Split component Name on the '_' character into array
+    CMP_NAME_PARTS=(${COMPONENT_NAME//_/ })
+  
+    # Take First bit of the Component Name
+    echo "result=${CMP_NAME_PARTS[0]}"
+
+---------------------------------------------------------------------------------
+|				                        While Loop          					|
+---------------------------------------------------------------------------------
+(1) ==========> SSH Interupt While Loop <========== 
+SSH might be reading from standard input, eating up your actionlist. 
+Try to redirect ssh's standard input to /dev/null:
+
+** $ ssh $REMOTE_HOST zfs snapshot -r ${RMT_FILESYSTEM}@${MARKER} </dev/null
+
+As a general rule, when running commands that may interfere with standard input under a while read-style loop, 
+I like to wrap the whole loop body into braces:
+
+** cat /tmp/uuoc | while read RMT_FILESYSTEM ISMOUNTED
+** do {
+**     echo ${RMT_FILESYSTEM}@${MARKER}
+**     [ "$ISMOUNTED" = "yes" ] && ssh $REMOTE_HOST zfs snapshot -r ${RMT_FILESYSTEM}@${MARKER}
+**     echo Remote Command Return Code: $?
+** } < /dev/null; done
+
+(2) ==========> read file <========== 
+
+	** while read line
+	** do
+	** ...
+	** done < file
+
+    ---------------OR----------------
+	** cat file | while read line
+	** do
+	** ...
+	**done
+
+---------------------------------------------------------------------------------
+|				                    For Loop                					|
+---------------------------------------------------------------------------------
+for variable [in words]; do
+    commands
+done
+
+for i in A B C D; do echo $i; done
+for i in distros*.txt; do echo $i; done
+
+for (( expression1; expression2; expression3 )); do
+    commands
+done
+
+---------------------------------------------------------------------------------
+|			                command line parameter				            	|
+---------------------------------------------------------------------------------
+1.  $# 					# total amount of parameters
+2.  $?					# return code of the last command; the most recent foreground pipeline exit status.
+3.  $@					# {$1, $2, $3 ...}
+4.  $1, $2, $3, ... 			# they are the positional parameters.
+5.  $* 					# it is the IFS expansion of all positional parameters, $1 $2 $3 ....
+6.  $- 					# current options set for the shell. 
+7.  $$ 					# pid of the current shell (not subshell).
+8.  $_ 					# most recent parameter (or the abs path of the command to start the current shell immediately after startup).
+9.  $IFS 				# is the (input) field separator.
+10. $! 					# is the PID of the most recent background command.
+11. $0 					# is the name of the shell or shell script.
+
+refer to: http://stackoverflow.com/questions/5163144/what-are-the-special-dollar-sign-shell-variables
+
+---------------------------------------------------------------------------------
+|	    pipe input to while loop and preserve variables after loop ends			|
+---------------------------------------------------------------------------------
+========> SOLUTION 1 
+while read i; do echo $i; done < <(echo "$FILECONTENT")
+
+========> SOLUTION 2 
+# shopt -s lastpipe 
+
+FILECONTENT="12 Name
+13 Number
+14 Information"
+shopt -s lastpipe   # Comment this out to see the alternative behaviour
+sum=0
+echo "$FILECONTENT" |
+while read number name; do ((sum+=$number)); done
+echo $sum
+
+
+---------------------------------------------------------------------------------
+|       eval: use value as variable name 
+---------------------------------------------------------------------------------
+
+#！/bin/bash  
+me=foo 
+var=name  
+res=`eval echo '$'"$var"`  
+echo $res           #foo
+
+---------------------------------------------------------------------------------
+|       read config file
+---------------------------------------------------------------------------------
+config file >>
+    ID=123
+    IP=192.168.3.154
+    Name=test
+
+shell >>
+    ----------------
+    | 1.use sed    |
+    ----------------
+    id=`sed '/^ID=/!d;s/.*=//' urfile`  
+    ip=`sed '/^IP=/!d;s/.*=//' urfile`  
+    name=`sed '/^Name=/!d;s/.*=//' urfile`  
+    echo $id  
+    echo $ip  
+    echo $name 
+    ----------------
+    | 2.use eval   |
+    ----------------
+    while read line;do  
+        eval "$line"  
+        done < config  
+    echo $ID  
+    echo $IP  
+    echo $Name  
+
+    ----------------
+    | 3.souce      |
+    ----------------
+    source config
+    echo $ID
+    echo $IP
+    echo $Name
+
+---------------------------------------------------------------------------------
+|				                Bash settings                                   |
+---------------------------------------------------------------------------------
+shopt -s nullglob
+set -o pipefail
+echo -e "[DEBUG] Bash settings: [$-] [${BASHOPTS}]\n"
+
+[DEBUG] Bash settings: [hB]
+[cmdhist:complete_fullquote:extquote:force_fignore:hostcomplete:interactive_comments:nullglob:progcomp:promptvars:sourcepath]
+
+---------------------------------------------------------------------------------
+|				        Return Status(echo 1 line)                              |
+---------------------------------------------------------------------------------
+echo -en "\n[INFO] Validating backup in primary location: ${LOC_BACKUP_DIR}... "
+echo '[FOUND]'
+# [INFO] Validating backup in optional location (source dir): /home/scdevlkg/SCdevtm/lkg/UCD_baselines/sfa20.0/... [FOUND]
+
+---------------------------------------------------------------------------------
+|				        Get Substring                                           |
+---------------------------------------------------------------------------------
+var=http://www.ohraymaster.com/123.htm
+# '#' remove left substring
+echo ${var#*//}                         # www.ohraymaster.com/123.htm
+echo ${var##*/}                         # 123.htm
+
+# '%' remove right substring
+echo ${var%/*}                          # http://www.ohraymaster.com
+echo ${var%%/*}                         # http:
+
+# range from left side
+echo ${var:0:5}                         # http:
+echo ${var:7}                           # www.ohraymaster.com
+echo ${var:0-7}                         # 123.htm
+# the first left character '0'
+# the first right character '0-1'
+
+---------------------------------------------------------------------------------
+|				        String format                                           |
+---------------------------------------------------------------------------------
+# ==> Bash 4.0 <==
+local action="${1^^}"           # enable/disable, ^^ - change to uppercase
+local action="${1,,}"           # lower case
+================================> for more details: cheat vim bashfeatures
+
+
+# ==> tr <==
+echo "$a" | tr '[:upper:]' '[:lower:]'
+
+# ==> AWK <== 
+echo "$a" | awk '{print tolower($0)}'
+
+# Perl
+echo "$a" | perl -ne 'print lc'
+
+# ==> Bash <==
+lc(){
+    case "$1" in  
+        [A-Z])
+        n=$(printf "%d" "'$1")
+        n=$((n+32))
+        printf \\$(printf "%o" "$n")
+    esac
+}
+word="ABX"
+for((i=0;i<${#word};i++))
+do
+    ch="${word:$i:1}"
+    lc "$ch"
+done
+
+---------------------------------------------------------------------------------
+|				         Global Variables                                       |
+---------------------------------------------------------------------------------
+STEP=0
+let STEP++          # <IN function>
+
+---------------------------------------------------------------------------------
+|				         Condition: Regular Expression                          |
+---------------------------------------------------------------------------------
+# SC_DIR is set as a child of Apache Default directory
+if [[ ! "${SC_DIR}" = "${APACHE_DEFAULT_DIR}"* ]]; then
+    ...
+fi
+
+---------------------------------------------------------------------------------
+|				         Evaluate ~                                             |
+---------------------------------------------------------------------------------
+#EU servers are not in /home, evaluate home dir using ~
+eval . ~/sqllib/db2profile
+
+---------------------------------------------------------------------------------
+|				         printf padding (20 characters)                          |
+---------------------------------------------------------------------------------
+# 20 characters
+printf '\texport %20s=%s\n' 'FED_VERSION_NAME'   "${FED_VERSION_NAME}"
+
+[FED][INFO] EXPOSED UCD PROCESS VARIABLES TO THE FRAMEWORK SHELL SCRIPT:
+    export     FED_VERSION_NAME=SFA40.0_Kit_20170309
+    export   FED_DEVELOPER_MODE=false
+    export             RES_NAME=DB2EU
+
+---------------------------------------------------------------------------------
+|				         grep + awk + iterate args                              |
+---------------------------------------------------------------------------------
+ps -ef | grep -F 'sbin/httpd' |grep -v "root"| awk '{print $2}' | xargs kill -9
+
+---------------------------------------------------------------------------------
+|				         Timestamp                                              |
+---------------------------------------------------------------------------------
+# 1 get Timestamp
+$ date '+%s' 2>/dev/null
+
+# 2 compare Timestamp
+let TDIFF=$T_FINISH-$T_START
+let SECS=$TDIFF%60
+let MINS=$TDIFF/60%60
+let HRS=$TDIFF/60/60%24
+let DAYS=$TDIFF/60/60/24
+
+

@@ -1,0 +1,9 @@
+- Basic threading
+    - Concurrent programming allows you to partition a program into separate, independently running tasks.
+
+- Defining tasks
+    - simply implement Runnable and write a run() method to make the task do your bidding
+
+- Thread class
+    - A Thread constructor only needs a Runnable object 
+    - Thread t = new Thread(new LiftOff()); t.sart();

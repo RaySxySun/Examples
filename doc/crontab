@@ -1,0 +1,12 @@
+------------------------------------------
+#comment out all jobs
+crontab -e
+:%s/^/#/
+------------------------------------------
+#uncoment all jobs
+crontab -e
+:%s/^#//
+------------------------------------------
+#backup crontab
+crontab -l > crontab.$(date +%Y-%m-%d).bck
+

@@ -1,0 +1,6 @@
+1. Run the Pre-Plugin Scripts (apache ws) 
+./SFA10/scrm-common.comp/socialcrm.tools/lwp/sugarcrm/src/Sugar/permanent.scripts/php/pre-plugin
+[temp dir: ucd_temp/ucd_temp/artifacts/SugarScript]
+
+2. Run the DB2 Pre-Plugin Scripts (a1insctp primedb)
+./SFA10/scrm-common.comp/socialcrm.tools/lwp/sugarcrm/src/Sugar/permanent.scripts/a1insctp.sql/sql/pre-plugin

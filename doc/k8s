@@ -1,0 +1,7 @@
+https://kubernetes.io/docs/tasks/tools/install-minikube/
+
+install VM
+https://www.virtualbox.org/wiki/Linux_Downloads
+
+install kubectl
+https://kubernetes.io/docs/tasks/tools/install-kubectl/

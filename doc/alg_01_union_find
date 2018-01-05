@@ -1,0 +1,60 @@
+[OUTLINES]
+Dynamic connectivity
+Quick find
+QUick Union
+improvements
+applications
+
+[Problem]
+- connectivity problem: 
+  - called Quick-find OR called eager algorithm
+- connectivity problem: 
+  - called Quick-find OR called eager algorithm
+
+[QuickFind Too Slow] First attempt
+- data structure:
+  - integer array id[] of size N
+  - interpretation: p and q are connected iff they have the same id.
+    - id[] 0 1 2 3 4 5 6 7 8 9
+           0 1 1 8 8 0 0 1 8 8
+    - 3, 4, 8 and 9 are connected
+- Find: check if p and q have the same id
+- Union: merge components containing p and q. change all entries whose id = id[p] ot id[q]
+
+[Quick-Union lazy approach]
+- data structure
+  - integer array id[] of size N
+  - interpretation: id[i] is parent of i
+  - Root of i is id[id[id[...id[i]...]]]. 
+- Find: check if p and q have the same id
+- Union: To merge components containing p and q, set the id of p's root to the id of q's root
+
+[Weighted quick-union]: Avoid having tall trees
+- Features:
+  - Modify quick-union to avoid tall trees.
+  - Keep track of size of each tree(number of objects)
+  - Balance by linking root of smaller tree to root of larger tree
+- data structure
+  - integer array id[] of size N
+  - an extra array: sz[i] to count number of objents in the tree rooted at i
+- running time  
+  - Find: takes time proportional to depth of p and q
+  - Union: takes constant time, given roots
+
+
+        ------------------------------------------
+        algorithm           initialize  union   connected
+        ------------------------------------------
+        quick-find              N       N         1
+        quick-union             N       N(max)    N
+        weighted QU             N       lgN(max)  lgN
+        
+        
+        ------------------------------------------
+        algorithm               worst-case time 
+        ------------------------------------------
+        quick-find                  M * N
+        quick-union                 M * N
+        weighted QU                 N + M log N
+        QU+path compression         N + M log N
+        weightedQU+path compression N + M lg* N

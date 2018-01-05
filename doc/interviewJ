@@ -1,0 +1,309 @@
+#### Chapter 1
+#### Chapter 2
+#### Chapter 3
+#### Chapter 4
+#### Chapter 5
+#### Chapter 6
+#### Chapter 7
+-----------------------------------------------------------------
+#### Chapter 8: Java Basics
+- [Question] Name some of Java's primitive types. How are these handled by the JVM?
+    - (1) Primitive types & (2) Reference types
+    - primitives always have a value; they can never be null. The basic types in Java:
+        - boolean   1
+        - short     16
+        - int       32
+        - long      64
+        - float     32
+        - double    64
+        - char      16 (unsigned: 0 - 65535: unicode value) 
+
+- [Question] Why is there no positive equivalent for Integer.MIX_VALUE?
+    - [Twos Complement] The storage of the binary values of short, int, and long use a respresentation in mem called Two's Complement.
+        - Two's Complement: a binary NOT and then adding 1    --> counter-intuitive: negation requires two instructions.
+            - -127  1000 0001  -->  127 0111 1111
+            - -128  1000 0000  -->  flipping all bits & add 1 --> 1000 0000 (no positive equivalent)
+        - Main advantages: there is only one value for zero. --> NO "negtive zero" --> one extra negative value
+
+- [Question] What is a Java object?
+    - Objects encapsulate state and behavior --> a collection of variables and a collection of methods. 
+    - [null] One of the most important distinctions is that there is a notation for the absence of an obj null
+        - variables can be set to null 
+        - methods can return null
+        - call a method on a null reference throw a NullPointerException.
+
+- [Question] What effect does the final keyword have on object references?
+    - The value stored in that mem location cannot change
+    - ALTHOUGH, the object reference cannot change, the values held within that obj can change, unless they themselves are final.
+
+- [Question] How do the visibility modifiers work for objs?
+        Visibility  Modifier    Scope
+        Least       private     Visible to any instance of that same class, not to subtypes
+                    <none>      Visible to any class in the same package
+                    protected   Visible to any subclasses
+        Most        public      Visible anywhere
+
+- [Question] For methods and variables, what does static mean?
+    - Static methods and variables are defined as belonging to the class and not specifically to an instance.
+    - Static methods and variables are usually accessed through the class name rather than a specific instance.
+        - confusion: When accessing static methods and variables with instance, other programmer may experience strange behavior in other instances after modifying the value
+
+- [Question] What are polymorphism and inheritance?
+    - they are two core idioms of object-oriented development.
+        - Polymorphism allows you to make a definition for a certain type of behavior, and have many diff classes implement that behavior.
+        - Inheritance allows you to derive the behavior and definition of a class from a superclass. 
+    - is-a relationship: e.g. Squre is-a Rectangle
+        - users do not understand, nor do users need to understand
+
+- [Question] Explain how some of the methods on the object class used when overridden.
+    - Every class running on a JVM inherits from java.lang.Object
+    - any non-final public or protected method of java.lang.Object can be overridden
+        - equals(Object other)  
+            - original equals method just compares the mem locations.Overriding the method is a must for testing equality.
+            - java.util.TreeSet & java.util.HashMap: use it to determine if an object already exists in the collection.
+        - hashCode (nice to have, but not required)
+            - public int hashCode()   -->   int means there would only be a maximum of 2^32 unique variations of a specific instance [NOT enough for String]
+            - The rule: two equal objs must return the same value.(Note that the reverse is not required.) 
+            - The more variance in the hashCode between diff instances, the more distributed those instances will be when stored in a HashMap
+            - the hashCode usually returns an int, its value could be negative. Any HashMap implementation will have to manipulate this value to a meaningful index for the table
+    - relationship between equals and hashCode
+        - The golden rule is: Whenever overriding hashCode or equals, you MUST overide BOTH methods.
+            - some IDEs (IntelliJ or Eclipse) do not allow you to auto-generate one method without the other.
+    - HashMap (plus HashSet is backed by HashMap) 
+        - they use the hashCode method as an index to the table storing the references
+        - unequal objs have the same hashCode --> both are stored at that index --> using LinkedList      
+
+- [Question] How are arrays represented in Java?
+    - They are objs
+
+- [Question] How are Strings held in mem?
+    - the value represented by the String is held as an array of char
+        - private final char[] value;
+
+- [Question] Is it possible to change the value of a string?
+    - The value of the String can never change. IT IS IMMUTABLE.
+        - all the methods that appear to mutate the String actually return a String instance themselves.
+            - substring, replace or split will always return a new copy of the string
+    - Advantage:   (1) Immutable objs are thread-safe. No locking or complex thread coordination.
+    - Other immutable classes: Integer, Double, Character and BigInteger.
+
+- [Question] What is interning?
+    - [String interning] Any repetition of a String literal can be referenced by the JVM, it holds all the literals in a constants pool.
+    - any String instance can be added to this pool with the intern() method. 
+        - The string will be one unique instance taking up mem inside the JVM.
+        - equals() will always return true, if two references point to the same string
+   - Strings are not stored on the heap, but on the PermGen space instead. 
+        - too many string entries can affect the runtime performance.
+   - String constant pool is an implementation of the Flyweight Pattern.
+
+- [Question] Explain how to use generics with the Collections(List, Set, Map) API.
+    - Generics are also known as parameterized types.
+    - When using generics with the collection classes, the compiler is being informed to restrict the conllection to allow only certain types to be contained
+        - By using generics, any potential exceptions at run time are moved to actual compiler errors.
+    - No constraints means you may see a exception: ClassCastExeption(runtime).
+    - The cast itself is messy, boilerplate code.
+        - final Author author = (Author) authors.get(2);   # remove boilerplate code (Author) - by using generics
+    - Generic types can be nested. 
+        - HashMap<Integer, List<String>> : a HashMap that has an Integer as its key, mapped to List s of type String
+
+
+
+
+
+
+
+
+
+
+
+#### Chapter 9
+
+-----------------------------------------------------------------
+#### Chapter 10: Understanding the JVM
+- Java programs are compiled (javac) into bytecode. This is interpreted by the JVM into the specific instructions for that architecture and operating system.
+
+- [Question] How is memonry allocated?
+    - The [new] keyword
+        - allocates memory on the Java heap, if no enough mem available to allocate , the JVM attempts to reclaim some mem from heap with a GC (worse OutOfMemoryError)
+    - [generations]:  The [heap] is split into several diff sections.as objs survive more GCs, they are promoted into diff generations.
+        - 1. Eden Space: first constructed.
+        - 2. Survivor Space: if they survive a GC
+        - 3. Tenured Generation: if they can live long enough there.
+        - 4.[Removed in Java8] PermGen(Permanent Generation): The objs that reside here are not eligible to be GCed
+            - immutable state: class definitions & string constant pool
+            - replaced with a new space called [Metaspace], which will be held in native mem
+
+- [Question] What is GC?
+    - [Definition] It is a mechanism of reclaiming previously allocated mem, so that it can be reused by future mem allocations.[Most Automated]
+        - with languages like C & C++, it is necessary to manage these mem allocation manually (malloc, free)
+        - More modern languages, Java & C#, have an automatic system for this.
+    - [Algorithms] Serveral diff algorithms for GC:
+        - 1. mark-and-sweep: a traditional GC algorithm in Java
+            - [Mark]
+              - (1) each obj reference in running code is marked as live
+              - (2) each reference within that obj is traversed and also marked as live
+              - (3) all routes from live objs have been traced
+            - [Sweep]
+              - (4) once each obj in the heap is visited, those mem locations not marked as live are made available for alloc 
+                - [stop-the-world] During this process, all of the threads 9in the JVM are paused to allow the mem to be reclaimed.    
+        - 2. Garbage First - G1 (Java 6)  
+            - Approved for test use in Java6 and prod use in Java7
+            - G1 still concentrates on a mark-and-sweep algorithm, running in parallel.
+            - G1 also concentrates on area of mainly empty mem first in an attempt to keep large areas of free space available
+
+- [Question] What is the difference between the stack and the heap?
+    - Mem is split into two parts: (1)the stack and (2)the heap
+    - The stack store any primitive values, references to objects, and methods
+    - The scope is usually defined by an area of code in curly brackets {}
+    - A recursive method calls itself too many times, the stack mem fills up. This will result in StackOverflowError 
+
+- [Question] How can you define the size of the heap for the JVM
+    - the JVM provides several command-line arguments for defining the size of the mem allocated to diff mem area
+        - To specify the meximum heap size:         java -Xmx512M <classname>
+            - Suffixs for the mem are G, M & K
+        - To specify the initial heap size:     java -Xms128M <classname>
+    - Default mem size(heap): 
+        - Default initial Xms: 1/64 of the mem on the computer, up to 1GB
+        - Default maximum Xmx: less than 1GB and 1/4 physical mem
+    - [NOT Recommended]Similar to setting initial & maximum heap sizes, JVM have startup arguments for setting the size of the stack
+    - For the permanent generation: -XX:Permsize & -XX  :MaxPermSize
+
+- [Question] Is it possible to have mem leaks in Java?
+    - A common misconception with the Java languages is that mem leaks are simply not possible.
+        - e.g. there is no remove operation in the class MemLeakStack<E>::public E pop() 
+
+- [Question] What is the lifecycle from writing a piece of Java code to it actually running on the JVM?
+    - 1. [Compile] your code. The compiler has several roles. Its output is bytecode, .class file for JVM
+        - making sure you have written a legal programs
+        - making sure you have used valid types.
+    - 2. [classloading]: bringing the bytecode for a class definiation into the mem of a running JVM
+        - the JVM has a classloaders. 
+            - the classloader is an abstraction.
+            - it can load class files from (1) disk, (2)network, (3) archived file - JAR
+            - Classes are only loaded on demand
+            - For security implications: Java applets are not allowed to use custom classloaders at all. 
+    - 3. [Checks] Once a class has been loaded, the JVM itself verifies the bytecode to make sure it is valid.
+    - 4. [Interpret] Once the code has been verified, the JVM can interpret the bytecode into the relevant instruction code for the architecture and operating sys
+        - the early JVM were notoriously slow. Just In Time compiler(JIT) can create highly optimized machine code based directly on app running state
+
+- [Question] Can you explicitly tell the JVM to perform a GC?
+    - the static GC method on the System class is the method to call to tell the JVM to return a GC
+    - BUT it does not guarantee that a GC will happen
+    - it is NOT POSSIBLE to enforce a GC, but when you call gc, the JVM will take your request into account.
+        - calling gc may cause your code slower, putting your whole app in a stop-the-world state during GC 
+    - Explicit calls to System.gc are usually another form of code smell:
+        - if you are calling this in an effort to free memory, it is more than likely you have a memory leak. To fix it rather than to call gc!
+
+- [Question] What does the finalize method do?
+    - The finalize method is a protected method, inherited from Object
+    - No guarantee that the method [finalize] will be called.
+        - If you have many objects configured in this manner, you run the risk of exhausting a database pool, or perhaps even having too many files open at once.
+        - You could not be sure when exactly this event would happen
+    - if an external resource need to be closed explicitly.(database, filesystem, network interface). use Java7's try-with-resouce construct. 
+
+- [Question] What is a WeakReference?
+    - A WeakReference is a generic container class, and when the contained instance has no strong reference, it is eligible for gc
+
+- [Question] What is a native method?
+    - java code -> compile -> bytecode (platform independent) -> translated into -> specific instructions 
+    - At times, you need to run platform-specific code (implememented by JVM)
+        - referencing a platform specific libary
+        - making some operating system-level calls (writing to disk or a network interface.)
+    - For other times, it is possible to write a native method. When code loaded into JVM, you need to register your native code
+
+- [Question] What are shutdown hooks?
+    - When the JVM terminates, it is possible to have some code run before it exits.(like finalize)
+    - Shutdown hooks are references to Thread objs.
+    - This facility could be used for notifying a support team of any JVM termination.
+
+
+
+
+-----------------------------------------------------------------
+#### Chapter 11: Concurrency
+- [Question]: How do you run code in parallel?
+    - extends Threads
+    - implements Runnable
+
+- Java code is run in threads. Hello  World app is run in the main thread.
+
+- the source code for the Thread start method
+    - it eventually calls a private method called start0(native method)
+
+- The JVM is deciding which thread to schedule to run
+
+- [Question]: What is the different between a Thread and an Executor?
+    - Creating a running thread in java is an expensive operation. 
+    - Using a thread pool, we can create threads when needed
+      (reuse a thread after it has completed running previous code.)
+
+- Using Executor(snippet) 
+    - Executors,newCchedThreadPool does not return and Executor, but an ExecutorService.
+    - Advantages:  (1) ExecutorService can return a result.(Runnable has a void return type) 
+    -              (2) ExecutorService can be shutdown unlike the Executors
+
+- [Question]: How do you test concurrent code?
+    - In JUnit, when the code in the main thread has completed, the test finished
+    - using singleThreadedExecutor rather than a cachedThreadPool won't help
+    - Two options:  (1) your Executor run in the same thead 
+                        - @Override Executor execute Method
+                    (2) wait for your thead to complete.
+                        - using CountDownLatch::await() & countDown()
+
+- [Question]: How do you manage shared state between threads?
+    - Every Java object has the capability to hold a lock on it.
+    - Only one running thread is allowded to execute inside by surrounding code with synchronized(object)
+        - performance impact: Threads will need to wait for others while they are locked.(Trade-off) 
+
+- [Question]: What do the atomic classes provide?
+    - The java Concurrency framework added the Atomic classes which wrap all of the primitive types. 
+        - such as: AtomicInteger, AtomicBoolean & AtomicReference(reference types INTERESTING)
+        - These classes all provide guaranteed atomic operations. (like incrementAndGet)
+    - when x++ & x-- are compiled, the bytecode is three operations:
+        - get from mmem the value stored in x
+        - increment that value by 1
+        - set the value of back to mem
+
+- [Question] What is Akka? (Download: www.akka.io)
+    - Akka is a framework that provides different approach to writing and working with concurrent code.
+    - It uses an actor model, is written in Scala
+    - Actors implement an onReceive method, which is called by the actor system when a msg is dispatched to that actor 
+    - ActorSystem.create(...) -> system -> system.actorOf(...) -> actorRef -> actorRef.tell(...)
+
+- [Question] What advantage does working with ActorRefs instead of Actors give?
+    - if your actor crashed, the actor system can create a new actor for a given ActorRef
+    - highly responsive system: the decoupling of sending and receivingmessages allows much flexibility because there is no blocking for a result
+
+- [Question] How can you achieve parallel message processing?
+    - actors are message processors, their instances are considered to be standalone. 
+    - By coupling the routing of message to diff actor instances: 
+        - (1) auto restart 
+        - (2) no code for creating threads or managing shared state.
+        - (3) By providing immutable objects as msg. it means less boilerplate
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

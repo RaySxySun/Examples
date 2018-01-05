@@ -1,0 +1,4 @@
+WM debug:
+grep -iE "(error|warn|exception)" weekly_resync.log
+grep -i Step weekly_maint.log
+grep -i  "Finished Step" nohup.out 

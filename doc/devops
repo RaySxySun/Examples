@@ -1,0 +1,4 @@
+1. consistant env (test, preprod & prod) VS consistant CD processes
+2. iteration test environmenti 
+    - 3 aircraft carriers in service: prod support, development, N+1 
+    (two fully operational carriers and the third in refit.) 

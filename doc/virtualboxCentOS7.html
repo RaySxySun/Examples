@@ -1,0 +1,292 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<head>
+<title>VirtualBox虚拟机配置CentOS7网络图文详解教程_Linux教程_Linux公社-Linux系统门户网站</title>
+<meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+<link rel="icon" href="../../favicon.ico" type="image/x-icon"/>
+<link rel="shortcut icon" href="../../favicon.ico" type="image/x-icon"/>
+<meta name="description" content="之前很多次安装CentOS7虚拟机，每次配置网络在网上找教程，今天总结一下，全图文配置，方便以后查看。"/>
+<meta name="keywords" content="VirtualBox虚拟机网络配置,VirtualBox网络配置,VirtualBox虚拟机配置CentOS7网络图文详解教程,Linux,Linux教程,Linux系统,Linux安装,Ubuntu,Fedora,RedHat,SUSE,CentOS,红旗Linux"/>
+<link rel="canonical" href="http://www.linuxidc.com/Linux/2017-01/139345.htm"/>
+<meta name="generator" content="Linux公社"/>
+<meta name="generator" content="Linux"/>
+<link rel="stylesheet" href="../../style/systems/style.css" type="text/css"/>
+<meta name="generator" content="专业的Linux网站"/>
+<script type="text/javascript" src="../../inc/jquery.js"></script>
+<script type="text/javascript" src="../../inc/iwms.js"></script>
+<script type="text/javascript">iwms.urlPrefix="../../";</script>
+
+<script type="text/javascript" src="../../inc/show.js"></script>
+</head>
+<body>
+<div class="topBar">
+	<div class="twidth">
+	
+	<div style="float:right">
+		<script type="text/javascript" src="../../inc/language.js"></script>
+	</div>
+	
+	<div id="topUser">你好，游客 <a href="#" onclick="iwms.logPop()">登录</a>
+	<a href="../../memberreg.aspx" rel="nofollow">注册</a>
+	<a href="../../search.aspx" rel="nofollow">搜索</a>
+	</div>
+	</div>
+</div>
+<div class="twidth">
+<div id="sitehead">
+<div class="l"></div>
+<div class="r"></div>
+<div class="m">
+	<table width="100%">
+	<tr align="center"><td width="160">
+	<a href="http://www.linuxidc.com/"><img style="filter: chroma(color=#FFFFFF);" src="../../pic/logo.jpg" alt="Linux公社" width="155" height="53" border="0" /></a>
+	</td><td>
+	<div align="center"><script type="text/javascript" src="/linuxfile/linux.js"></script></div>
+	</td>
+	</tr></table>
+</div>
+</div>
+<div id="navbar">
+<div class="l"></div>
+<div class="r"></div>
+<div class="m">
+	<a href="../../index.htm" class="first">首页</a><a href="../../it/">Linux新闻</a><a href="../../Linuxit/" class="thisclass">Linux教程</a><a href="../../MySql/">数据库技术</a><a href="../../RedLinux/">Linux编程</a><a href="../../Apache/">服务器应用</a><a href="../../Unix/">Linux安全</a><a href="../../download/">Linux下载</a><a href="../../Linuxrz/">Linux认证</a><a href="../../theme/">Linux主题</a><a href="../../Linuxwallpaper/">Linux壁纸</a><a href="../../linuxsoft/">Linux软件</a><a href="../../digi/">数码</a><a href="../../mobile/">手机</a><a href="../../diannao/">电脑</a>
+
+</div>
+</div>
+
+<div id="navsub">
+<div class="l"></div>
+<div class="r"></div>
+<div class="m">
+	<a href="../../index.htm">首页</a> → <a href="../../Linuxit/">Linux教程</a>
+</div>
+</div>
+<div class="linuxe1"><script type="text/javascript" src="/linuxfile/linuxe1.js"></script></div>
+<div class="linux1"><script type="text/javascript" src="/linuxfile/linux1.js"></script></div>
+<div class="linuxa"><script type="text/javascript" src="/linuxfile/linuxa.js"></script></div>
+<div class="linuxa1"><script type="text/javascript" src="/linuxfile/linuxa1.js"></script></div>
+<table id="middle" width="100%" cellspacing="0" cellpadding="0" style="table-layout:fixed">
+<tr valign="top"><td>
+
+	<div class="mframe mR">
+	<div class="tl"></div>
+	<div class="tr"></div>
+	<div class="tm">
+		<div class="moreR">
+			背景：<script type="text/javascript">WriteBg()</script>
+		</div>
+		<span class="tt">阅读新闻</span>
+	</div>
+	<div class="wrapper">
+	<div class="ml"></div>
+	<div class="mr"></div>
+	<div class="mm" id="bodyTd">
+		<div id="printBody" style="word-break:break-all;">
+			<div style="text-align:center"><h1 class="aTitle">VirtualBox虚拟机配置CentOS7网络图文详解教程</h1></div>
+			
+			<table width="97%" align="center">
+				<tr>
+				<td width="140">[日期：2017-01-08]</td>
+				<td align="center">来源：cnblogs.com/wxw16&nbsp;
+				作者：wuxiwei</td>
+				<td width="160" align="right">[字体：<a href="javascript:ContentSize(16)">大</a> <a href="javascript:ContentSize(0)">中</a> <a href="javascript:ContentSize(12)">小</a>]
+				</td></tr>
+			</table>
+<div id="li_all">
+<div id="li_1"><script type="text/javascript" src="/linuxfile/linux201.js"></script></div>
+<div id="li_2"><script type="text/javascript" src="/linuxfile/linux2.js"></script></div>
+</div>
+			<div id="content"><p>之前很多次安装<a href="http://www.linuxidc.com/topicnews.aspx?tid=14" target="_blank" title="CentOS">CentOS</a>7虚拟机，每次配置网络在网上找教程，今天总结一下，全图文配置，方便以后查看。</p>
+<p>Virtual Box可选的网络接入方式包括：</p>
+<ul>
+<li>NAT 网络地址转换模式(NAT,Network Address Translation)</li>
+<li>Bridged Adapter 桥接模式</li>
+<li>Internal 内部网络模式</li>
+<li>Host-only Adapter 主机模式</li>
+</ul>
+<p>具体的区别网上的资料很多，就不再描述了，下面是一个最直接有效的配置，<span style="color: #ff0000;">配置CentOS7虚拟机里面能上外网，而主机与CentOS7虚拟机也能连通</span>。不论是学习还是使用，基本都能够满足。不废话，直接上图！</p>
+<h3 id="设置virtual-box">设置Virtual Box</h3>
+<p>最好的办法就是使用两块网卡，nat(虚拟机访问互联网，使用10.0.2.x段)和host-only(虚拟机和主机互相通信，使用192.168.56.x段)。在偏好设置里面设置网络。如下图配置：</p>
+<p><img src="../../upload/2017_01/170108145794811.png" alt="" /></p>
+<p><img src="../../upload/2017_01/170108145794812.png" alt="" /></p>
+<p>接下来对CentOS7虚拟机网络设置，添加网卡1和网卡2，分别选择连接方式和对应的网卡：</p>
+<p><img src="../../upload/2017_01/170108145794813.png" alt="" /></p>
+<p><img src="../../upload/2017_01/170108145794814.png" alt="" /></p>
+<p>注意记下两个MAC地址，后面需要在网络配置文件中使用。</p>
+<h3 id="centos7网络配置-nat网络">CentOS7网络配置 NAT网络</h3>
+<p>开机以后，我们访问<code>ping www.baidu.com</code>，可以发现不能成功。通过<code>ip addr</code>命令查看网络配置。</p>
+<p><img src="../../upload/2017_01/170108145794815.png" alt="" /></p>
+<p>我们可以发现enp0s3网卡（NAT）没有开启工作，而host-only默认的端口是192.168.56.101（具体后面介绍），我们先解决虚拟机访问互联网的问题。</p>
+<p>进入<code>cd /etc/etc/sysconfig/network-scripts/</code>目录，可以看到目前只有ifcfg-enp0s3配置文件，编辑文件，将<code>ONBOOT=no</code>改为<code>yes</code>，再添加<code>BOOTPROTO</code>为<code>dhcp</code>，保存，退出，重启网络。再<code>ping www.baidu.com</code>，通了，而且查看网络配置情况，可以看到enp0s3网卡已经开启工作。</p>
+<p>可以看到默认的配置文件中<code>HWADDR</code>对应的地址是NAT网卡，所以一开始就说NAT网卡没有开启工作，host-only默认会有&ldquo;开启&rdquo;并指定地址。</p>
+<p><img src="../../upload/2017_01/170108145794816.png" alt="" /></p>
+<p><img src="../../upload/2017_01/170108145794817.png" alt="" /></p>
+<p><img src="../../upload/2017_01/170108145794818.png" alt="" /></p>
+<p><img src="../../upload/2017_01/170108145794819.png" alt="" /></p>
+<h3 id="centos7网络配置-host-only网络">CentOS7网络配置 host-only网络</h3>
+<p>ping主机上的虚拟网卡192.168.56.1，发现也没有问题，是通的，但是虽然我们看到host-only网卡已经&ldquo;开启&rdquo;，但是主机访问不了虚拟机（不能ping通），这个时候就要用到我们的第二块网卡host-only来完成主机对虚拟机的访问。</p>
+<p>在<code>cd /etc/sysconfig/network-scripts/</code>目录下面看没有ifcfg-enp0s3文件，将ifcfg-enp0s3复制一份，改名为ifcfg-enp0s8，并且做如下修改：</p>
+<ol>
+<li>修改<code>HWADR</code>为host-only网卡的MAC地址。</li>
+<li>修改<code>BOOTPROTO</code>为<code>static</code>。</li>
+<li>修改<code>NAME</code>为<code>enp0s8</code>。</li>
+<li>修改<code>UUID</code>（可以随意改动一个值，只要不和原先的一样）。</li>
+<li>添加<code>IPADDR</code>，可以自己制定，用于主机连接虚拟机使用。</li>
+<li>添加<code>NETMASK=255.255.255.0</code>。</li>
+</ol>
+<p><img src="../../upload/2017_01/1701081457948110.png" alt="" /></p>
+<p><img src="../../upload/2017_01/1701081457948111.png" alt="" /></p>
+<p>修改以后重启网络，可以通过命令查看<code>ip addr</code>网络配置，可以看到两个网卡都开始工作了，主机页可以ping通虚拟机。</p>
+<p><img src="../../upload/2017_01/1701081457948112.png" alt="" /></p>
+<p><img src="../../upload/2017_01/1701081457948113.png" alt="" /></p>
+<p><span><span style="color: #ff0000;">更多CentOS相关信息见</span><a href="../../topicnews.aspx?tid=14" target="_self"><span style="color: #0000ff;">CentOS</span></a><span style="color: #ff0000;"> 专题页面 </span><span style="color: #0000ff;"><a title="CentOS" href="../../topicnews.aspx?tid=14" target="">http://www.linuxidc.com/topicnews.aspx?tid=14</a></span></span></p>
+<p><span style="font-size: small;"><strong>本文永久更新链接地址</strong></span>：<a href="../../Linux/2017-01/139345.htm">http://www.linuxidc.com/Linux/2017-01/139345.htm</a></p><a href="http://www.linuxidc.com" target="_blank"><img src="/linuxfile/logo.gif" alt="linux" width="15" height="17" /></div>
+<div class="linux3"><script type="text/javascript" src="/linuxfile/linux3.js"></script></div>
+<div class="linux302"><script type="text/javascript" src="/linuxfile/linux302.js"></script></div>		
+			
+			
+		</div>
+<div class="linuxfx"><script type="text/javascript" src="/linuxfile/fx.js"></script></div>	
+<div class="linux8"><script type="text/javascript" src="/linuxfile/linux8.js"></script></div>
+<div class="linux801"><script type="text/javascript" src="/linuxfile/linux801.js"></script></div>
+		<div class="nearNews">
+			<div class="prevNews"><a href="../../Linux/2017-01/139340.htm">关于计算机知识的基本理解</a></div>
+			<div class="nextNews"><a href="../../Linux/2017-01/139361.htm">Linux为普通用户添加sudo权限</a></div>
+		</div>
+	</div>
+	</div>
+	<div class="bl"></div>
+	<div class="br"></div>
+	<div class="bm"></div>
+	</div>
+<div class="linux809"><script type="text/javascript" src="/linuxfile/linux809.js"></script></div>
+	<div class="mframe mR">
+	<div class="tl"></div>
+	<div class="tr"></div>
+	<div class="tm">
+		<span class="tt">相关资讯</span> &nbsp; &nbsp; &nbsp;
+		<a href="../../search.aspx?where=nkey&amp;keyword=48653" target="_blank">VirtualBox虚拟机网络配置</a>&nbsp; <a href="../../search.aspx?where=nkey&amp;keyword=48654" target="_blank">VirtualBox网络配置</a>&nbsp; 
+	</div>
+	<div class="wrapper">
+	<div class="ml"></div>
+	<div class="mr"></div>
+	<div class="mm">
+		
+	</div>
+	</div>
+	<div class="bl"></div>
+	<div class="br"></div>
+	<div class="bm"></div>
+	</div>
+<div class="linux808"><script type="text/javascript" src="/linuxfile/linux808.js"></script></div>
+	
+	<div class="mframe mR">
+	<div class="tl"></div>
+	<div class="tr"></div>
+	<div class="tm">
+		<span class="tt">本文评论</span>
+		 	　　<a href="../../remark.aspx?id=139345" target="_blank">查看全部评论</a> <span class="gray">(0)</span>
+	</div>
+	<div class="wrapper">
+	<div class="ml"></div>
+	<div class="mr"></div>
+	<div class="mm">
+		<table width="100%" style="margin:6px">		
+		<tr><td width="50%">
+			<form action="" name="fmRemarkSt" onsubmit="return remark.post(this);">
+			<input type="hidden" value="1" name="face"/>
+			表情： <img src="../../pic/b.gif" alt="表情" class="face1" style="cursor:pointer;vertical-align:middle" onclick="remark.dispFace(this)" onmouseout="remark.hideFace()"/>
+			姓名： <input type="text" name="username" value="" maxlength="15" style="width:60px" class="inputbg"/>
+			<input type="checkbox" id="rmAnonymitySt" onclick="remark.anony(this)"/><label for="rmAnonymitySt">匿名</label>
+			字数 <input type="text" id="bodyLen" size="3" readonly="readonly" style="border-width:0;background:transparent;vertical-align:middle" value="0"/>
+			<br/>
+			<textarea name="body" cols="40" rows="4" onkeydown="remark.dispLen(this)" onkeyup="remark.handle(event,this);remark.dispLen(this)" style="width:39em;height:100px;margin:3px 0;overflow-y:auto"></textarea>
+				<br/>
+		　　　<input type="checkbox" checked="checked" id="rmAgreeSt"/><label for="rmAgreeSt">同意评论声明</label>
+		　　　<button type="submit" style="width:50px">发表</button>
+			</form><br>
+			评论声明
+			<ul style="list-style-type:square;margin:5px 0 0 1em;padding:0">
+			<li>尊重网上道德，遵守中华人民共和国的各项有关法律法规</li>
+			<li>承担一切因您的行为而直接或间接导致的民事或刑事法律责任</li>
+			<li>本站管理人员有权保留或删除其管辖留言中的任意内容</li>
+			<li>本站有权在网站内转载或引用您的评论</li>
+			<li>参与本评论即表明您已经阅读并接受上述条款</li>
+			</ul>
+		</td>
+		<td width="50%"><div class="linux799"><script type="text/javascript" src="/linuxfile/linux799.js"></script></div></td></tr>
+		</table>
+		<script type="text/javascript" src="../../inc/remark.js"></script>
+		<script type="text/javascript">
+			remark.maxSize=500;
+			remark.minSize=2;
+			remark.sourceEle=$(document.fmRemarkSt).find("button").get(0);
+			iwms.vCode="D2BDA41E";
+			iwms.user.name.length==0 ? $i("rmAnonymitySt").click() : $i("rmAnonymitySt").form.username.value=iwms.user.name;
+		</script>
+		<div class="reCont" id="reContainer"></div>
+	</div>
+	</div>
+	<div class="bl"></div>
+	<div class="br"></div>
+	<div class="bm"></div>
+	</div>
+	
+</td><td width="300" valign="top">
+<div class="linux901"><script type="text/javascript" src="/linuxfile/linux901.js"></script></div>
+<div class="linux902"><script type="text/javascript" src="/linuxfile/linux902.js"></script></div>
+<div class="linux903"><script type="text/javascript" src="/linuxfile/linux903.js"></script></div>
+<div class="linux905"><script type="text/javascript" src="/linuxfile/linux905.js"></script></div>
+	
+	<div class="lframe">
+	<div class="tl"></div>
+	<div class="tr"></div>
+	<div class="tm">
+		<span class="tt">最新资讯</span>
+	</div>
+	<div class="wrapper">
+	<div class="ml"></div>
+	<div class="mr"></div>
+	<div class="mm">
+		<ul class="nl">
+<li><a href="../../Linux/2017-01/139361.htm" target="_blank">Linux为普通用户添加sudo权限</a></li>
+<li><a href="../../Linux/2017-01/139360.htm" target="_blank" title="Python smtplib中间人安全限制绕过漏洞(CVE-2016-0772)">Python smtplib中间人安全限制绕过漏洞(CVE</a></li>
+<li><a href="../../Linux/2017-01/139359.htm" target="_blank">InnoDB体系结构学习笔记</a></li>
+<li><a href="../../Linux/2017-01/139358.htm" target="_blank">InnoDB关键特性学习笔记</a></li>
+<li><a href="../../Linux/2017-01/139357.htm" target="_blank">MySQL数据库和InnoDB存储引擎文件</a></li>
+<li><a href="../../Linux/2017-01/139356.htm" target="_blank">CentOS 7配置LNMP开发环境及配置文件管理</a></li>
+<li><a href="../../Linux/2017-01/139355.htm" target="_blank">apachetop 实现实时监测Web服务器运行状况</a></li>
+<li><a href="../../Linux/2017-01/139354.htm" target="_blank">SSH框架和Redis的整合</a></li>
+<li><a href="../../Linux/2017-01/139353.htm" target="_blank">Spring获取ApplicationContext</a></li>
+<li><a href="../../Linux/2017-01/139352.htm" target="_blank">Java初始化过程</a></li>
+</ul>
+	</div>
+	</div>
+	<div class="bl"></div>
+	<div class="br"></div>
+	<div class="bm"></div>
+	</div>
+	<div class="u70"><script type="text/javascript" src="/linuxfile/u70.js"></script></div>
+	<div class="u80"><script type="text/javascript" src="/linuxfile/u80.js"></script></div>
+	<div class="u90"><script type="text/javascript" src="/linuxfile/u90.js"></script></div>
+	<div class="space"></div>
+	<div id="pin">
+	<script type="text/javascript" src="/linuxfile/pin.js"></script>
+	</div>
+</td></tr>
+</table>
+<div class="linux906"><script type="text/javascript" src="/linuxfile/linux906.js"></script></div>
+<div id="footer">
+<a href="http://www.linuxidc.com/aboutus.htm">Linux公社简介</a> - <a href="http://www.linuxidc.com/adsense.htm">广告服务</a> - <a href="http://www.linuxidc.com/sitemap.aspx">网站地图</a> - <a href="http://www.linuxidc.com/help.htm">帮助信息</a> - <a href="http://www.linuxidc.com/contactus.htm">联系我们</a><br />本站（LinuxIDC）所刊载文章不代表同意其说法或描述，仅为提供更多信息，也不构成任何建议。<br /><script type="text/javascript" src="/linuxfile/qq.js"></script><br />
+<script type="text/javascript" src="/linuxfile/foot.js"></script><br />Copyright &copy; 2006-2016　<a href="http://www.linuxidc.com/">Linux公社</a>　All rights reserved 沪ICP备15008072号-1号
+	<script type="text/javascript">iwms.aId=139345;$(function(){iwms.imgCont=$i('content');iwms.imgResize();InitContStyle();iwms.getVars();})</script>
+	
+</div>
+</div>
+<script type="text/javascript" src="/linuxren/linuxren1.js"></script>
+<script type="text/javascript" src="/linuxren/linuxren2.js"></script>
+<script type="text/javascript" src="/linuxren/linuxren3.js"></script>
+</body>
+</html>

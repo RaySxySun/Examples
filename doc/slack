@@ -1,0 +1,28 @@
+==> slack bot
+https://www.fullstackpython.com/blog/build-first-slack-bot-python.html
+https://sergeantsalt.slack.com/messages/@starterbot/
+==> api
+https://api.slack.com/rtm#events
+
+****************************************************************************
+*           Create a robot
+****************************************************************************
+# Create a virtual environment                                                                                                             
+$ mkdir slackapi
+$ virtualenv -p python3 venv    # virtualenv venv
+$ pip install --upgrade virtualenv
+
+# Active the virtual environment
+source venv/bin/activate 
+
+# import 
+pip install slackclient
+
+# Gain token
+https://slackapi.github.io/python-slackclient/auth.html
+slack_client = SlackClient('xoxp-145468160356-146080617383-160160557013-d39dee788071d71da22e35adcdf08900')
+
+# Get client 
+git clone https://github.com/slackapi/python-slackclient.git
+
+

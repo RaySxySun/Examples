@@ -1,0 +1,18 @@
+bash-4.3# cd /home/scdevlkg/SCdevtm/lkg/UCD_baselines/
+bash-4.3# ls
+08_05_reducedMask2  sfa10.0-reduced     sfa20.0-reduced     sfa30.0-reduced     sfa40.0-reduced
+sfa10.0             sfa20.0             sfa30.0             sfa40.0
+bash-4.3# pwd   
+/home/scdevlkg/SCdevtm/lkg/UCD_baselines
+bash-4.3# whoami
+root
+bash-4.3# hostname
+c9c8.swg.usma.ibm.com
+bash-4.3# cat SFA40.0_SalesConnectKit_20161215-1421MASK1__20161229194430__20161229194409.metadata
+FILENAME_APP='salesconnect_pre-SFA40.0_SalesConnectKit_20161215-1421MASK1.tar.gz'
+FILENAME_DB2US='SALECONN.0.a1insctp.DBPART000.20161229194430.001'
+FILENAME_DB2EU='SALEEUR.0.a1insctp.DBPART000.20161229194409.001'
+TS_APP='SFA40.0_SalesConnectKit_20161215-1421MASK1'
+TS_DB2US='20161229194430'
+TS_DB2EU='20161229194409'
+

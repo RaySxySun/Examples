@@ -1,0 +1,178 @@
+git cheat paper: http://alvinalexander.com/git/git-cheat-sheet-git-reference-commands
+
+
+*** Git configuration (initial configuration)********************
+# your name and email address
+$ git config --global user.name "ohraymaster"
+$ git config --global user.email "ohraymaster@163.com"
+
+# more optional git config stuff
+$ git config --global core.editor vim
+$ git config --global merge.tool vimdiff
+
+*** Global settings are put in this file ************************
+~/.gitconfig
+/etc/gitconfig
+# Git configuration file in your current Git repository. 
+.git/config
+
+*** check your Git configuration ********************************
+# show all git configurations
+$ git config --list
+
+# show a specific key
+$ git config user.name
+
+*** Initializing a Git repository *******************************
+$ git init
+$ git add *
+# OR
+$ git add .
+# Then
+$ git commit -m 'initial commit'
+
+*** Git - Ignoring files with .gitignore ************************
+$ cat .gitignore
+# ignore java class files
+*.class
+# ignore binary/compiled files
+*.[oa]
+# ignore temporary files
+*~
+    # .gitignore pattern/naming rules:
+    (1) Blank lines are ignored
+    (2) Lines beginning with '#' are ignored
+    (3) Standard glob patterns work (.a, .o)
+    (4) Can specify root directory files like '/TODO'
+    (5) End patterns with a slash to specify a directory (bin/)
+    (6) Negate a pattern by beginning it with an '!'
+
+*** Git init example *******************************************
+$ mkdir example
+$ cd example
+$ git init
+$ touch README
+$ git add README
+$ git commit -m 'first init'
+$ git remote add origin git@github.com:alvinj/example.git
+$ git push origin master
+
+*** Push an existing Git repository to Github ******************
+$ cd example
+$ git remote add origin git@github.com:alvinj/example.git
+$ git push origin master
+
+***  Cloning a Git repository***********************************
+# clone a git repo from github
+$ git clone git@github.com:username/reponame.git
+
+# one of my projects
+$ git clone git@github.com:dlsxysun/sergeantSalt.git
+
+*** Adding files to a Git repository ***************************
+# (1) create new file
+$ touch README
+
+# (2) add file to staging area
+$ git add README
+
+# (3) commit the file
+$ git commit -m 'yada yada'
+
+# A faster/easier way is to skip the Git staging area
+$ touch README
+$ git commit -a -m 'yada yada'
+
+*** Git status and diff commands *******************************
+$ git status
+$ git diff
+$ git diff --cached
+
+*** Git - Removing files ***************************************
+# TODO is this step necessary?
+$ rm README
+
+$ git rm README
+$ git commit -m 'yada yada'
+
+#Git remove cached option
+$ git rm --cached README
+
+*** Git - Moving files *****************************************
+$ git mv README readme.txt
+
+*** Git push (sharing changes) *********************************
+$ git push [remote-name] [branch-name]
+$ git push origin master
+
+*** Git remote commands ****************************************
+$ git remote
+origin
+another-server
+yet-another-server
+
+# more detailed git remote information:
+$ git remote -v
+[remote-name]  [remote-url]
+
+#  inspect a Git remote
+$ git remote show origin
+$ git remote show [remote-name]
+
+*** git update *************************************************
+# local
+$ git pull
+$ git pull [remote-name]
+
+# fetch code from remote
+# To pull down all the data from a remote project that you don't have, 
+# so you can then do a manual merge
+$ git fetch
+$ git fetch [remote-name]
+
+            [git fetch "workflow"]
+            $ git fetch origin
+            $ git log -p master origin/master
+            # manually check and adjust the differences
+            $ git merge origin/master
+
+*** Git status *************************************************
+$ git remote show origin
+            [If everything is up to date]
+            Fetch URL: ssh://user@host:port/path/to/git/myapp.git
+            Push  URL: ssh://user@host:port/path/to/git/myapp.git
+            HEAD branch: master
+            Remote branch:
+              master tracked
+            Local branch configured for 'git pull':
+              master merges with remote master
+            Local ref configured for 'git push':
+              master pushes to master (up to date)
+
+*** Git export *************************************************
+git archive master | bzip2 > project-source.tar.bz2
+
+
+
+              
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+

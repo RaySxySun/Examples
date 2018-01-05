@@ -1,0 +1,36 @@
+--------------------------------------------------------------------------------------------------------
+#Standard Apache paths				| # example
+# RedHat: 	/etc/init.d/httpd		| function execute_apache_command() {
+# AIX: 		/etc/rc.d/init.d/httpd		| 	local command=$1
+# Linux:	/usr/sbin/apache2ctl		|  	if [ -f /etc/redhat-release ]; then
+# Others:	/etc/init.d/apache2		|      		/etc/init.d/httpd $command
+						|	elif [ $(uname) == "AIX" ]; then
+						|		/etc/rc.d/init.d/httpd $command
+						|	elif [ $(uname) == "Linux" ]; then
+						|		/etc/init.d/apache2 $command
+						| 	fi
+						| } 
+---------------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------------------------
+					TROUBLESHOOTING 	
+---------------------------------------------------------------------------------------------------------I
+# PROBLEM 1: 	AllowOverride setup for .htaccess	Test for .htaccess rewrites failed. 
+#		This usually means you do not have AllowOverride set up for Sugar directory.
+$ 2enmod rewrite
+$ vim /etc/apache2/sites-available/000-default.conf
+	################################################
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/
+
+        <Directory />
+                Options FollowSymLinks
+                AllowOverride None
+        </Directory>
+
+        <Directory /var/www>
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride All
+                Require all granted
+        </Directory>
+	################################################################

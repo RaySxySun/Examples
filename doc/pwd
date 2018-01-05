@@ -1,0 +1,7 @@
+============================================
+# 1 using sudo without password
+$ vim /etc/sudoers # or visudo
+your_user_name ALL=(ALL) NOPASSWD: ALL
+
+============================================
+sudo -u scdevlkg ssh -t scdevlkg@scdevds.rtp.raleigh.ibm.com passwd

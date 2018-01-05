@@ -1,0 +1,45 @@
+*****[Ubuntu]*****INSTALL:APT****************************************************************
+run echo 'deb https://pkg.jenkins.io/debian-stable binary/' >> /etc/apt/sources.list
+run wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | apt-key add -
+run apt-get update
+run apt-get install -y --fix-missing jenkins
+*****[Ubuntu]*****START***********************************************************************
+/etc/init.d/jenkins start
+
+*****[Ubuntu]***RESTART***********************************************************************
+# Allows all running jobs to complete. New jobs will remain in the queue to run after the
+# restart is complete.
+(jenkins_url)/safeRestart 
+
+# Forces a restart without waiting for builds to complete.
+(jenkins_url)/restart 
+
+*****[2 ways] Reset Password***********************************************************************
+[Solution] <useSecurity>true</useSecurity>
+    
+    ```
+    1. Stop Jenkins (the easiest way to do this is to kill the servlet container.)
+    2. Go to $JENKINS_HOME in the file system and find config.xml file.
+    3. Open this file in the editor.
+    4. Look for the <useSecurity>false</useSecurity> element in this file.
+    5. Replace true with false
+    6. Remove the elements authorizationStrategy and securityRealm
+    7. Start Jenkins
+    ```    
+[Reset password to 'test']
+<passwordHash>#jbcrypt:$2a$10$razd3L1aXndFfBNHO95aj.IVrFydsxkcQCcLmujmFQzll3hcUrY7S</passwordHash>
+
+*****Default Workspace***********************************************************************
+#Default work space
+/<node_root>/workspace/<job_name>
+
+*****[Ubuntu]*****PLUGIN LIST*****************************************************************
+1. Python Plugin
+2. Node and Label parameter plugin 
+3. Delivery Pipeline Plugin
+4. Slack Notification Plugin
+5. Environment Injector Plugin
+6. "Conditional build step plugin" and the "Fail the build"
+(https://wiki.jenkins-ci.org/display/JENKINS/Run+Condition+Plugin#RunConditionPlugin-Example%3ARunabuildstepifafiledoesnotexist)
+6. Team Concert Plugin  # RTC
+7. Copy Artifact Plugin #Build selector for copy artifact

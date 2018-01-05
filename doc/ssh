@@ -1,0 +1,36 @@
+#####################################
+# 	     Configuration	    #
+#####################################
+/etc/ssh/sshd_config	   # 1.server
+/etc/ssh/ssh_config	   # 2.client
+
+#####################################
+# 	     troubleshooting	    #
+#####################################
+$ ssh -v user@host              # For test
+
+==> no access 
+1. ~/.ssh/authorized_keys   <= 644
+2. ~/.ssh                   <= 700
+3. /home/<user>             <= 755
+4. ~/.ssh/config	    <= 600
+5. Configuration of /etc/ssh/sshd_config
+
+==> access deny
+#   Received disconnect from 9.37.208.104 port 22:2: Too many authentication failures for optimzr
+#   Connection to svt5eng01.rtp.raleigh.ibm.com closed by remote host.
+#   Connection to svt5eng01.rtp.raleigh.ibm.com closed.
+$ ssh -v user@9.37.208.104                          # test it
+$ ssh -o PubkeyAuthentication=no user@9.37.208.104  # login without pub key
+# the problem is too many attempts by using local private keys.
+
+#####################################
+# 	    establish tunnel	    #
+#####################################
+# map to remote server:
+ssh -C -f -N -g -L 本地端口:目标IP:目标端口 用户名@目标IP
+    # - e.g.
+    ssh  -C -f -N -g -L 8080:192.168.56.3:8080 r3
+
+# reverse map to local server:
+ssh -C -f -N -g –R 本地端口:目标IP:目标端口 用户名@目标IP

@@ -1,0 +1,48 @@
+# Everything is an object
+
+-----------------------------
+
+- Where storage lives
+  - Registers
+  - The stack
+    - object references
+  - The heap
+  - Constant storage
+  - Non-RAM storage
+
+- High-precision Numbers
+  - BigInteger & BigDecimal (no primitive analogue- 类似物)
+
+- Array
+  - A Java array is guaranteed to be initialized (null) and cannot be accessed outside of its range
+    - overhead: The range checking comes at the price of having a small amount of memory overhead on each array and
+      verifying the index at run time (the safety and increased productivity are worth the expense)
+
+- Class
+  - fields (data members)
+  - methods (member functions)
+
+- JVM GC
+  - stop-and-copy(NOT done in the background)
+      - two issues about "copy collectors"
+        - duplicates: two heaps, maintaining twice as much memory as you actually need.
+          - some JVMs deal with this by allocating the heap in chunks.
+        - wastful: copying process itself. once program becomes stable, it will generate little or no garbage.
+          - solution: switch to diff schema, mark-and-sweep. general use -> fairly slow VS. little garbage -> fast
+    - Mark-and-sweep (no copying happens, need to stop program)
+      - starting from the stack and static storage -> tracing through all the references to find live objects
+      - each time it finds a live obj, and mark the obj. (it IS NOT collected yet)
+      - when the marking process is finished does the sweep occur 
+
+- the efficiency of GC (Adaptive generational stop-and-copy mark-and-sweep)
+  - The JVM monitors the efficiency of GC
+    - all obj are long-lived -> switches to mark-and-sweep
+    - if the heap starts to become fragmented -> swich back to stop-and-copy
+
+- just-in-time (JIT) compiler
+  - it partially or fully converts a program into native machine code. no need to be interpreted by the JVM -> run faster
+  - 2 drawbacks:
+    - takes a little bit more time.
+    - increases the size of the executable (bytecodes are more compact than expanded JIT code) -> may cause paging
+      - paging -> slow down a program
+      - alternative approach: lazy evaluation -> not JIT compiled until necessary.(HotSpot technologies)

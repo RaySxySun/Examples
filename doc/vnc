@@ -1,0 +1,51 @@
+--------------------------------------------
+|		1. remove vm			
+--------------------------------------------
+$ sudo apt-get install vnc4server
+$ vncserver
+
+--------------------------------------------
+|		2. local vm			
+--------------------------------------------
+$ sudo apt-get install vncviewer
+$ vncviewer ${remote}:1
+
+--------------------------------------------
+|		3. remote gnome desktop			
+--------------------------------------------
+vncserver -kill:1
+apt-get install x-window-system-core
+apt-get install gdm
+apt-get install ubuntu-desktop
+
+vim ~/.vnc/xstartup 	# comment out x-window-manager &
+			# add gnome-session
+
+	#!/bin/sh
+	# Uncomment the following two lines for normal desktop:
+	# unset SESSION_MANAGER
+	# exec /etc/X11/xinit/xinitrc
+	
+	[ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup
+	[ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources
+	xsetroot -solid grey
+	vncconfig -iconic &
+	x-terminal-emulator -geometry 80x24+10+10 -ls -title "$VNCDESKTOP Desktop" &
+	#x-window-manager &
+	gnome-session &
+
+!!! no taskbar & windows -> modify xstartup 
+	# add -> xstartup
+	metacity --replace &
+!!! no desktop&mouse
+	install gnome-panel
+	# add -> xstartup
+	gnome-panel &
+!!! change left bar style
+	gnome-session # ls /usr/share/gnome-session/sessions/
+	#modify xstartup
+	gnome-session & => gnome-session --session=ubuntu-2d &
+
+
+
+

@@ -1,0 +1,147 @@
+Role			Hostnames (rtp.raleigh.ibm.com)					
+Cast Iron VM		svt6ci01m/svt6ci01	use UCD to stop all orchs				
+Load Balancer		svt6lb01		Shutdown WAS via /home/tests/lb_shutdown.sh			shutdown LPAR via "shutdown -h"		
+User Web		svt6web01		stop apache and redis via /etc/rc.d/init.d/ commands		shutdown LPAR via "shutdown -h"		
+Services Web		svt6ws01		stop apache and redis via /etc/rc.d/init.d/ commands		shutdown LPAR via "shutdown -h"		
+SC4BP Web		svt6sc4bp01		stop apache and redis via /etc/rc.d/init.d/ commands		shutdown LPAR via "shutdown -h"		
+Optimizer Engine	svt6eng01		follow optimizer wiki to stop optimizer				shutdown LPAR via "shutdown -h"		
+Optimizer Kafka		svt6kz01		follow optimizer wiki to stop kafka, zookeeper and tunnels	shutdown LPAR via "shutdown -h"		
+Optimizer Kafka		svt6kz02		follow optimizer wiki to stop kafka, zookeeper and tunnels	shutdown LPAR via "shutdown -h"		
+Optimizer Kafka		svt6kz03		follow optimizer wiki to stop kafka, zookeeper and tunnels	shutdown LPAR via "shutdown -h"		
+ODS Replica DB		svt6qrepdb		Have Suresh and Sangeeta shut these down by start of day Tuesday	shutdown LPAR via "shutdown -h"	
+ODS Stage DB		svt6stagdb		Have Suresh and Sangeeta shut these down by start of day Tuesday	shutdown LPAR via "shutdown -h"	
+ODS Datastage		svt6ds01		Have Suresh and Sangeeta shut these down by start of day Tuesday	shutdown LPAR via "shutdown -h"	
+MQ/Seedlist/SS Loader	svt6mqsl01		as wasusr stop all WAS servers, then node then mngr			shutdown LPAR via "shutdown -h"	
+US Elastic		svt6uses01		stop elastic and apache via /etc/rc.d/init.d/ commands	shutdown LPAR via "shutdown -h"			
+US Elastic		svt6uses02		stop elastic and apache via /etc/rc.d/init.d/ commands	shutdown LPAR via "shutdown -h"			
+US Elastic		svt6uses03		stop elastic and apache via /etc/rc.d/init.d/ commands	shutdown LPAR via "shutdown -h"			
+EU Elastic		svt6eues01		stop elastic and apache via /etc/rc.d/init.d/ commands	shutdown LPAR via "shutdown -h"			
+EU Elastic		svt6eues02		stop elastic and apache via /etc/rc.d/init.d/ commands	shutdown LPAR via "shutdown -h"			
+EU Privacy DB		svt6eudb01	
+Standby DB		svt6stdbydb	
+Primary DB		svt6primedb	
+
+===============================================
+
+
+# Cast Iron VM
+  - use UCD to stop all orchs
+  - use UCD to remove db trigger
+
+# Load Balancer
+Server List:
+  - `svt6lb01`
+
+``` sh
+# stop
+/home/tests/lb_shutdown.sh
+shutdown -h
+```
+
+# WEB server
+Server List:
+  - `svt6ws01`
+  - `svt6web01`
+  - `svt6sc4bp01`
+
+``` sh
+/etc/rc.d/init.d/httpd stop
+shutdown -h
+```
+
+# DataOptimizer
+## Optimizer
+Server List:
+  - `svt6eng01`
+
+``` sh
+# as optimzr user
+su - optimzr
+cd /home/optimzr/scripts
+# wait till Optimzer is fully stopped
+./stop_optimizer.sh
+```
+
+## Kafka
+Server List:
+  - `svt6kz01`
+  - `svt6kz02`
+  - `svt6kz03`
+  
+``` sh
+# as kafka user
+su - kafka
+cd /home/kafka/scripts
+# wait till Cluster is fully stopped
+./kz_cluster.sh stop
+```
+
+# ODS
+Server List
+  - `svt6ds01`
+  - `svt6qrepdb`
+  - `svt6stagdb`
+
+# MQ/Seedlist/SS Loader
+Server List:
+  - `svt6mqsl01`
+  
+``` sh
+# run as wassrvr
+su - wassrvr
+
+cd /opt/IBM/WebSphere/AppServer/profiles/AppSrv01/bin
+./stopServer.sh server4
+./stopServer.sh server3
+./stopServer.sh server2
+./stopServer.sh server1
+./stopNode.sh
+
+cd /opt/IBM/WebSphere/AppServer/profiles/Dmgr01/bin
+./stopManager.sh
+```
+
+# ElasticSearch
+Server List:
+  - `svt6uses01`
+  - `svt6uses02`
+  - `svt6uses03`
+  - `svt6eues01`
+  - `svt6eues02`
+  
+``` sh
+/etc/rc.d/init.d/elasticsearch stop
+shutdown -h
+```
+
+# DB2
+Server List
+  - `svt6eudb01`
+  - `svt6stdbydb`
+  - `svt6primedb`
+  
+``` sh
+# EU DB
+su - a1inscep
+db2stop
+shutdown -h
+
+# stdby
+su - a1insctp
+# backup crontab
+crontab -l > crontab.$(date +%Y-%m-%d).bck
+
+db2 deactivate db saleconn
+db2 stop hadr on db saleconn
+db2stop
+shutdown -h
+
+# primedb
+su - a1insctp
+crontab -l > crontab.$(date +%Y-%m-%d).bck
+
+db2 deactivate db saleconn
+db2 stop hadr on db saleconn
+db2stop
+shutdown -h
+```

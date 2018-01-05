@@ -1,0 +1,75 @@
+#Create a project
+mvn archetype:generate -DgroupId=com.sshc.gfix.appia.driver -DartifactId=gfix-appia-driver -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+
+#edit pom.xml: to add compile plugins
+  <build>    
+    <plugins>      
+      <plugin>     
+        <groupId>org.apache.maven.plugins</groupId>     
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>  
+          <archive> 
+            <manifest>  
+              <addClasspath>true</addClasspath>
+              <classpathPrefix>lib/</classpathPrefix>
+              <mainClass>com.hsbc.gfix.appia.driver.App</mainClass>
+            </manifest>         
+          </archive>     
+        </configuration> 
+      </plugin>    
+      <plugin>     
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId> 
+        <executions>       
+          <execution> 
+            <id>copy-dependencies</id>
+            <phase>prepare-package</phase>
+            <goals>    
+              <goal>copy-dependencies</goal> 
+            </goals> 
+            <configuration>
+              <outputDirectory>${project.build.directory}/lib</outputDirectory>
+              <overWriteReleases>false</overWriteReleases>
+              <overWriteSnapshots>false</overWriteSnapshots>
+              <overWriteIfNewer>true</overWriteIfNewer> 
+            </configuration>  
+          </execution>
+        </executions> 
+      </plugin>
+      <plugin> 
+        <groupId>org.apache.maven.plugins</groupId> 
+        <artifactId>maven-compiler-plugin</artifactId>  
+        <version>3.7.0</version>     
+        <configuration> 
+          <!-- put your configurations here -->     
+        </configuration> 
+      </plugin>         
+    </plugins>  
+  </build>
+  
+# troubleshooting: fail to package project 
+- java.lang.NoClassDefFoundError: org/codehaus/plexus/compiler/util/scan/InclusionScanException
+- reason: The time has come to end the era of Codehaus; projects and services will be progressively taken offline from April 2nd 2015 onwards
+    - refer to: https://www.javaworld.com/article/2892227/open-source-tools/codehaus-the-once-great-house-of-code-has-fallen.html
+- solution: update plugin => maven-compiler-plugin
+     - refer to: https://maven.apache.org/plugins/maven-compiler-plugin/usage.html
+
+# support eclipse:
+mvn eclipse:eclipse
+
+# fail to install -> try to skip test
+mvn clean install -Dmaven.test.skip=true
+
+# install unsupported jar package
+visit url http://www.oracle.com/technetwork/database/features/jdbc/jdbc-drivers-12c-download-1958347.html
+download ojdbc7 into ~/additional_jars
+cd ~/additional_jars
+mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc7 -Dversion=12.1.0.2 -Dpackaging=jar -Dfile=ojdbc7.jar #install the jar into maven
+	W<!-- http://www.cnblogs.com/wuyouwulv/p/maven_configure_oracle_jdbc.html -->  
+    <dependency>      
+      <groupId>com.oracle</groupId>      
+      <artifactId>ojdbc7</artifactId>      
+      <version>12.1.0.2</version>
+    </dependency> 
+  
+    

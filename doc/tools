@@ -1,0 +1,13 @@
+
+**********************************************************************
+*           Headless environment                                     *
+**********************************************************************
+# xvfb is more like a wrapper.
+# we need a headless environment to run an app
+xvfb-run --auto-servernum --server-args="-screen 0 1280x760x24"  gedit
+# check xvfb status
+netstat -ln
+
+#xvfb docker image
+https://hub.docker.com/r/aheuermann/electron/
+

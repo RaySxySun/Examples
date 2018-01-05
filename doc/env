@@ -1,0 +1,17 @@
+---------------------------------------------
+		Environment
+---------------------------------------------
+- User Env
+	- ~/.profile
+	- ~/.bash_profile OR ~./bash_login
+	- ~/.bashrc
+
+- System Env
+	- /etc/environment
+	- /etc/profile
+	- /etc/bash.bashrc
+
+- LIBPATH				    # search all running libs
+	- export LIBPATH
+	- $ ldd /bin/bash 		    # library is loaded by a program
+	- $ ldconfig -v -N | grep '^/' 	    # To get a list of directories that are searched 

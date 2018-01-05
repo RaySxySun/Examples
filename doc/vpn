@@ -1,0 +1,4 @@
+download shadowsocks-Qt5
+    - https://github.com/shadowsocks/shadowsocks-Qt5
+download SwitchyOmega
+    - https://github.com/RaySxySun/SwitchyOmega

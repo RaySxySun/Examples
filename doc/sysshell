@@ -1,0 +1,233 @@
+====gnome theme====================================================================
+sudo apt-get install gnome-shell
+
+====check disk size================================================================
+
+$ du -sh <dir-path>
+# -s, --summarize
+
+$ df -h
+#Filesystem      Size  Used Avail Use% Mounted on
+#udev            3.8G  4.0K  3.8G   1% /dev
+#tmpfs           767M  1.5M  765M   1% /run
+#/dev/sda8        37G   12G   23G  34% /
+#none            4.0K     0  4.0K   0% /sys/fs/cgroup
+#none            5.0M     0  5.0M   0% /run/lock
+#none            3.8G  136M  3.7G   4% /run/shm
+#none            100M   60K  100M   1% /run/user
+#/dev/sda3        49G   20G   30G  40% /media/ohray/LoL
+#/dev/sda5       199M   69M  116M  38% /boot
+#/dev/sda7        35G   32G  956M  98% /home
+#/dev/sda2        35G   22G   13G  64% /media/ohray/Backup
+#/dev/sdb6        83G   71G   13G  85% /media/ohray/F64E58124E57C9CF
+
+======ADD disk size================================================================
+$ lsvg rootvg
+$ chfs -a size=+50G /dev/fslv04
+$ df -g
+
+======Check Spaces==================================================================
+df -h 				# show status of every Filesystem
+du -h --max-depth=1		# show all current files/dirs
+
+# common method
+du -g | grep '\.$'              # the used space of current directory
+du -g | grep '\./[^/]*$'        # the used space of the folders (depth = 1)
+du -g | grep '\./[^/]*/[^/]*$'  # the used space of the folders (depth = 2)
+
+
+======COUNT TOTAL FILES #===========================================================
+ls -l |grep "^-"|wc -l 		# count total files number
+find ./ -type f | wc -l		# same
+find /media/ -type f -size +5G -name ".*tar" 	# find the files (size > 5G)
+
+======COUNT TOTAL DIRS #============================================================
+find ./ -type d | wc -l
+
+====All Env=========================================================================
+print env
+
+====USERS & GROUPS==================================================================
+
+# add a user to a group
+gpasswd -a user group
+
+# remove user from a group
+deluser user group
+
+# add user
+useradd user -u 10003
+
+# change user pwd
+sudo passwd user
+
+# add sudo permission
+sudo usermod -a -G adm user
+sudo usermod -a -G sudo user
+
+# add primary group gid
+usermod user -g primary_group
+
+# list all users and groups
+cat /etc/passwd
+cat /etc/group
+
+====ADD root user into sudo group===================================================
+$ chmod 600 /etc/sudoers
+$ echo "root ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+$ chmod 400 /etc/sudoers
+
+# troubleshooting => sudo: no tty present and no askpass program specified
+# add all permission to the specified user
+$ echo "apache ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+# TEST IF impersonation user (a1insctp) needs PASSWORD
+sudo -n -u a1insctp ls
+sudo -n -u a1insctp /opt/urbancode/ibm-ucdagent/var/temp/test.sh 
+
+====64 vs 32 compatibility==========================================================
+# If your system is 64 bit, enable 32 bit architecture   
+$ sudo dpkg --add-architecture i386 
+
+# Install the ia32-libs package
+$ sudo apt-get install ia32-libs
+
+# check lib path
+$ cd /etc/ld.so.conf/
+$ cat /etc/ld.so.conf/*
+
+# update lib path
+$ /sbin/ldconfig –v
+
+# normal path
+/usr/local/lib
+/usr/local/lib32
+
+# smaple & troubles
+# error while loading shared libraries
+$ visit att
+$ visit wine
+
+====Install Destop Shortcut=========================================================
+$ cd /usr/share/applications/
+$ sudo touch /usr/share/applications/eclipse.desktop
+$ sudo chmod a+x ./eclipse.desktop
+$ sudo vim ./eclipse.desktop
+	###ADD###########################################
+	# [Desktop Entry]				#
+	# Name=eclipse					#
+	# Comment=Eclipse IDE				#
+	# Exec=/opt/software/eclipse/eclipse/eclipse	#
+	# Icon=/opt/software/eclipse/eclipse/icon.xpm	#
+	# Terminal=false				#
+	# StartupNotify=true				#
+	# Type=Application				#
+	# Categories=Development;			#
+	# X-Desktop-File-Install-Version=0.22		#
+	#################################################
+$ desktop-file-install ./eclipse.desktop
+$ sudo desktop-file-install ./eclipse.desktop
+
+====Re-amount File SYS==============================================================
+# Example: Disable ipv6
+$ vim /etc/sysctl.conf
+	################## ADD ####################
+	net.ipv6.conf.all.disable_ipv6 = 1
+   	net.ipv6.conf.default.disable_ipv6 = 1
+  	net.ipv6.conf.lo.disable_ipv6 = 1
+	###########################################
+$ mount -o remount rw /proc/sys                          # in case, /proc/sys is read-only 
+$ sudo sysctl -p					 # disable
+$ cat /proc/sys/net/ipv6/conf/all/disable_ipv6		 # check status 
+$ ifconfig -a 
+
+=====CHECK SYS INFO==================================================================
+$ cat /proc/cpuinfo				# Check CPU INFO
+$ cat /proc/interrupts 				# Check CPU interrupts
+$ cat /proc/ioports 				# Check IO info
+$ cat /proc/meminfo				# Check Memery info: mem used, free, swap size
+$ cat /proc/partitions				# Check partitions
+$ cat /proc/swaps				# Check the info of swaps
+$ cat /proc/version				# Check Version like: uname -r
+	#########################################
+	#check version                		#   	                                   
+	# $ uname -a                        #1	#
+	# $ uname -r                        #2	#
+	# $ cat /etc/issue                  #3	#
+	# $ cat /etc/redhat-release         #4	#
+	# $ file /bin/ls                    #5	#
+	# $ vim /ect/issue                  #6	#
+	# $ lsb_release -a                  #7	#
+	# $ cat /proc/version           #8	#
+	#########################################
+$ df -m						# Check the size of disks (MB)
+$ df -h						# Check the size of disks (GB)
+$ du -sh					# Check current folder size
+$ cat /etc/passwd 				# Check All USER 
+$ cat /etc/group				# Check All USER GROUPS
+$ dmidecode					# Check hardware components, serial numbers and BIOS revision.
+        ##########################################                                                             
+        # $ dmidecode | grep "Serial Number"	 #
+	# $ dmidecode |grep -A16 "Memory Device$"#
+	# $ dmidecode |grep -A42 "Processor"|more#
+	##########################################
+
+====REMOUNT FILE SYS===================================================================
+$ mount -v | grep "^/" | awk '{print "\nPartition identifier: " $1  "\n Mountpoint: "  $3}' 
+$ sudo mount -o remount,rw /dev/sdc4  /media/ray/Ubuntu\ 16.0/
+
+====TEMP TRASH BIN=====================================================================
+$  ls ~/.local/share/Trash/files/
+
+====LOCALE SETTINGS====================================================================
+# ERROR SAMPLE: troubleshooting: pip install requests 
+$ pip install requests      # locale.Error: unsupported locale setting
+$ export LC_ALL=C           # Solution
+
+    ***************************************************************************************
+    $ locale
+    LANG=en_US.UTF-8
+    LANGUAGE=en_US
+    LC_CTYPE="en_US.UTF-8"
+    LC_NUMERIC=zh_CN.UTF-8
+    LC_TIME=zh_CN.UTF-8
+    LC_COLLATE="en_US.UTF-8"
+    LC_MONETARY=zh_CN.UTF-8
+    LC_MESSAGES="en_US.UTF-8"
+    LC_PAPER=zh_CN.UTF-8
+    LC_NAME=zh_CN.UTF-8
+    LC_ADDRESS=zh_CN.UTF-8
+    LC_TELEPHONE=zh_CN.UTF-8
+    LC_MEASUREMENT=zh_CN.UTF-8
+    LC_IDENTIFICATION=zh_CN.UTF-8
+    LC_ALL=
+    ------------------------------------------------------------------------------
+    LANG=en_US.UTF-8
+    LANGUAGE=
+    LC_CTYPE="C"
+    LC_NUMERIC="C"
+    LC_TIME="C"
+    LC_COLLATE="C"
+    LC_MONETARY="C"
+    LC_MESSAGES="C"
+    LC_PAPER="C"
+    LC_NAME="C"
+    LC_ADDRESS="C"
+    LC_TELEPHONE="C"
+    LC_MEASUREMENT="C"
+    LC_IDENTIFICATION="C"
+    LC_ALL=C
+***************************************************************************************
+
+====CHECK PORTS====================================================================
+netstat -nao | grep <ports>
+rmsock <id> tcpcb   # gain the backend process id
+
+====Outage Notice for ssh==========================================================
+touch /etc/nologin                      # local user only    
+    disable login by admin temperarily  # add comment
+
+
+
+
+

@@ -1,0 +1,194 @@
+[URLS]
+# algorithm
+alg=https://www.coursera.org/learn/algorithms-part1/lecture/
+#
+pan=https://pan.baidu.com/disk/home#list/path=%2F&vmode=list
+
+
+
+#baidu
+baidu = http://www.baidu.com
+
+#free software download
+freesoftware=http://spcn.w3cloud.ibm.com/software/spcn/swdownloads.html
+fixcenter=https://www-945.ibm.com/support/fixcentral/
+
+#vm
+$=https://vlaunch.rtp.raleigh.ibm.com/vm/cbn
+
+#yum cheat
+yum = https://access.redhat.com/articles/yum-cheat-sheet
+
+# itsas
+itsas = https://itsas.raleigh.ibm.com/itsas/secure/welcome.do
+itdash = https://itsas-dashboard.rtp.raleigh.ibm.com/
+# dashboard
+compliance = https://itsas-dashboard.rtp.raleigh.ibm.com/
+99422 = https://swgjazz.ibm.com:8017/jazz/web/projects/Social%20CRM%20-%20Sales%20Force%20Automation#action=com.ibm.team.workitem.viewWorkItem&id=99422
+
+# rtc
+myrtc = https://swgjazz.ibm.com:8017/jazz/web/projects/Social%20CRM%20-%20Sales%20Force%20Automation#action=com.ibm.team.workitem.runSavedQuery&id=_QOHcELXpEeaDjIayKRN5NQ
+
+mytask = https://swgjazz.ibm.com:8017/jazz/web/projects/Social%20CRM%20-%20Sales%20Force%20Automation#action=com.ibm.team.workitem.runSavedQuery&id=_pUKd8NYSEeW-Ko9BsTuv4A 
+
+mydash = https://swgjazz.ibm.com:8017/jazz/web/projects/Social%20CRM%20-%20Sales%20Force%20Automation#action=com.ibm.team.dashboard.viewDashboard
+
+# linux user/group cheat sheet
+user = https://www.cyberciti.biz/faq/howto-linux-add-user-to-group/
+
+# att
+att = https://www.andrewferrier.com/blog/2009/01/12/using-att-network-client-vpn-with-ubuntu-64bit/
+
+# wine
+wine = https://wiki.winehq.org/Ubuntu
+
+# svt
+svt4 = https://svt4sugarlb01a.rtp.raleigh.ibm.com/sales/salesconnect/index.php
+svt5 = https://svt5lb01a.rtp.raleigh.ibm.com/sales/salesconnect/index.php
+svt6 = https://svt6lb01a.rtp.raleigh.ibm.com/sales/salesconnect/index.php
+
+svt4bp = https://svt4sugarlb01bp.rtp.raleigh.ibm.com/sales/salesconnect/index.php
+svt5bp = https://svt5lb01bp.rtp.raleigh.ibm.com/sales/salesconnect/index.php
+svt6bp = https://svt6lb01bp.rtp.raleigh.ibm.com/sales/salesconnect/index.php 
+
+svt4self = https://svt4sugarlb01a.rtp.raleigh.ibm.com/selfservice/index.php
+svt5self = https://svt5lb01a.rtp.raleigh.ibm.com/selfservice/index.php
+svt6self = https://svt6lb01a.rtp.raleigh.ibm.com/selfservice/index.php
+
+ci4=https://svt4ci01m.rtp.raleigh.ibm.com/login
+ci5=https://svt5ci01m.rtp.raleigh.ibm.com/login
+ci6=https://svt6ci01m.rtp.raleigh.ibm.com/login
+
+
+# scbuild
+scbuild = https://mlsa2.swg.usma.ibm.com/SalesConnect
+sfa = https://mlsa2.swg.usma.ibm.com/workplace/dailybuilds
+
+# jenkins
+bvt = http://svtjenkins.rtp.raleigh.ibm.com:8080/job/TriggerRun/
+scdeploy = https://scdeploy.swg.usma.ibm.com:8443/
+svtdeploy = http://svtdeploy.rtp.raleigh.ibm.com:8080/
+kickoff=https://swgjazz.ibm.com:8017/jazz/web/projects/Social%20CRM%20-%20Sales%20Force%20Automation#action=com.ibm.team.build.viewDefinitionList
+myjenkins=http://esgrabber.rtp.raleigh.ibm.com:8666/
+usejenkins=https://wiki.jenkins-ci.org/display/JENKINS/Use+jenkins
+slackplugin=https://wiki.jenkins-ci.org/display/JENKINS/Slack+Plugin
+polling=http://esgrabber.rtp.raleigh.ibm.com:8666/job/polling_build_status/build?delay=0sec
+salt=https://sergeantsalt.slack.com/messages/@slackbot/
+cnslack=https://ibm-sales-transform.slack.com/threads/
+slackapi=https://api.slack.com/rtm#events
+# trello
+trello=https://trello.com/b/szsZ4ZSW/ci-cd-initiative
+
+# db2
+usedb2=http://www.ibm.com/support/knowledgecenter/SSEPGG_10.5.0/com.ibm.db2.luw.kc.doc/welcome.html
+db2patch=http://www.ibm.com/support/knowledgecenter/en/SSEPGG_10.5.0/com.ibm.db2.luw.qb.server.doc/doc/t0024957.html
+
+# php
+pecl = http://pecl.php.net
+php = http://www.php.net/manual/en/
+
+# es
+es = https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html
+
+
+# hrms
+hrms = http://w3-01.ibm.com/hr/web/empservices/hrms/
+
+# wiki
+wiki = https://apps.na.collabserv.com/wikis/home?lang=en-us#!/wiki/Wef08d017d343_46a0_b1a2_8287b688eef5/page/Welcome%20to%20DevOps%20Transition
+# baseline
+ba = https://w3-connections.ibm.com/wikis/home?lang=en-us#!/wiki/W62b944dfe43b_4070_b882_3ce65791f137/page/Baseline%20Automation%20Details 
+# FCH development
+fch = https://w3-connections.ibm.com/wikis/home?lang=en-us#!/wiki/Manager%20Forecasting%20V2.2/page/Development
+# optimizer wiki
+optimizer = https://w3-connections.ibm.com/wikis/home?lang=en-us#!/wiki/W01d96f8176ed_4d42_a814_0d95f45c8e91/page/Optimizer%20Knowledge%20Transfer
+# box
+box = https://ibm.ent.box.com/folder/0
+
+# myasset 
+myasset = https://w3-01.sso.ibm.com/tools/wam/assetcenter/Controller.wss?action=physinventory
+
+# vm ticket https://tivsupport.ibm.com/maximo/webclient/login/login.jsp?appservauth=true
+ticket = https://tivsupport.ibm.com/maximo/webclient/login/login.jsp?appservauth=true
+
+# slang
+slang = http://www.thefreedictionary.com/
+
+# dict
+dict = http://dict.youdao.com/
+
+# salary
+salary = http://w3-01.ibm.com/hr/web/empservices/hrms/ay_sbs_personal_modify_bank_info_gcg.html?country=672&company=0684
+
+# chat
+slack = https://ibm-salesconnect.slack.com/messages/general/
+verse=https://mail.notes.na.collabserv.com/verse?#
+# functional id
+fid=https://mail.notes.na.collabserv.com/data0/126/23110103.nsf/iNotes/Mail/?OpenDocument&LLU=23110103
+
+
+# video 
+# linux: 3mze
+vlinux=http://pan.baidu.com/s/1dFyOsM1
+# docker: nv2v 
+vdocker=http://pan.baidu.com/s/1boI2pbh 
+docker=https://hub.docker.com/
+
+# ucd
+ucd=https://www.ibm.com/support/knowledgecenter/SS4GSP_6.2.4/com.ibm.udeploy.doc/topics/part_using.html
+scdevucd=https://scdevucd.rtp.raleigh.ibm.com:8443
+svtsl01=https://svtsl01.rtp.raleigh.ibm.com:8443
+dadevucd=https://dadevucd.rtp.raleigh.ibm.com:8443
+ucdplugin=https://developer.ibm.com/urbancode/plugins/ibm-urbancode-deploy/
+
+#***Ubuntu****************************************************************************************************
+# ubuntu
+# (1)      => sources.list generator
+sources=https://repogen.simplylinux.ch/
+lauchpad=https://launchpad.net/
+#***Python****************************************************************************************************
+python=https://docs.python.org/2/library/re.html#
+pindex=https://docs.python.org/2.7/genindex-all.html
+psample=https://wiki.python.org/moin/SimplePrograms
+starch=https://ehmatthes.github.io/pcc/index.html
+# education
+edu=https://sugweb05.rtp.raleigh.ibm.com/education/
+
+#api
+slackapi=https://api.slack.com/
+slacktoken=https://github.com/jenkinsci/slack-plugin
+
+# cheat
+cheat=https://www.shortcutfoo.com/app/dojos
+
+#rtc_repository
+sfa=https://swgjazz.ibm.com:8017/jazz/web/projects/Social%20CRM%20-%20Sales%20Force%20Automation#action=com.ibm.team.scm.showWorkspaces
+# outage
+outage=https://w3-connections.ibm.com/communities/service/html/communityview?communityUuid=5a090897-6c6c-4746-b15f-5ab9f703bebf
+
+#9gag
+9gag=http://9gag.com/
+
+#sources.list
+sourceslist=https://repogen.simplylinux.ch/
+
+#shell
+shellsample=http://www.jb51.net/list/list_235_1.htm
+
+#node
+electron=https://github.com/hokein/electron-sample-apps
+
+#network
+c10k=http://www.kegel.com/c10k.html#threaded
+
+# stack
+stack=http://stackoverflow.com/
+
+#quora
+quora=https://www.quora.com/
+
+# useful apps
+chatroom=https://code.google.com/p/talk2me-chatroom
+
+#github
+github=https://github.com/

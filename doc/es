@@ -1,0 +1,23 @@
+#doc
+https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html
+
+---------------------------------------------------------------------------------------------------------
+                                        DOWNLOAD/INSTALL/PLUGIN
+---------------------------------------------------------------------------------------------------------
+$ java -version
+$ echo $JAVA_HOME
+$ curl -L -O https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.4.5.tar.gz	# DOWNLOAD ES
+$ tar -xvf elasticsearch-1.4.5.tar.gz								# Then extract it
+$ cd elasticsearch-1.4.5/bin
+$ vim <es_root>/config/elasticsearch.yml							# Change new port
+$ cd <es_root>/bin										# https://github.com/mobz/elasticsearch-head
+$ ./plugin -install mobz/elasticsearch-head/1.4							# Install plugin head
+$ ./elasticsearch	#alias esstart='cd /opt/freeware/es/elasticsearch-1.4.5/bin; nohup ./elasticsearch/bin/elasticsearch -f /dev/null 2>&1 &'	
+$ ./elasticsearch --cluster.name rayes --node.name rayes01					# Setup a cluster for the current node
+	###########################################
+	#visit http://localhost:port/_plugin/head/#
+	###########################################
+
+# add these two alias into .bashrc
+alias esstart='nohup elasticsearch -f /dev/null 2>&1 &'
+alias esstop="curl -XPOST http://localhost:9831/_cluster/nodes/_shutdown;"

@@ -1,0 +1,8 @@
+---
+
+- Four key strategies:
+  - Lightweight and minimally invasive development with POJOs
+  - Loose coupling through DI and interface orientation
+  - Declarative programming through aspects and common conventions
+  - Eliminating boilerplate code with aspects and template
+

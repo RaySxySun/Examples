@@ -1,0 +1,256 @@
+
+Append dictionary to a dictionary?
+# <root>/config/settings.py
+    import config
+    def __init__():
+        global g_config
+        g_config = {}
+        g_config.update(config.config)
+
+# <root>/config/config.py
+    config = {}
+    config['g_threadpool'] = []
+    config['g_max_threads'] = 2
+
+# <root>/main.py
+    import config.settings
+    settings.__init__()
+    from src.common.services import analyseService
+
+# Any other files which will use global variables: g_config
+# Example: <root>/src/common/services/analyseService.py
+    import ...config import setting         # without __init__()
+
+
+
+*************************************************************************************************
+*       suppress InsecureRequestWarning:: Unverified HTTPS request is being made in Python2.6     *
+*************************************************************************************************
+import requests
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
+
+*************************************************************************************************
+*       1. Elegant way to make all dirs in a path
+*       2. Remove files/dirs
+*************************************************************************************************
+os.makedirs()
+------
+os.remove()     # will remove a file.
+os.rmdir()      # will remove an empty directory.
+shutil.rmtree() # will delete a directory and all its contents.
+
+*************************************************************************************************
+*       Auto format editor
+*************************************************************************************************
+au FileType python setlocal formatprg=autopep8\ -
+
+
+*************************************************************************************************
+*       LOCALE SETTINGS
+*************************************************************************************************
+# ERROR SAMPLE: troubleshooting: pip install requests 
+$ pip install requests      # locale.Error: unsupported locale setting
+$ export LC_ALL=C           # Solution
+
+
+*************************************************************************************************
+*       How to check if a directory exists and create it if necessary
+*************************************************************************************************
+env_dir = "/jenkins/svt/sync"
+if not os.path.exists(env_dir):
+    os.makedirs(env_dir)
+
+*************************************************************************************************
+*       inline if: simple if-then statement on one line
+*************************************************************************************************
+'Yes' if fruit == 'Apple' else 'No'
+
+# [Wrong] SyntaxError: can't assign to conditional expression
+env_dict['debug'] = True if sys.argv[2] == 'debug' else env_dict['debug'] = False
+
+*************************************************************************************************
+*      get env variables 
+*************************************************************************************************
+import os
+print os.environ['HOME']
+
+*************************************************************************************************
+*      pulling data out of HTML and XML files
+*************************************************************************************************
+# Beautiful Soup is a Python library for pulling data out of HTML and XML files. It works with your favorite parser to
+# provide idiomatic ways of navigating, searching, and modifying the parse tree. 
+[link](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
+$ pip install beautifulsoup4        #installation
+
+*************************************************************************************************
+*       String functionality       
+*************************************************************************************************
+# print string without newline
+from __future__ import print_function
+print(x.ljust(18), end='')
+
+# print unicode
+print(unichr(0x1f648))          
+python2 -c "for codepoint in range($START, $END): print unichr(codepoint)"
+
+# alignment: padding
+str = "Now I am here." 
+print(str.center(18), end='')
+print(str.rjust(18), end='')
+print(str.ljust(18), end='')
+
+# get config
+import ConfigParser
+parser = ConfigParser.ConfigParser()
+cfg = "%s/doc/urls"%(cfgDir)
+parser.read(cfgFile)
+options = parser.options(section)   # get keys/options
+options.sort()
+parser.get(section, sys.argv[1])    # get values
+
+# sort string list
+options.sort()
+for x in sorted(options):           # OR inline sort
+    pass
+
+
+*************************************************************************************************
+*       Find the nth occurrence of substring in a string
+*************************************************************************************************
+# invalid: mystring.find("substring", 2nd)
+>>> import re
+>>> s = "ababdfegtduab"
+>>> [m.start() for m in re.finditer(r"ab",s)]
+[0, 2, 11]
+>>> [m.start() for m in re.finditer(r"ab",s)][2] #index 2 is third occurrence 
+11
+
+
+
+*************************************************************************************************
+*      ERROR: locale setting - pip install beautifulsoup4 
+*************************************************************************************************
+locale.Error: unsupported locale setting
+$ locale -a
+$ export LC_ALL="C.UTF-8"
+$ export LC_CTYPE="C.UTF-8"
+$ sudo dpkg-reconfigure locales
+
+
+virtualenv
+http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432712108300322c61f256c74803b43bfd65c6f8d0d0000
+*************************************************************************************************
+*      Pythonic: The rules of thumb 
+*************************************************************************************************
+#### 1. string format
+str = "welcome to {blog} and following {channel}".format(blog='raysxysun.github.io', channel='linux')
+
+
+*************************************************************************************************
+*      Shared global variables 
+*************************************************************************************************
+# move all globals to a file
+    # settings.py
+    def init():
+        global myList
+        myList = []
+
+    # subfile.py
+    import settings
+    def stuff():
+        settings.myList.append('hey')
+
+    # main.py
+    import settings
+    import subfile
+    settings.init()          # Call only once
+    subfile.stuff()         # Do stuff with global var
+    print settings.myList[0] # Check the result
+
+*************************************************************************************************
+*       There are many ways to import a python file, all with their pros and cons.
+*************************************************************************************************
+# Example 1: Import a python module with python interpreter:
+    # /home/el/foo/fox.py:
+        def what_does_the_fox_say():
+          print("vixens cry")
+    
+    # Get into the python interpreter:
+        ray@ray:/home/el/foo$ python
+        Python 2.7.3 (default, Sep 26 2013, 20:03:06) 
+        >>> import fox
+        >>> fox.what_does_the_fox_say()
+        vixens cry
+        >>> 
+
+# Example 2: Use execfile or (exec in Python 3) in a script to execute the other python file in place:
+    # Put this in /home/el/foo2/mylib.py:
+        def moobar():
+          print("hi")
+
+    # /home/el/foo2/main.py:
+        execfile("/home/el/foo2/mylib.py")
+        moobar()
+    
+    # run the files
+        ray@ray:/home/el/foo$ python main.py
+        hi 
+
+# Example 3: Use from ... import ... functionality:
+    # /home/el/foo3/chekov.py:
+        def question():
+          print "where are the nuclear wessels?"    
+
+    # /home/el/foo3/main.py:
+        from chekov import question
+        question()
+
+    # Run it
+        ray@ray:/home/el/foo3$ python main.py 
+        where are the nuclear wessels?
+
+# Example 4: Import utils.py if it's in a different file location from where it is imported
+    # /home/el/foo4/stuff/utils.py:
+        def test():
+          print "my message"
+
+    # /home/el/foo4/main.py:
+        import sys 
+        import os
+        sys.path.append(os.path.abspath("/home/el/foo4/stuff"))
+        from utils import *
+        test()
+
+    # run it
+        ray@ray:/home/el/foo4$ python main.py 
+        my message
+
+# Example 5: Import files in python with the bare import command:
+
+    # mkdir -p /home/el/foo5/
+    # mkdir -p /home/el/foo5/herp
+    # touch __init__.py under /home/el/foo5/herp
+    # mkdir -p /home/el/foo5/herp/derp
+    # touch another __init__.py under /home/el/foo5/herp/derp
+    # make a new file:/home/el/foo5/herp/derp/yolo.py
+        def skycake():
+          print "SkyCake evolves to stay just beyond the cognitive reach of " +
+          "the bulk of men. SKYCAKE!!"
+    # The moment of truth: touch the new file /home/el/foo5/main.py
+        from herp.derp.yolo import skycake
+        skycake()
+    # Run it:
+        ray@ray:/home/el/foo5$ python main.py
+        SkyCake evolves to stay just beyond the cognitive reach of the bulk 
+        of men. SKYCAKE!!
+# The empty __init__.py file communicates to the python interpreter 
+# that the developer intends this directory to be an importable package.
+
+# Example 6, use os.system("python yourfile.py")
+    import os
+    os.system("python yourfile.py")
+
+
+ 

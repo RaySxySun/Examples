@@ -1,0 +1,5 @@
+# allow ip connection
+edit C:\app\ohraymaster\product\11.2.0\dbhome_1\NETWORK\ADMIN\listener.ora
+replace localhost with hostname 
+	 (ADDRESS = (PROTOCOL = TCP)(HOST = DESKTOP-7LP9IPT)(PORT = 1521))
+restart tns service: OracleOraDb11g_home1TNSListener

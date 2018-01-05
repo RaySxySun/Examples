@@ -1,0 +1,2 @@
+# curl delete request
+curl -k -s -XDELETE https://user:password@svt4es01.rtp.raleigh.ibm.com:9200/opportunities

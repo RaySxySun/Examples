@@ -1,0 +1,12 @@
+==================================================================
+#check version 
+
+uname -a			#1
+uname -r 			#2
+cat /etc/issue			#3
+cat /etc/redhat-release 	#4
+file /bin/ls			#5
+vim /ect/issue			#6
+lsb_release -a 			#7
+cat cat /proc/version		#8
+

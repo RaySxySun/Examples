@@ -1,0 +1,41 @@
+package com.hsbc.gfix.agent;
+
+public class TestClass {
+	public static void main(String[] args) {
+		try {
+			Class testTypeClass = TestClassType.class;  			// 测试.class
+			System.out.println("testTypeClass---" + testTypeClass);
+			
+			Class testTypeForName = Class.forName("com.hsbc.gfix.agent.TestClassType"); // 测试Class.forName()
+			System.out.println("testTypeForName---" + testTypeForName);
+			
+			TestClassType testTypeGetClass = new TestClassType();  // 测试Object.getClass()
+			System.out.println("testTypeGetClass---" + testTypeGetClass.getClass());
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+class TestClassType {
+
+	public TestClassType() {
+		System.out.println("----构造函数---");  // 构造函数
+	}
+	
+	static {
+		System.out.println("---静态的参数初始化---");  	// 静态的参数初始化
+	}
+	
+	{
+		System.out.println("----非静态的参数初始化---");  // 非静态的参数初始化
+	}
+}
+
+==================================OUTPUT========================================
+testTypeClass---class com.hsbc.gfix.agent.TestClassType
+---静态的参数初始化---
+testTypeForName---class com.hsbc.gfix.agent.TestClassType
+----非静态的参数初始化---
+----构造函数---
+testTypeGetClass---class com.hsbc.gfix.agent.TestClassType

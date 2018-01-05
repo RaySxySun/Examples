@@ -1,0 +1,133 @@
+# 1. DB2
+
+```sh
+
+# start db2
+ssh svt4primedb		#login primary db
+su - a1insctp		#change user
+db2start		#start primary db
+
+ssh svt4eudb		#login eu db
+su - a1inscep		#change user
+db2start		#start eu db
+
+ssh svt4stdbydb  	#login standby db
+su - a1insctp		#change user
+db2start		#start db
+
+# enable db2 hadr
+
+db2 start hadr on db saleconn as standby	#start hadr
+db2pd -db saleconn -hadr			#check hadr status
+
+ssh svt4primedb		#login primary db
+su - a1insctp		#change user
+db2 start hadr on db saleconn as primary	#start hadr
+db2pd -db saleconn -hadr			#check hadr status
+
+# enable crontab 
+ssh svt4primedb		#login primary db
+su - a1insctp		#change user
+crontab -e		#enable all cron jobs
+
+ssh svt4stdbydb		#login standby db
+su - a1insctp		#change user
+crontab -e		#enable all cron jobs
+
+```
+
+---
+
+# 2. Apache
+
+```sh
+ssh svt4ws01
+/etc/rc.d/init.d/httpd start
+
+ssh svt4web01
+/etc/rc.d/init.d/httpd start
+
+ssh svt4sc4bp01
+/etc/rc.d/init.d/httpd start
+```
+
+---
+
+# 3. load balance
+
+```sh
+ssh svt4lb
+cd /home/tests/
+./lb-configuration.sh 	#check the ip addrs for each apache server
+
+# set web01 lo0
+ssh svt4web01
+ifconfig lo0 alias 9.37.19.149 netmask 255.255.255.255	#sample 
+
+# set bp01 lo0
+ssh svt4sc4bp
+ifconfig lo0 alias 9.37.16.149 netmask 255.255.255.255	#sample
+```
+
+# 4. DO middleware
+
+```
+#kafka
+ssh svt4				# 1. Login to kz01 as kafka
+./kz_tunnels.sh all check		# 2. Check to see if tunnels are up:
+#*if tunnels are up skip to step 4
+./kz_tunnels.sh server start 		#3. start server tunnels 
+./kz_tunnels.sh client start 		#4. start client tunnels
+./kz_cluster.sh start			#5. start cluster  
+./kz_sanity.sh. 			#6. *Wait till cluster is fully up then run. 
+					#   The script must pass before moving on to next step
+
+#enable optimzr
+using ucd: enable 
+
+#optimzr
+ssh svt4eng01				#1. Login to eng01 as optimizer
+cd /home/optimizer/scripts
+nohup ./weekly_maint.sh 3 force &	#2. resync
+tail -f /home/optimzr/scripts/nohup.out	#3. check status
+./start_optimizer.sh			#4. start optimizer
+```
+
+---
+
+# 5. ElasticSearch
+
+```
+ssh svt4es0x	# x refers to 1-x
+/etc/rc.d/init.d/elasticsearch start
+```
+
+---
+
+# 6. WAS
+
+```sh
+ssh svt6mqsl01
+su - wassrvr
+cd /opt/IBM/WebSphere/AppServer/profiles/Dmgr01/bin
+./startManager.sh 
+cd /opt/IBM/WebSphere/AppServer/profiles/AppSrv01/bin
+./startNode.sh 
+./startServer.sh server1
+./startServer.sh server2
+./startServer.sh server3
+./startServer.sh server4
+```
+
+---
+
+# 7Cast Iron VM
+
+  - use UCD to start all orchs
+  - use UCD to remove db trigger
+
+---
+
+
+$ ./lb-shutdown.sh
+

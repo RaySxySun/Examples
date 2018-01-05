@@ -1,0 +1,54 @@
+=======================source=====================
+https://repogen.simplylinux.ch/     #Ubuntu Sources List Generator
+http://mirrors.163.com/
+
+
+# check linux version
+================APT==============================			=========================YUM===================
+$ apt-get install lsb  							$ yum install lsb
+$ lsb_release -a							$ lsb_release -a
+
+#update source
+================APT=============================                	=========================YUM===================
+$ mv /etc/apt/sources.list sources.list.bk				$ cd /etc/yum.repos.d/
+$ cp cfg_files/sources.list /etc/apt/.					$ mv CentOS-Base.repo CentOS-Base.repo.backup
+$ apt-get update							$ cp cfg_files/CentOS7*.repo /etc/yum.repos.d/
+									$ yum clean all & yum makecache
+
+
+
+# download wine 
+$ sudo add-apt-repository ppa:wine/wine-builds
+$ sudo apt-get update
+$ sudo apt-get install --install-recommends wine-staging
+$ sudo apt-get install winehq-staging
+
+===============deb packages installation=======				=========================YUM=================
+$ sudo dpkg -i <package.deb>		# 1. install the package	$ yum list installed | grep docker
+$ sudo dpkg -c <package.deb>		# 2. list content
+$ sudo dpkg -l <package.deb>		# 3. infomation
+$ sudo dpkg -r <package>		# 4. rm <package>		$ sudo yum -y remove docker-* && rm -rf /var/lib/docker
+$ sudo dpkg -P <package>		# 5.  purge all			
+$ sudo dpkg -L <package>		# 6. list all installed files
+$ sudo dpkg -s <package>		# 7. show package info
+$ sudo dpkg-reconfigure <package>	# 8. reconfig
+$ dpkg -l | grep php| awk '{print $2}'  # 9. list all php-related app
+$ <command #9> | tr "\n" " " 		# 10.list all app in 1 line
+
+
+
+
+======apt show/install version================
+$ apt-cache show agnclient-compat
+$ apt-cache show agnclient-compat=1.0.5
+
+
+
+
+==============================================
+		REDHAT
+==============================================
+$ rpm -qa	 		# list all installed packages
+$ rpm -qi iptables		# display more info
+$ rpm -ql iptables		# list package files 
+$ rpm -qa | sort -fu | more	# got a nice alphabetical list

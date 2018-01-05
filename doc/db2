@@ -1,0 +1,333 @@
+DB2 IBM Knowledge Center
+https://www.ibm.com/support/knowledgecenter/en/SSEPGG_10.5.0/com.ibm.db2.luw.kc.doc/welcome.html
+
+=============DDL===============   ==============DML=============
+# Data Definition Language	  # Data Manipulation Language
+# NOTE: don't require commit	  (1)SELECT, (2)INSERT,
+(1)CREATE,   (2)ALTER, (3)DROP,   (3)UPDATE, (4)DELETE
+(4)TRUNCATE, (5)COMMENT, RENAME	  (5)DELETE, (6)MERGE,
+                				  (7)CALL,   (8)EXPLAIN PLAN
+				                  (8)LOCK TABLE
+
+=============DCL===============   ==============TCL=============
+# Data Control Language		  # Transaction Control Language
+(1) GRANT,    (2)REVOKE		  (1)SAVEPOINT, (2)ROLLBACK
+				  (3)SET TRANSACTION
+
+===============================================================
+db2 deactivate db saleconn 	# deactivate db2
+===============================================================
+db2pd -hadr -db saleconn	# check db2 hadr info
+db2 stop hadr on db saleconn 	# stop db2 hadr
+===============================================================
+crontab -l			# check cron, close if need::wq:wed
+db2stop 			# stop db2
+db2stop force			# force to stop db2
+db2_kill			# unique skill
+ipclean				# **must** clean memory
+===============================================================
+db2start			# start db2
+db2 activate database SAMPLE  	# activate db
+===============================================================
+db2 list application 		# show current connections
+db2 force application all       # stop all connections
+db2 "force application (31841)"	# stop specified app
+===============================================================
+nslookup <ip> 			# check the connection source ip
+===============================================================
+db2pd -d saleconn -wlocks	# list wait locks and then
+				# get snapshot
+db2 get snapshot for application agentid 31841 > ss31841.out			
+===============================================================
+ps -ef | grep db2sys		# check current process
+===============================================================
+$ groupadd db2iadm1 
+$ ueradd -u 1004 -g db2iadm1 -m -d /home/a1insctp a1insctp	# add instance user
+$ groupadd db2fadm1 -g 993
+$ useradd -u 1003 -g db2fadm1 -m -d /home/db2fencl db2fencl
+$ groupadd dasadm1 
+$ useradd -u 1005 -g dasadm1  -m -d /home/db2das db2das
+$ gpasswd -a a1insctp dasadm
+$ cd <db2>/bin
+$ ./db2install
+$ vim /etc/services 
+	###########################
+	# a1insctp	50000/tcp #
+	###########################
+$ cd /opt/ibm/db2/V10.5/instance
+$ ./db2icrt -u db2fencl a1insctp				# add user
+$ db2 get dbm cfg
+$ db2 get dbm cfg | grep SVCENAME				# check server name
+$ db2 update dbm cfg using SVCENAME a1insctp
+$ db2set -all
+$ db2set DB2COMM=TCPIP
+$ db2start
+$ db2licm -a ./xxxx.lic						# add db2 licinse 
+$ sudo apt-get install libaio1 libaio-dev
+$ sudo wget http://pecl.php.net/get/ibm_db2-1.9.9.tgz	# download php db2 mod
+$ sudo pecl install ./ibm_db2-1.9.9.tgz 			# install ibm_db2
+===============================================================
+$ db2sampl							# create a sample db
+
+===============================================================
+		Trouble Shooting
+===============================================================
+
+$ su a1insctp
+$ db2start
+# SQL6031N Error in the db2nodes.cfg file at line number "1". Reason code "10". 	# Problem 1
+
+$ su root                                                                               # Solution 1                          
+$ vim /etc/services                                                                     # Change Port: a1insctp  58821/tcp  
+$ su a1insctp
+$ vim sqllib/db2nodes.cfg								            # Modify the hostname of the node
+
+-------------------
+
+$ db2set -all										                # Problem 2: incorrect DB2SYSTEM=web01
+$ /opt/ibm/db2/V10.5/adm/db2set -g DB2SYSTEM=db						# Solution 2: set a correct server name
+
+===============================================================
+		db2 ?
+===============================================================
+db2 ? SQL6048N 
+QL6048N:
+    => http://www-01.ibm.com/support/docview.wss?uid=swg21443907
+    => [Solution]
+        vim <INSTANCE_HOME>/sqllib/db2nodes.cfg                     # change the hostname in the cfg file
+
+# SQL30082N  Security processing failed with reason "19" ("USERID DISABLED or RESTRICTED").  SQLSTATE=08001
+$ db2 ? SQL30082N                   # db2 instance user
+$ lsuser -a account_locked sctid    # [AIX/root] check if the user is locked
+$ lsuser -a time_last_login sctid   # [AIX/root] 
+$ perl -we 'print(my $time = localtime 1484659322, "\n")'   # print date with prettyformat 
+
+===============================================================
+        check db2 look
+===============================================================
+db2look -d saleconn -l -e -x -a -o db2look.log 
+
+===============================================================
+        DB2 Catalog  
+===============================================================
+#node directory: remote/local
+db2 list node directory                                                             # LIST node directory
+db2 catalog TCPIP node <node_name> remote <hostname or IP_Addr> server <port>       # CREATE REMOTE node declaration
+db2 catalog local node <node_name> instance <instance_name>                         # CREATE LOCAL node declaration
+db2 uncatalog node <node_name>                                                      # REMOVE node 
+    # example
+    db2 -v "catalog tcpip node ${NODE_NAME} remote cnwbzp1048.cn.dst.ibm.com server 50005"
+    db2 -v "catalog db SALECONN at node ${NODE_NAME}"
+
+#db directory
+db2 catalog db <db_name> as <alias> at node <nodename>                              # CREATE REMOTE db catalog
+$ db2 catalog db mydb as yourdb at node mynode                                      # EXAMPLE
+db2 uncatalog db yourdb                                                             # REMOVE REMOTE db catalog
+
+#local directory
+db2 list db directory on /home/a1insctp                                             # LIST local db directory
+## EXAMPLE
+$ db2 CATALOG LOCAL NODE myinst INSTANCE inst 
+$ db2 CATALOG TCPIP NODE wkstan2 REMOTE sys2 SERVER a1insctp                        # a1insctp remote service: /etc/services => a1insctp 58888/tcp
+
+===============================================================
+        Check current default schema  
+===============================================================
+db2 select current schema from sysibm.sysdummy1
+
+===============================================================
+        Restore DB2
+===============================================================
+
+
+
+===============================================================
+        DB2 upgrade: FROM DB2 V10.1 TO DB2 V10.5
+===============================================================
+# refer to db2_upgrade
+cheat vim db2_upgrade
+
+===============================================================
+        DB2 source: Required by some db2 command
+===============================================================
+. /home/${p:environment/salesconnect_db2_instance_user}/sqllib/db2profile >/dev/null
+db2 list utilities show detail | grep -p "^Database Name .* = ${DBNAME}\$"
+
+===============================================================
+        DB2 backup check: LOB Path (Required) db2chbkp 
+===============================================================
+# list storage details from the backup file | Extract paths only | Extract the lob dir path only | Ensure 1st result only
+LOB_DIR="$(. "/home/${DB_USER}/sqllib/db2profile" >/dev/null; \
+        db2ckbkp -S "${DB_BACKUP}" 2>&1 \
+        | grep 'Storage path.*/lob' \
+        | sed 's|.* \(\/db\/.*\/lob\) (.*)$|\1|g' \
+        | head -n 1)"
+
+if [[ ! ${LOB_DIR} =~ ^/.*/lob$ ]]; then
+    echo "[WARNING] Unable to discover the lob dir path from backup file (${LOB_DIR})"
+    exit 0
+fi
+===============================================================
+        DB2 restore
+===============================================================
+# [INFO] Offline image
+    # without logs
+db2  -v "restore db ${BACKUP_DB_NAME} from ${BACKUP_DIR} taken at ${BACKUP_DB_TIMESTAMP} into ${BACKUP_DB_NAME}  with 8 buffers without prompting"
+    # with logs
+db2  -v "restore db ${BACKUP_DB_NAME} from ${BACKUP_DIR} taken at ${BACKUP_DB_TIMESTAMP} into ${BACKUP_DB_NAME} logtarget ${LOGTARGET} with 8 buffers without prompting"
+####example [offline with logs]
+db2 -v "restore db saleconn from /db/a1insctp/db2backup taken at 20170322062728 into saleconn logtarget /db/a1insctp/db2backup/logs with 8 buffers without prompting"
+
+# [INFO] Online image
+db2 -v "restore db ${BACKUP_DB_NAME} from ${BACKUP_DIR} taken at ${BACKUP_DB_TIMESTAMP} into ${BACKUP_DB_NAME} logtarget ${LOGTARGET} with 8 buffers without prompting"
+
+    ########################################
+    #[INFO] Env variables:
+    #declare -x ARTIFACTS_DIR="/tempspace/ucd_temp/ZZHANG//artifacts/"
+    #declare -x BACKUP_DB_NAME="SALECONN"
+    #declare -x BACKUP_DB_TIMESTAMP="20161223024804"
+    #declare -x BACKUP_DIR="/home/scdevlkg/SCdevtm/lkg/UCD_baselines/sfa20.0/"
+    #declare -x BACKUP_FILENAME="SALECONN.0.a1insctp.DBPART000.20161223024804.001"
+    #declare -x BACKUP_MCHN="dubdata1.swg.usma.ibm.com"
+    #declare -x DB2INSTANCE="a1insctp"
+    #declare -x DROP_DB="true"
+    #declare -x HADR_PRIMARY_HOST="dubdata1.swg.usma.ibm.com"
+    #declare -x HADR_PRIMARY_SVC="DB_DUB1IN2_1"
+    #declare -x HADR_STANDBY_HOST=""
+    #declare -x HADR_STANDBY_SVC="DB_DUB1IN2_2"
+    #declare -x INSTANCE_USER="a1insctp"
+    #declare -x LOGPATH="/db/a1insctp/actlog_HRSDB/ZZHANG"
+    #declare -x LOGTARGET="/db/a1insctp/db2data/ZZHANG/tempspace/log-target/"
+    #declare -x NEW_DB_NAME="ZZHANG"
+    #########################################
+
+
+===============================================================
+        DB2 rollforward
+===============================================================
+$ db2 -v "rollforward db $NEW_DB_NAME to end of logs and stop overflow log path ($LOGTARGET)"
+
+===============================================================
+        DB2 Performance
+===============================================================
+db2 compatible mode will slow down db2 20% - 30%
+
+===============================================================
+        DB2 Options
+===============================================================
+db2 ? options
+
+ Option  Description                               Default Setting
+ ------  ----------------------------------------  ---------------
+   -a    Display SQLCA                             OFF
+   -c    Auto-commit                               ON
+   -d    Retrieve and display XML declarations     OFF
+   -e    Display SQLCODE/SQLSTATE                  OFF
+   -f    Read from input file                      OFF
+   -i    Display XML data with indentation         OFF
+   -l    Log commands in history file              OFF
+   -m    Display the number of rows affected       OFF
+   -n    Remove new line character                 OFF
+   -o    Display output                            ON
+   -p    Display db2 interactive prompt            ON
+   -q    Preserve whitespaces and linefeeds        OFF
+   -r    Save output report to file                OFF
+   -s    Stop execution on command error           OFF
+   -t    Set statement termination character       OFF
+   -v    Echo current command                      OFF
+   -w    Display FETCH/SELECT warning messages     ON
+   -x    Suppress printing of column headings      OFF
+   -z    Save all output to output file            OFF
+
+db2 -x "select ...."
+    db2后的options选项里直接加-x就可以省略列标题的打印,+x不省略,默认就是+x
+
+===============================================================
+        DB2 reorg/runstats
+===============================================================
+BEGIN
+    call admin_cmd('reorg table SCTID.XXXX');
+    call admin_cmd('runstats on table SCTID.XXXX with distribution and detailed indexes all');
+END@
+
+# reorg: reorganize all indexes defined on a table by rebuilding the index data into unfragmented, physically contiguous pages. 
+# runstats: Updates statistics in the system catalog about 
+	    (1) the characteristics of a table, 
+	    (2) associated indexes, or 
+	    (3) statistical views. 
+	    These characteristics include number of records, number of pages, and average record length. 
+	    The optimizer uses these statistics when determining access paths to the data.
+
+===============================================================
+        DB2 pendding
+===============================================================
+a1insctp@allinone:~$ db2 connect to saleconn
+SQL1116N  A connection to or activation of database "SALECONN" failed because 
+the database is in BACKUP PENDING state.  SQLSTATE=57019
+
+[Solution]
+db2dart saleconn /CHST /WHAT DBBP off;
+
+===============================================================
+        DB2 backup log path 
+===============================================================
+https://www.ibm.com/support/knowledgecenter/en/SSEPGG_10.1.0/com.ibm.db2.luw.admin.config.doc/doc/r0011448.html
+# 1. local rotation
+db2 update db cfg for MYDB using LOGARCHMETH1 LOGRETAIN
+# 2. TSM: need the app
+db2 update db cfg for MYDB using LOGARCHMETH1 TSM           
+db2 update db cfg for MYDB using logretain RECOVERY
+# 3. LOGRETAIN 
+mkdir -p /home/db2inst2/COMDBA/restore_log
+db2 restore db COMDBA from /mnt/hgfs/mshehata/Backup logtarget /home/db2inst2/COMDBA/restore_log
+db2 update db cfg for COMDBA using LOGRETAIN off
+db2 update db cfg for COMDBA using USEREXIT off
+db2 update db cfg for COMDBA using LOGARCHMETH1 DISK:/home/db2inst2/COMDBA/restore_log
+db2 "rollforward db COMDBA to end of logs and complete OVERFLOW LOG PATH (/home/db2inst2/COMDBA/restore_log)"
+
+===============================================================
+        DB2 backup procedure 
+===============================================================
+# !!! drop target db before restore
+# db2 update db cfg for MYDB using LOGARCHMETH1 LOGRETAIN
+# backup & restore    
+    # online: 
+    #       backup (without logs)
+    nohup db2 "backup db saleconn online to /home/a1insctp/db2backup with 8 buffers buffer 8192 compress" &
+    #       backup (with logs)
+    nohup db2 "backup db saleconn online to /home/a1insctp/db2backup with 8 buffers buffer 8192 compress include logs" &
+    #       restore (rollforward is required)  
+    db2 -v "restore db saleconn from /home/a1insctp/db2backup taken at 20170321074844 into saleconn LOGTARGET /home/a1insctp/db2backup/logs with 8 buffers without prompting"
+    #       rollforward
+    db2 "rollforward db saleconn to end of logs and stop overflow log path(/home/a1insctp/db2backup/logs/)"
+
+    # offline backup
+    # stop db
+    db2 connect to sample
+    db2 quiesce database immediate force connections
+    db2 connect reset
+    #stop all application
+    db2 force application all
+    # offline backup
+    db2 backup db sample to "/home/a1insctp/db2backup" with 8 buffers buffer 8192 compress parallelism 1 without prompting
+    # resume db 
+    db2 connect to sample
+    db2 unquiesce database
+    db2 connect reset
+    exit
+db2ckbkp -S db2backup/SALECONN.0.a1insctp.DBPART000.20170321044446.001
+# restore 
+    # online 
+    db2 -v "restore db saleconn from /home/a1insctp/db2backup taken at 20170321044446 into saleconn with 8 buffers without prompting" 
+    # need FORWARD
+    db2 get db cfg for saleconn | grep pending   # check db status
+    # SQL1117N  A connection to or activation of database "SALECONN" cannot be made 
+    # because of ROLL-FORWARD PENDING.  SQLSTATE=57019
+    db2 -v "rollforward db saleconn to end of logs and complete overflow log path (/home/a1insctp/a1insctp/NODE0000/SQL00001/LOGSTREAM0000/NODE0000)"
+    # offline 
+    # restore without log
+    db2 -v "restore db saleconn from /home/a1insctp/db2backup taken at 20170321044446 into saleconn with 8 buffers without prompting" 
+
+!!! backup/restore SQL2540W warnings
+==> https://www.columbia.edu/sec/acis/db2/db2m0/sql2500.htm
+

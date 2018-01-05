@@ -1,0 +1,71 @@
+*********************Sys Upgrade************************
+# check current Sys level
+$ oslevel -s 
+    7100-03-04-1441
+    Breaking that down
+    (1) First 4 digits show the AIX base level. 
+    (2) Next is the 2 digit Technology Level (TL)
+    (3) Followed by the 2 digit Service Pack (SP)
+    (4) The last four digits show the release date of the Service Pack using the format YYWW 
+        - Y: year
+        - W: week
+    So, the command "oslevel -s" command reports 7100-03-04-1441
+    Then we know 
+    => 7100 -> AIX 7.1
+    => 03   -> TL 3
+    => 04   -> SP 6
+    => 1441 -> the week 41 of 2014
+
+# mount packages 
+$ mount rtpmsa.raleigh.ibm.com:/msa/.projects/p10/ibmpublic /mnt
+exit $?
+
+# backup
+$ mksysb
+
+# install fixes
+$ smit update_all
+    -> [Choose Label] update installed software to latest level
+        -> [device/directory] put in the dot (.). If you remembered to cd to the directory that has the .toc file
+
+
+
+
+*********************Dir Size***************************
+#### data size of directories
+#### -s, --summarize
+$ du -sg ./*
+
+*
+*********************CPU INFO**************************
+$ lsdev -Cc processor		# Method 1 
+$ lparstat -i | grep CPU	# Method 2
+$ lsattr -El proc0		# Method 3
+$ lscfg -v | grep -i proc	# Method 4
+$ prtconf | pg			# Method 5
+
+
+# Available CPU Nunbers
+$ bindprocessor -q		# available processors #
+
+**********************tar.gz****************************
+# [AIX] compress tar.gz
+tar cvf optimizer_log.tar optimizer-1.log optimizer.metrics-1.log optimizer.trace.log
+gzip optimizer_log.tar
+
+********************Account Locked**********************
+# To check account properties you use the command lsuser and specify what property you want to see.
+# Checking if an account is locked
+$ lsuser -a account_locked sctid
+
+# To calculate when was the last time an user logged in to the server, you will need to convert the time displayed. Use the command below to convert.
+$ lsuser -a time_last_login sctid
+    # sctid time_last_login=1484659322
+$ perl -we 'print(my $time = localtime 1484659322, "\n")'
+    # Tue Jan 17 08:22:02 2017
+
+# unlocked a user
+$ chuser account_locked=false sctid
+
+********************** du  ****************************
+du -ak /home|sort -n -r|head    # current level folders

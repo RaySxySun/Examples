@@ -1,0 +1,66 @@
+# Step 1: Install JAVA JDK
+ 
+- DOWNLOAD JAVA JDK FROM
+http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+
+- DOWNLOAD WITHOUT LICENSE TERMS
+
+# RPM
+http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+
+# TAR GZ:
+wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-x64.tar.gz
+
+# CURL RPM
+curl -v -j -k -L -H "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-x64.rpm > jdk-8u112-linux-x64.rpm
+
+############################################################################
+# In all cases above, subst 'i586' for 'x64' to download the 32-bit build. #
+# -j -> junk cookies							   #
+# -k -> ignore certificates						   #
+# -L -> follow redirects						   #
+# -H [arg] -> headers							   #
+# curl can be used in place of wget.					   #
+############################################################################
+------------------------------------------------------
+
+# Step 2: uncompress 
+# RECOMMENDED INSTALLATION LOCATION
+/opt/software/java
+tar -zxvf jdk_<version>.tar.gz                                                                      
+ 
+ 
+# Step 3: EDIT PROFILE
+vim /etc/profile
+ 
+- EXPORT VARIABLES
+export JAVA_HOME=/opt/software/java/jdk_<version>
+export JRE_HOME=/opt/software/java/jdk_<version>/jre
+export CLASSPATH=.:$CLASSPATH:$JAVA_HOME/lib:$JRE_HOME/lib
+export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
+ 
+- SOURCE PROFILE
+source /etc/profile
+ 
+- JAVA VERSION
+java -version
+
+<<<<<<< HEAD
+# SEE Core java notes
+cheat vim java_thread
+
+
+=======
+
+--------------------------------------------------------------------------
+# How to install jdk1.8 without installation on Windows 
+  -- Extract JDK directly from .EXE installer.
+Step 1. Download the JDK from Oracle (e.g. JDK 8 8u111).   
+Step 2. simply open the .exe file with 7-Zip.
+Step 3. For x64 the tools.zip can be found in .rsrc\1033\JAVA_CAB10\111\
+Step 4. Unpack tools.zip to the desired JDK directory (e.g. "D:\JavaJDK\")
+Step 5. unpack a few files packed with pack200 => go to the root directory & Run 
+    - for /R %f in (.\*.pack) do @"%cd%\bin\unpack200" -r -v -l "" "%f" "%~pf%~nf.jar"
+Step 6. go into bin folder & Check 
+    - ./java -version
+ 

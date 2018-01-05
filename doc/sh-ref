@@ -1,0 +1,6 @@
+- Extract mem usage by users
+  ps aux | awk 'NR != 1 {x[$1] += $4} END{ for(z in x) {print z, x[z]"%"}}'
+
+- Extract sys info
+  sar -A > sar.log   # mem calculation is diff between Linux & Unix
+  

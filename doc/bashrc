@@ -1,0 +1,7 @@
+#######################################################
+# ERROR 1: debconf: unable to initialize frontend: Dialog
+# ERROR 2: perl: warning: Falling back to the standard locale ("C").
+# export DEBIAN_FRONTEND=noninteractive
+# export LC_ALL=C
+# export PATH=$PATH:/sbin::~/bin:.
+#######################################################

@@ -1,0 +1,15 @@
+
+*** swich node ********************************************************
+ln -sf /usr/local/n/versions/node/0.10.46/bin/node /usr/local/bin/node
+ln -sf /usr/local/n/versions/node/7.0.0/bin/node /usr/local/bin/node
+*** check module ********************************************************
+[root@esgrabber SVT5]# node -v
+v0.10.46
+
+[root@esgrabber node_modules]# ls -l /usr/bin/elasticdump
+lrwxrwxrwx 1 root root 47 10月 25 14:11 /usr/bin/elasticdump -> ../lib/node_modules/elasticdump/bin/elasticdump
+
+[root@esgrabber node_modules]# npm list elasticdump
+/usr/lib
+└── elasticdump@0.13.0 
+

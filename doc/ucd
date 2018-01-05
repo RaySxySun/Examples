@@ -1,0 +1,33 @@
+[propertyfile] Updating property file: /opt/IBM/UCBuild/server/conf/server/installed.properties
+[propertyfile] Updating property file: /opt/IBM/UCBuild/server/conf/installed.version
+
+
+---> Exchanging keystores between servers
+# Before you begin
+Make sure that the location of the Java™ keytool command is on the PATH variable of the servers.
+
+keytool -importkeystore -srckeystore encryption.keystore -srcstorepass changeit -srcstoretype jceks -alias desedekeymppo
+-destkeystore temp.keystore -deststorepass ohraymaster -deststoretype jceks
+
+
+---> check keystore
+keytool -list   -keystore /home/ray/encryption.keystore   -storepass changeit   -storetype jceks
+keytool -keypasswd  -alias aes128keymclp   -keystore /home/ray/encryption.keystore   -storepass changeit   -storetype jceks
+
+
+
+https://www.ibm.com/support/knowledgecenter/en/SS4GSP_6.1.0/com.ibm.udeploy.install.doc/topics/ssl_mutual_authServers.html
+
+=========================================================================================================================
+#docker urbancode deploy server 
+https://hub.docker.com/r/ibmcom/ucds/
+sudo docker run -d --net docker01 -p 8443:8443 -p 7918:7918 -p 8080:8080 --name=ucds -t ibmcom/ucds
+
+
+# agent
+https://hub.docker.com/r/ibmcom/ucda/
+sudo docker run -d --net docker01 --add-host="ucd-server:172.25.0.2" -e AGENT_NAME=repo -v /home/ray:/home/ray --name=repo -t ibmcom/ucda
+https://github.com/IBM-UrbanCode/UCD-Docker-Images/issues/10
+
+
+

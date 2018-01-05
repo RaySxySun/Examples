@@ -1,0 +1,112 @@
+===================[Quick Run]===============================
+sudo docker network create -d bridge --subnet 172.25.0.0/16 docker01
+
+docker run -d --net docker01 
+        -p 2200:22 -p 8880:8080 
+	--ip 172.25.0.120 
+        -v /home:/home 
+        -h rayws01 
+        --name=rayws01 
+        -it ucd 
+        /bin/bash -c '/root/scripts/boothook.sh; while true;do sleep 1000; done'
+
+
+===================[HIGHLIGHT]===============================
+su -      								# superuser root
+./build.sh xmaster   							# using **root** to install jenkins
+
+===================[SHORTCUT]=================================
+alias attachd='sudo docker attach'					# shortcut
+alias startd='sudo docker start'
+alias stopd='sudo docker stop'
+alias allstopd='sudo docker stop $(sudo docker ps -q)'
+
+====================[EXPORT/IMPORT]=================================
+sudo docker export xmaster > xmaster.tar				# export a docker container 
+cat xmaster.tar | sudo docker import - xmaster
+
+====================REMOVE=================================
+sudo docker rm $(sudo docker ps -qa)					# rm all docker images
+
+====================CREATE NETWORK=========================
+sudo docker network create -d bridge --subnet 172.25.0.0/16 docker01	# create a sub network
+sudo docker network disconnect docker01 web01centos			# disconnect network
+sudo docker network connect --ip 172.25.0.6 docker01 web01centos	# specify a ip to a container	
+
+====================BUILD==================================
+sudo docker build . -t slave
+
+====================RUN====================================
+sudo docker run --net docker01 -v /home/ohraymaster:/home/ohraymaster -h xagent --name=xagent1 -it xagent bash
+
+sudo docker run -d --net docker01 -v /home/ohraymaster:/home/ohraymaster -h xagent1 --name=xagent1 xagent /bin/bash -c "/root/scripts/boothook.sh; while true;do sleep 1000; done"
+
+====================TROUBLESHOOTIING NETWORK===============
+apt-get install curl
+sudo apt-get install dnsutils
+apt-get install zip
+
+====================查找文件夹名===========================
+find /opt/ -type d -name ibm-ucd-agent-install
+
+===========================================================
+Build & Installation
+Docker Images: HERE
+
+Steps	Description	Commands
+1	Install docker	apt-get install docker.io
+2	Launch service	service docker.io status
+ 	 	service docker.io start
+3	softe link	ln -sf /usr/bin/docker.io /usr/local/bin/docker
+4	import docker	cat ubuntu14.tar
+ 	 	sudo docker import - ray/ubuntu14
+ 	OR pull a images	sudo docker pull ubuntu:16.04
+ 	 	sudo docker images
+5	run docker container	docker run -d –dns 8.8.8.8 –dns 8.8.4.4 -p 80:80 -p 9200:9200 -p 50000:50000 -v /home/ray/www:/home/ray/www \ 
+                                      –name=ibmsc -h SC ray/ubuntu14 /bin/bash -c “while true;do sleep 1000; done” # google DNS: –dns 8.8.8.8 –dns 8.8.4.4
+6	start & login	sudo docker start ibmsc
+ 	 	login-docker.sh ibmsc
+7	save	docker commit wow wowserver
+8	export docker image	sudo docker ps -a
+ 	 	sudo docker export 7691a814370e > ubuntu14.tar
+9	remove docker images	docker stop $(docker ps -a -q)
+ 	 	sudo docker rmi -f 87bce9b2c54c
+10	reomve all container	docker rm $(docker ps -a -q)
+11	remove a image	docker rmi 
+12	remove all images	docker rmi $(docker images -q)
+13	Network Config:docker run	1. sudo docker run –net:host –name ubuntu_bash -i -t ubuntu:latest /bin/bash
+ 	 	2. sudo docker run –dns 8.8.8.8 –dns 8.8.4.4 –name ubuntu_bash -i -t ubuntu:latest /bin/bash
+ 	 	3. vi /etc/default/docker 然后去掉“docker_OPTS=”–dns 8.8.8.8 –dns 8.8.4.4””前的#号
+ 	 	4. vi /etc/NetworkManager/NetworkManager.conf 在dns=dnsmasq前加个#号注释掉 然后 sudo restart network-manager && sudo restart docker
+ 	 	5. pkill docker && iptables -t nat -F && ifconfig docker0 down && brctl delbr docker0 && docker -d
+ 	 	6. 直接在docker内修改/etc/hosts
+14	Docker network	sudo vim /etc/resolvconf/resolv.conf.d/base (nameserver 8.8.8.8 nameserver 8.8.4.4)
+15	Docker Version	docker version
+16	Download & test latest centos server	sudo docker run -i -t centos /bin/bash
+17	create docker subnet networks	sudo docker network create -d bridge –subnet 172.25.0.0/16 docker01
+18	run a contatiner with a given ip	[preferrable] docker run -v /home/ray:/home/ray -h xmaster –name=xmaster -it ubuntu bash
+.	 	[alernative]sudo docker run –net mynet123 –ip 172.18.0.22 -v /home/ray:/home/ray -h xmaster –name=xmaster -it ubuntu bash
+19	make sure container attached to network	docker network connect docker01 xmaster
+20	inspect a customized network	docker network inspect xmaster
+
+=============INSTALL DOCKER ON LINUX======================
+https://docs.docker.com/engine/installation/linux/
+
+=============INSTALL SHIPYARD=============================
+# Quick Start
+curl -s https://shipyard-project.com/deploy | bash -s
+
+# For Help
+curl -s https://shipyard-project.com/deploy | bash -s -- -h
+
+# Controller: Server
+$ docker run shipyard/shipyard server -h
+# Controller: Help 
+$ docker run shipyard/shipyard -h
+
+====> Ubuntu Docker container login mesg warning
+root@svtdevlab:~# /home/ray/dlogin raylab
+mesg: ttyname failed: Success
+#Solution remove mesg logic from .bashrc .profile
+
+

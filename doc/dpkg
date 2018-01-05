@@ -1,0 +1,9 @@
+# ENV: Ubuntu 14.04 amd64
+
+1. dpkg --print-architecture            #amd64
+2. dpkg --print-foreign-architectures   #<no outputelections
+3. dpkg --add-architecture i386         #repeat cmd #2: i386
+4. apt-get update
+
+# Get installation list
+dpkg --get-selections

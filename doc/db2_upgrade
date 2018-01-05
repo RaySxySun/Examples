@@ -1,0 +1,104 @@
+# DB2 IBM Knowledge Center
+https://www.ibm.com/support/knowledgecenter/en/SSEPGG
+# download fix pack
+http://www.ibm.com/support/docview.wss?uid=swg21633303
+# Installation Method
+https://www.ibm.com/support/knowledgecenter/SSEPGG_10.5.0/com.ibm.db2.luw.qb.server.doc/doc/c0025016.html
+
+============================================================
+|           Upgrading your DB2® to a new release REQUIRES:
+============================================================
+upgrading DB2 environment components:
+    (1) DB2 servers, 
+    (2) DB2 clients, 
+    (3) database applications, 
+    (4) routines, 
+    (5) tools 
+    (6) and scripts.
+
+============================================================
+|           Tasks we need to perform:
+============================================================
+(1) creating an [upgrade strategy] and an [upgrade plan]
+(2) Upgrading [existing instances and databases]
+(3) Upgrading [client instances] to keep the configuration of existing clients. 
+(4) Upgrading database [applications and routines]
+
+============================================================
+|           The upgrade tasks
+============================================================
+(1) upgrade prerequisites: provides upgrade support, restrictions, and best practices
+(2) pre-upgrade: pareparation Tasks
+(3) upgrade: step-by-step procedure
+(4) post-upgrade: all tasks after upgrade
+# refer to https://www.ibm.com/support/knowledgecenter/en/SSEPGG_10.5.0/com.ibm.db2.luw.qb.upgrade.doc/doc/c0023855.html
+
+============================================================
+|           Upgrade essentials
+============================================================
+(1) upgrade concepts
+(2) upgrade restrictions
+(3) upgrade recommendations
+(4) DB2 server
+
+============================================================
+|           Upgrading DB2 Server 
+============================================================
+(1) install a DB2 copy
+(2) upgrade all the instances and databases (be able run them under the new DB2 release)
+# refer to https://www.ibm.com/support/knowledgecenter/en/SSEPGG_10.5.0/com.ibm.db2.luw.qb.upgrade.doc/doc/c0011933.html
+
+============================================================
+|           Procedure: Preparing to install a fix pack 
+============================================================
+1. Check the fix pack prerequisites.
+    -> https://www.ibm.com/support/knowledgecenter/en/SSEPGG_10.5.0/com.ibm.db2.luw.qb.server.doc/doc/t0024976.html
+    -> [db2prereqcheck] Checking whether your system satisfies the DB2 installation prerequisites by consuming [DB2prereqs.xml] 
+        It checks:
+            -> (1) system level: Linux distribution, AIX® Technology Level, C library, runtime patches 
+            -> (2) prerequisites: are related to the client, uDAPL, GPL, and DB2 pureScale®
+        DB2prereqs.xml file is
+            -> [AIX]in both the db2/aix/install and db2/aix/bin directories.
+            -> contains the prerequisite from Version 9.8 Fix Pack 2 to Version 10.5
+2. download and uncompress the fix pack.
+3. stop the DB2® instances 
+
+============================================================
+|           Procedure: install a fix pack 
+============================================================
+0. How to get a fix pack
+1. Run as
+    root installation: root users
+    non root installation: ower of DB2
+2. Change to the directory that contains the fix pack image
+3. Start the installation
+    $ ./installFixPack -b DB2DIR
+    # In clustered environments where some instances are not mounted
+    $ ./installFixPack -b DB2DIR -f ha_standby_ignore
+4. Next: Post-installation tasks for fix packs (Linux and UNIX).
+# refer to https://www.ibm.com/support/knowledgecenter/SSEPGG_10.5.0/com.ibm.db2.luw.qb.server.doc/doc/t0024956.html
+
+============================================================
+|           Procedure: Post-installation tasks for fix packs  
+============================================================
+
+============================================================
+|           Install a fix pack  
+============================================================
+# 1. Preparing to install a fix pack
+#       (1) Validating "Linux distribution " ... 
+#       (2) Validating "kernel level " ... 
+#       (3) Validating "C++ Library version " ... 
+#       (4) Validating "32 bit version of "libstdc++.so.6" " ...
+#       (5) Validating "/lib/i386-linux-gnu/libpam.so*" ...
+$ cd /opt/ibm/db2/V10.5/instance/native/install     # if not cd into the folder, we will get an error
+$ ./db2prereqcheck -i   
+$ ./db2prereqcheck -i -v 10.5.0.0
+            # (Issue 0) Fail to locate any 32-bit libstdc
+            #       => (Solution 0) $ dpkg --add-architecture i386
+            #       =>              $ apt update
+            #       # The way to fix this is to add another architecture before the apt-get update
+            # (Issue 1) Fail to find 32-bit libstdc++.so.6: 
+            #       => (Solution 1) apt-get install lib32stdc++6
+            # (Issue 2) Fail to find 32-bit /lib/i386-linux-gnu/libpam.so*:
+            #       => (Solution 2) $ apt install libpam0g:i386 

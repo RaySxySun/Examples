@@ -1,0 +1,105 @@
+---------------------------------------------------------------------------------------------------------      
+					INSTALLATION
+---------------------------------------------------------------------------------------------------------
+# Ubuntu 16.04 comes with PHP7 as the standard, so there are no PHP5 packages
+$ cd /opt/software/php
+$ wget -O php-5.5.36.tar.gz http://de1.php.net/get/php-5.5.36.tar.gz/from/this/mirror
+$ tar -zvxf php-5.5.36.tar.gz 
+$ cd php-5.5.36
+-----------------------------------OR--------------------------------------------------------------------
+$ sudo add-apt-repository ppa:ondrej/php 
+$ sudo apt-get update 
+$ sudo apt-get install php5.6
+
+---------------------------------------------------------------------------------------------------------      
+					PHPUNIT INSTALLATION
+---------------------------------------------------------------------------------------------------------      
+➜ wget https://phar.phpunit.de/phpunit.phar
+➜ chmod +x phpunit.phar
+➜ sudo mv phpunit.phar /usr/local/bin/phpunit
+➜ phpunit --version
+
+---------------------------------------------------------------------------------------------------------
+                                        XDEBUG INSTALLATION
+---------------------------------------------------------------------------------------------------------
+➜ sudo apt-get install php-xdebug
+
+---------------------------------------------------------------------------------------------------------
+					COMMON PATH
+---------------------------------------------------------------------------------------------------------
+|#Standard php ini paths                      | # example						|
+|# RedHat:       '/etc/php.d' 		          | function execute_apache_command() {			|	
+|# AIX:          '/opt/freeware/etc/php.d'    |								|
+|# Ubuntu>=14.04:'/etc/php5/mods-available'   |       if [ -f /etc/redhat-release ]; then		|	
+|# Ubuntu<14.04  '/etc/php5/conf.d'           |       	echo '/etc/php.d'      				|
+|                                             |       elif [ $(uname) == "AIX" ]; then			|
+|                                             |               echo '/opt/freeware/etc/php.d'		|
+|                                             |       elif [ $(uname) == "Linux" ]; then		|
+|                                             |               if [ -d '/etc/php5/mods-available' ]	|
+|                                             |       fi						|
+|                                             | }							|
+---------------------------------------------------------------------------------------------------------
+sudo apt-get update 
+
+　　安装 Apache2：
+ 
+　　sudo apt-get install apache2
+ 
+　　安装PHP模块：
+ 
+　　sudo apt-get install php5
+ 
+　　安装Mysql
+ 
+　　sudo apt-get install mysql-server
+ 
+　　其他模块安装：
+ 
+　　sudo apt-get install libapache2-mod-php5
+ 
+　　sudo apt-get install libapache2-mod-auth-mysql
+ 
+　　sudo apt-get install php5-mysql
+ 
+　　sudo apt-get install php5-gd
+ 
+
+
+---------------------------------------------------------------------------------------------------------
+			Extention DIR
+---------------------------------------------------------------------------------------------------------
+extension_dir	/usr/lib/php5/20121212	
+---------------------------------------------------------------------------------------------------------
+			INSTALL pecl packages manager
+---------------------------------------------------------------------------------------------------------
+$ sudo apt-get install php-pear		# install pecl
+$ sudo apt-get install php5-dev
+$ sudo pecl install ibm_db2
+# check /etc/php5/apache2/available-mods/
+# also check the link /etc/php5/apache2/conf.d/
+$ sudo apachectl restart	
+$ sudo pecl clear-cache
+---------------------------------------------------------------------------------------------------------
+			Download/Install ibm_db2
+---------------------------------------------------------------------------------------------------------
+$ sudo wget wget http://pecl.php.net/get/ibm_db2-1.9.9.tgz      # download php db2 mod
+$ sudo pecl install ./ibm_db2-1.9.9.tgz                         # install ibm_db2
+$ cd /etc/php5/mods-available/
+$ touch ibm_db2.ini
+$ vim ibm_db2.ini
+$ php5enmod ibm_db2
+$ apachectl restart
+---------------------------------------------------------------------------------------------------------
+			Download/Install php5-curl/php5-imap
+---------------------------------------------------------------------------------------------------------
+$ sudo apt-get install php5-curl
+$ sudo apt-get install php5-imap
+$ apachectl restart
+
+---------------------------------------------------------------------------------------------------------
+			Zend opc & opcache
+---------------------------------------------------------------------------------------------------------
+opcache performance + (5% - 9%)
+
+
+

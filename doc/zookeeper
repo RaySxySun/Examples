@@ -1,0 +1,18 @@
+#uncompress installation packages into target directory
+tar -zvxf zookeeper-3.4.5.tar.gz -C /usr/local/
+cd zookeeper-3.4.5/conf
+cp zoo_sample.cfg zoo.cfg
+vim zoo.cfg
+    dataDir=/usr/local/zookeeper-3.4.5/data
+    server.0=192.168.56.3:2888:3888
+    server.1=192.168.56.4:2888:3888
+    server.2=192.168.56.5:2888:3888
+mkdir /usr/local/zookeeper-3.4.5/data
+cd /usr/local/zookeeper-3.4.5/data
+touch myid
+vi myid
+    0
+#stop firewall service on all nodes
+systemctl stop firewalld.service
+zkServer.sh start
+zkServer.sh status

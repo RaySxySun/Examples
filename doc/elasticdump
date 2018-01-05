@@ -1,0 +1,7 @@
+*** Extract *******************************************************************************************
+elasticdump --input="$TARGET/$INDEX" --output=$ --limit=500 | gzip > $INDICES_DIR/"$INDEX"_data.json.gz
+*** Push **********************************************************************************************
+gunzip -c $BACKUP_DIR/indices/"$INDEX"_data.json.gz | elasticdump --bulk=true --input=$ --output="$TARGET_INDEX_URL/$INDEX" --limit=500
+
+
+

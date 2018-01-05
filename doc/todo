@@ -1,0 +1,27 @@
+#########################################
+#		TODAY			#			
+#########################################
+script 4 sed
+
+1. RTUU update: SVT4
+
+
+1. play with db2
+2. ftp
+3. syc daily build                  [Done]
+4. en speaking topic movie: Christopher Nolan
+
+
+https://svtsl01.rtp.raleigh.ibm.com:8443/rest/deploy/application/SalesConnect_30/exportWithArtifacts?snapshotIds=334e4a13-00ca-460e-abd1-0655dc300b75
+
+https://svtsl01.rtp.raleigh.ibm.com:8443/rest/deploy/application/SalesConnect_30/exportWithArtifacts?snapshotIds=334e4a13-00ca-460e-abd1-0655dc300b75
+
+https://svtsl01.rtp.raleigh.ibm.com:8443/rest/deploy/application/SalesConnect_30/snapshots/false?sortType=desc
+
+IDL
+masking update
+
+2017年 03月 23日 星期四 16:14:35 CST
+https://scdeploy.swg.usma.ibm.com:8443/job/Baseline-Reduce-Reduce/configure
+startup_quick_reduce_db.sh
+

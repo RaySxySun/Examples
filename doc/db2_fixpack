@@ -1,0 +1,97 @@
+停止所有 DB2 进程
+
+1. 通过运行 su - root 命令切换至 root 用户权限。
+2. 对每个实例运行下列命令：
+   su - iname
+   . $HOME/sqllib/db2profile
+   db2 force applications all
+   db2 terminate
+   db2stop           # 如果您是 hacmp 用户，则必须使用 ha_db2stop 命令来停止 DB2
+   ipclean
+   db2licd -end      # 在每个物理节点运行
+   exit
+
+3. 运行下列命令(如果您启用了图形界面das)：
+   su - aname
+   . $HOME/das/dasprofile
+   db2admin stop
+   exit
+
+4. 在 AIX 上，还应该在安装之前运行 slibclean 以从内存中卸装未使用的共享库：
+   su - root
+   cd /usr/sbin
+   slibclean
+
+6. 如果有故障监视器且它正在使用 DB2 版本 8，应该禁用它。要禁用故障监视
+   器协调程序：
+   su - root
+   cd /usr/opt/db2_08_01/bin    #一般在这个路径下，不在使用ps -elf查找路径执行db2fmcu
+   db2fmcu -d
+   db2fm -D
+
+7. 对于要更新的实例，确保已清除了所有 DB2 进程间通信（IPC）。作为实例拥
+   有者，在每个物理节点上运行以下命令：
+   cd $HOME/sqllib/bin
+   ipclean
+
+解压缩修订包安装映像
+  将压缩格式的映像复制至至少包含 2 千兆字节可用空间的临时文件系统。
+  cd /TMP 
+  zcat PF18_U824363.tar.Z | tar -xvf -
+
+
+安装映像
+  su - root
+  cd /TMP
+  ./installFixPak -y
+注: 缺省情况下，installFixPak 命令将落实 AIX 上所有已更新的文件集。
+
+
+安装后，请执行下列操作：
+*  更新实例以使用新级别的 DB2
+*  更新系统目录
+*  重新启动实例，并且
+*  对绑定文件进行绑定
+在应用修订包之后，不必重新编译应用程序。但是，要利用对应用程序中链接至
+的文件所作的任何更改，建议重新编译应用程序。
+
+更新实例以使用新的 DB2 级别
+1. 对于每个实例，发出下列命令：
+   su - root
+   cd INSTHOME/instance      #INSTHOME 表示适用于操作系统的安装目录
+   db2iupdt iname            #iname 表示实例名
+注: 发出 db2iupdt 命令之后，会将“故障监视器协调程序”自动添加至 /etc/inittab。
+
+2. DAS存在并且是 DB2 版本 8 DAS 
+   su - root                  
+   cd INSTHOME/instance      #INSTHOME 表示适用于操作系统的安装(一般来说是/usr/opt/db2_08_01)
+   dasupdt dasname           #dasname 表示 DAS 所有者名 
+
+更新系统目录
+如果您希望使用特定于最新修订包的能力，则强烈推荐执行此任务。如果您不计
+划使用特定于最新修订包的能力，则可以返回到先前的修订包，不必使用 
+db2updv8。
+db2 connect to <dbname>
+db2updv8 -d <dbname>
+
+重新启动实例和管理服务器
+su - db2inst1
+db2start
+db2admin start 
+
+对绑定文件进行绑定
+db2 CONNECT TO <dbname>
+cd $HOME/sqllib/bnd
+db2 BIND @db2ubind.lst BLOCKING ALL GRANT PUBLIC ACTION ADD
+db2 BIND @db2cli.lst BLOCKING ALL GRANT PUBLIC ACTION ADD
+db2 terminate
+
+将 db2schema.bnd 绑定至现有数据库
+在服务器上进行安装之后，需要将附加绑定文件绑定至现有数据库。此需求不适
+用于客户机。
+db2 terminate
+db2 CONNECT TO <dbname>
+cd $HOME/sqllib/bnd
+db2 BIND db2schema.bnd BLOCKING ALL GRANT PUBLIC sqlerror continue
+db2 terminate
+

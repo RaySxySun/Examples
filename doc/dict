@@ -1,0 +1,24 @@
+sudo apt-get install dict
+sudo apt-get install dictd
+
+
+# install dictionaries
+sudo apt-get install dict-gcide
+sudo apt-get install dict-wn
+sudo apt-get install dict-devil
+# Installing English Thesaurus database
+sudo apt-get install dict-moby-Thesaurus
+
+# setup dictd server port
+sudo dictd -p 9222
+# setup dict client host:port 
+sudo dict -h localhost -p 9222
+
+# restart dictd service
+sudo dictd restart
+# check dict status
+dict -I
+
+
+# find more dict packages
+sudo apt-cache search "dict package"

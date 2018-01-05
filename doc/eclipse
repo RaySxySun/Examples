@@ -1,0 +1,13 @@
+# 1. Download the supported version of Rational Team Concert p2 Install Repository archive file (RTC-Client-p2Repo-version_number.zip) from the jazz.net site. For example, to set up the integration with Rational Team Concert 5.0.2 version, download RTC-Client-p2Repo-5.0.2.zip file.
+
+# 2. Start Rational Integration Tester and select Fetch Project from Source Control option in the project selection window. If Rational Integration Tester is already open, click File > Source Control to open the Rational Integration Tester Tools utility window.
+
+# 3. Click Help > Install New Software.
+
+# 4. In the Install window, click Add > Archive, and browse to select the downloaded Rational Team Concert p2 Install Repository archive file. Click OK.
+
+# 5. Select the Rational Team Concert Client (extend an Eclipse installation) option, click Next and then click Finish. The Rational Integration Tester Tools utility is restarted after the installation.
+
+# 6. Open the Work Items perspective and connect to the Rational Team Concert repository and the project area where you plan to manage the Rational Integration Tester test artifacts. For more information on managing sources in Rational Team Concert, see Rational Team Concert knowledge center.
+
+Alt + Shift + w                     # show files in packages explorer 

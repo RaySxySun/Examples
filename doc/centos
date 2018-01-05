@@ -1,0 +1,44 @@
+# use yum
+yum install net-tools   #install netstat
+yum install lsof	#check ports: lsof -i
+
+#check package providers
+yum whatprovides netstat
+
+#shutdown firewall
+systemctl stop firewalld.service
+
+# install and config network
+1. download minimal centos iso from https://www.centos.org/download/
+2. install it via Virtual Box
+3. in the installation guide page: enable network enp0s3
+4. enable host-only network to build local sub network (192.168.56.1)
+5. go into the server console: add "NETWORKING=yes" into /etc/sysconfig/network
+6. cd /etc/sysconfig/network-scripts && cp ifcfg-enp0s3 ifcfg-enp0s8
+7. edit ifcfg-enp0s8
+    # A typical sample
+    TYPE="Ethernet"
+    PROXY_METHOD="none"
+    BROWSER_ONLY="no"
+    BOOTPROTO="static"
+    DEFROUTE="yes"
+    IPV4_FAILURE_FATAL="no"
+    IPV6INIT="yes"
+    IPV6_AUTOCONF="yes"
+    IPV6_DEFROUTE="yes"
+    IPV6_FAILURE_FATAL="no"
+    IPV6_ADDR_GEN_MODE="stable-privacy"
+    NAME="enp0s8"
+    UUID="61dfa9f9-58c0-4617-9854-e9a69258d9a3"
+    DEVICE="enp0s8"
+    ONBOOT="yes"
+    IPADDR=192.168.56.2
+    NETMASK=255.255.255.0
+8. stop & disable firewalld.service
+   systemctl stop firewalld.service
+   systemctl disable firewalld.service
+# SETUP HOSTNAME NAME
+# hostnamectl set-hostname Your-New-Host-Name-Here
+# hostnamectl set-hostname "Your New Host Name Here" --pretty
+# hostnamectl set-hostname Your-New-Host-Name-Here --static
+# hostnamectl set-hostname Your-New-Host-Name-Here --transien

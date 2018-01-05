@@ -1,0 +1,57 @@
+#########################################################################################
+#											#
+#				UCOMMAND COMMON API					#	
+#											#
+#########################################################################################
+
+# ucd_cli/ucommand/include/API/AbstractApi.php::execRest($action)
+ 
+# 1. get application list
+#	$applicationAPIs = $this->getClass('Application'); 
+#	$applications = $applicationAPIs->getList(); 
+curl  -H "Authorization: Basic xxx" -k https://c14-98.swg.usma.ibm.com:8443/rest/deploy/application?active=true  -s 
+
+# 2. Remove an application
+#	$applicationAPIs = $this->getClass('Application');
+#	$deleted = $applicationAPIs->delete($application['id']);
+curl  -H "Authorization: Basic xxx"  -k -X DELETE 'https://c14-98.swg.usma.ibm.com:8443/rest/deploy/application/4f4c046d-685b-417a-9519-757f603ca5c3' -s
+
+# 3. get components
+#	$return['component'] = $this->cleanComponents();
+#	$componentAPIs = $this->getClass('Component');
+#	$components = $componentAPIs->getList();
+curl  -H "Authorization: Basic xxx"  -k https://c14-98.swg.usma.ibm.com:8443/rest/deploy/component?active=true  -s
+
+# 4. Remove components
+# 	 $return['component'] = $this->cleanComponents();
+# 	 $return_array[$component['name']] = $this->cleanComponent( $component ); 
+# 	 $componentAPIs = $this->getClass('Component');
+# 	 $deleted = $componentAPIs->delete( $component ['id'] );
+# 	 $result = $this->rest()->component()->deleteComponent( $id );
+curl  -H "Authorization: Basic xxx"  -k -X DELETE 'https://c14-98.swg.usma.ibm.com:8443/rest/deploy/component/7a9d4652-531b-4d76-9b2c-7d58b538e2b9' -si
+
+# 5. get application processes
+# 	$this->cleanApplicationProcesses( $application ['name'] );
+# 	$this->cleanApplicationProcess($process);
+# 	$this->rest()->application()->getApplicationProcesses($application);  
+curl  -H "Authorization: Basic xxx"  -k https://c14-98.swg.usma.ibm.com:8443/rest/deploy/application/SalesConnect_30/processes/false  -s
+
+# 6. remove an app processes
+#	$this->cleanApplicationProcesses( $application ['name'] );
+#	$this->cleanApplicationProcess($process);
+#	$applicationAPIs->deleteProcess($process['id']);
+#	$result = $this->rest()->application()->deleteApplicationProcess($processId);
+curl  -H "Authorization: Basic xxx"  -k -X DELETE 'https://c14-98.swg.usma.ibm.com:8443/rest/deploy/applicationProcess/e2c3333c-f0fd-4cb5-9710-06c8aa1f0c2b' -s
+
+# 7. get application components
+# 	$this->cleanApplicationComponents( $application ['name'] );
+# 	$applicationAPIs->getComponents($applicationName);
+# 	$this->rest()->application()->getApplicationComponents($application);
+curl  -H "Authorization: Basic xxx"  -k  'https://c14-98.swg.usma.ibm.com:8443/rest/deploy/application/SalesConnect_30/components' -s
+
+# 8. remove an app components
+# 	$this->cleanApplicationComponents( $application ['name'] );
+#	$this->cleanApplicationComponent($applicationName, $component);
+#	$applicationAPIs->deleteComponent($applicationName, $component['id']);
+#	$this->rest()->application()->deleteApplicationComponent($application, $componentId);
+curl  -H "Authorization: Basic xxx"  -k  'https://c14-98.swg.usma.ibm.com:8443/rest/deploy/application/SalesConnect_30/removeComponents' -X PUT -H 'Content-Type: application/x-www-form-urlencoded' --data '{"components":["7a9d4652-531b-4d76-9b2c-7d58b538e2b9"]}' -s

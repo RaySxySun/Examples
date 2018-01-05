@@ -1,0 +1,115 @@
+[link](http://www-01.ibm.com/support/docview.wss?uid=isg3T1020193)
+Technote (FAQ)
+
+Question
+For security purposes there are times we need users to be locked out of their accounts. How can we do this?
+Answer
+There are a variety of ways to lock a user's account in AIX. 
+
+1. A New User
+A new user account created with the /usr/bin/mkuser command will automatically be locked, and will have no initial password.
+
+In the file /etc/passwd the entry for a new user "lockme":
+lockme:*:239:1::/home/lockme:/usr/bin/ksh 
+
+Notice initially the user has a * in the password field, rather than ! which is used to signify the password is stored in a shadow file (/etc/security/passwd in AIX)
+
+The mkuser man page mentions this:
+
+       The mkuser command does not create password information for a user. It
+       initializes the password field with an * (asterisk). Later, this field
+       is set with the passwd or pwdadm command. New accounts are disabled
+       until the passwd or pwdadm commands are used to add authentication
+       information to the /etc/security/passwd file.
+
+
+A login attempt to this account would give this error:
+
+login: lockme
+lockme's Password:
+You entered an invalid login name or password. 
+
+To Allow Login
+Have root or a user with a role containing the authorization "aix.security.passwd" set the new user's password.
+
+
+2. Setting the Account Locked Attribute
+From the chuser man page:
+       account_locked
+            Indicates if the user account is locked. Possible values include:
+              true
+                   The user's account is locked. The values yes, true, and
+                   always are equivalent. The user is denied access to the
+                   system.
+              false
+                   The user's account is not locked. The values no, false, and
+                   never are equivalent. The user is allowed access to the
+                   system. This is the default value.
+
+You can use the "chuser" command to set this on an account:
+# chuser account_locked=true USERNAME
+
+A login attempt would give this message:
+
+login: lockme
+lockme's Password:
+Your account has been locked; please see the system administrator.
+
+To Allow Login
+unlock the account with:
+# chuser account_locked=false USERNAME
+
+
+3. Setting Login Retries
+From the AIX manual:
+       loginretries
+            Defines the number of unsuccessful login attempts allowed after
+            the last successful login before the system locks the account. The
+            value is a decimal integer string. A zero or negative value
+            indicates that no limit exists. 
+
+This attribute would be set via the chuser command:
+# chuser loginretries=NUMBER USERNAME
+where NUMBER would be a numeric signifying the maximum number of attempts to log in, and USERNAME is the account to be changed.
+
+If a user attempts to log in, but gives the wrong password, once they have made unsuccessful attempts equal to or greater than the number given in loginretries, any further login attempt would fail with this message:
+
+login: lockme
+lockme's Password:
+There have been too many unsuccessful login attempts; please see
+        the system administrator.
+
+To Allow Login Again
+Once the user's account is locked, the user will not be able to log in until the system administrator resets the user's unsuccessful_login_count attribute in the /etc/security/lastlog file to be less than the value of loginretries. To do this, enter the following:
+
+# chsec -f /etc/security/lastlog -s USERNAME -a unsuccessful_login_count=0
+
+Typically 0 is used, but any number less than the value of loginretries can be used.
+
+
+4. Setting an expiration date on the account
+The expires attribute can also be used to prevent access to an account.
+
+       expires
+            Identifies the expiration date of the account. The Value parameter
+            is a 10-character string in the MMDDhhmmyy form, where MM = month,
+            DD = day, hh = hour, mm = minute, and yy = last 2 digits of the
+            years 1939 through 2038. All characters are numeric. If the Value
+            parameter is 0, the account does not expire. The default is 0. See
+            the date command for more information.
+
+For example to set an expiration of December 31, 2013 11:59 pm
+
+# chuser expires=1231235913 USERNAME
+
+A login attempt would give this output:
+
+login: lockme
+lockme's Password:
+Your account has expired; please see the system administrator.
+
+To Allow Login Again
+Either set expires to 0 or set to a future date for another expiration at that time:
+# chuser expires=0 USERNAME
+or
+# chuser expires=1231235914  (for Dec 31, 2014 @ 11:59 PM)

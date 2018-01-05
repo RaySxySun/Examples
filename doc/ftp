@@ -1,0 +1,45 @@
+***********************************************
+*       Installation
+***********************************************
+
+>>> Ubuntu 16.04
+https://help.ubuntu.com/lts/serverguide/ftp-server.html
+
+##### install
+sudo apt install vsftpd
+
+##### testing: Anonymous FTP Configuration
+vim /etc/vsftpd.conf
+    anonymous_enable=Yes
+sudo mkdir /srv/files/ftp
+sudo usermod -d /srv/files/ftp ftp 
+sudo restart vsftpd     # sudo service vsftpd start
+
+#### User Authenticated FTP
+vim /etc/vsftpd.conf
+    write_enable=YES
+    anon_upload_enable=YES  #Enabling anonymous FTP upload
+
+#### Securing FTP
+vim /etc/vsftpd.conf
+    #  users can be limited to their home directories by uncommenting:
+    chroot_local_user=YES  
+    #limit a specific list of users to just their home directories:
+    chroot_list_enable=YES
+    chroot_list_file=/etc/vsftpd.chroot_list
+sudo restart vsftpd
+
+#### FTPS:
+vim /etc/vsftpd.conf
+    ssl_enable=Yes
+    rsa_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
+    rsa_private_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
+sudo restart vsftpd
+#### allow no shell access
+vim /etc/shells 
+    /usr/sbin/nologin   #add
+
+
+
+
+

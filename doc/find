@@ -1,0 +1,11 @@
+find . -type f -ctime +30 -exec ls -ltr {} \;
+
+#Example: rm file modified within 2 days 
+$ find . -type f -mtime -2 -exec rm {} \;
+
+#Example: rm file modified before 2 days 
+$ find . -type f -mtime +2 -exec rm {} \; 
+
+#Example: rm file created within 2 days 
+$ find . -type f -ctime -2 -exec rm {} \;
+

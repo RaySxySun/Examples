@@ -1,0 +1,24 @@
+==============================================================================
+############################################################################## 
+# trouble-shooting: docker cannot access to the public internet		     	
+# 1. find network interface name					     
+# 2. shutdown the interface						     
+# 3. start the interface with a valid ip addr				     
+##############################################################################
+$ ifconfig -a					# check all net
+$ sudo ifconfig br-ef5493855fd6 down		# bring bridget network down
+$ sudo ifconfig br-ef5493855fd6 up 172.25.0.1	# bring the network up with ip
+
+==============================================================================
+############################################################################## 
+# trouble-shooting: add alias and remove alias		     	
+# 1. find network interface name					     
+# 2. shutdown the interface						     
+############################################################################## 
+To create or remove an alias, enter the following command: ifconfig interface_name [-]alias address
+# Example  The following example creates the alias IP address 192.0.2.30 for the interface e0 (already configured with IP address 192.0.2.21):
+$ ifconfig e0 alias 192.0.2.30
+$ ifconfig lo0 alias 9.37.19.149 netmask 255.255.255.255	#sample
+
+# The following example removes the 192.0.2.30 alias for the interface e0 specified in the previous example:
+$ ifconfig e0 -alias 192.0.2.30
