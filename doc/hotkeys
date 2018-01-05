@@ -4,3 +4,4 @@ sout -> System.out.println()
 F2   -> move to an error
 Ctrl+Shift+Alt+T -> refactory
 Ctrl+Alt+V -> extract to a variable
+Ctrl+] -> move into the current target fun
