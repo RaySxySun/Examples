@@ -13,7 +13,6 @@
         <activemq-version>5.15.2</activemq-version>
     </properties>
 
-
     <build>
         <plugins>
             <plugin>
