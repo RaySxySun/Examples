@@ -11,6 +11,8 @@
     <properties>
         <kotlin.version>1.2.10</kotlin.version>
         <activemq-version>5.15.2</activemq-version>
+        <mybatis-spring-boot>1.2.0</mybatis-spring-boot>
+        <mysql-connector>5.1.39</mysql-connector>
     </properties>
 
     <build>
@@ -81,6 +83,64 @@
             <artifactId>spring-boot-starter-activemq</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>org.mybatis.spring.boot</groupId>-->
+            <!--<artifactId>mybatis-spring-boot-starter</artifactId>-->
+            <!--<version>${mybatis-spring-boot}</version>-->
+        <!--</dependency>-->
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <!--<version>RELEASE</version>-->
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-test</artifactId>
+        </dependency>
+
+        <!--Active MQ connection pool-->
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-pool</artifactId>
+            <!-- <version>5.7.0</version> -->
+        </dependency>
+
+        <!-- fastjson -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.7</version>
+        </dependency>
+
+        <!-- MySQL 连接驱动依赖 -->
+        <!--<dependency>-->
+            <!--<groupId>mysql</groupId>-->
+            <!--<artifactId>mysql-connector-java</artifactId>-->
+            <!--<version>${mysql-connector}</version>-->
+        <!--</dependency>-->
+
+        <!--active mq pool-->
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-pool</artifactId>
+            <!-- <version>5.7.0</version> -->
+        </dependency>
+
+        <!--network framework netty-all-->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>4.1.19.Final</version>
+        </dependency>
+
         <!-- Junit -->
         <dependency>
             <groupId>junit</groupId>
@@ -116,10 +176,12 @@
             <version>${kotlin.version}</version>
             <scope>test</scope>
         </dependency>
+
+
         <!--<dependency>-->
-            <!--<groupId>org.scala-lang</groupId>-->
-            <!--<artifactId>scala-library</artifactId>-->
-            <!--<version>2.12.4</version>-->
+        <!--<groupId>org.scala-lang</groupId>-->
+        <!--<artifactId>scala-library</artifactId>-->
+        <!--<version>2.12.4</version>-->
         <!--</dependency>-->
         <!--<dependency>-->
         <!--<groupId>com.typesafe.akka</groupId>-->
@@ -127,15 +189,14 @@
         <!--<version>2.5.8</version>-->
         <!--</dependency>-->
         <!--<dependency>-->
-            <!--<groupId>com.typesafe.akka</groupId>-->
-            <!--<artifactId>akka-agent_2.12</artifactId>-->
-            <!--<version>2.5.8</version>-->
+        <!--<groupId>com.typesafe.akka</groupId>-->
+        <!--<artifactId>akka-agent_2.12</artifactId>-->
+        <!--<version>2.5.8</version>-->
         <!--</dependency>-->
 
         <!--activemq-->
 
     </dependencies>
-
 
 
 </project>

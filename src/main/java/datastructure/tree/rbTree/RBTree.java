@@ -15,7 +15,7 @@ package datastructure.tree.rbTree;
  * >> Max Height: 2log(n+1)
  * >> O(logn) for search, insert, remove
  */
-public class RBTree <T extends Comparable<T>> {
+public class RBTree<T extends Comparable<T>> {
 
     private RBTNode<T> mRoot;
     private static final boolean RED = false;
@@ -42,11 +42,11 @@ public class RBTree <T extends Comparable<T>> {
      */
 
     private boolean isRed(RBTNode<T> node) {
-        return ((node != null) && (node.color == RED))? true: false;
+        return ((node != null) && (node.color == RED)) ? true : false;
     }
 
     private boolean colorOf(RBTNode<T> node) {
-        return node != null ? node.color: BLACK;
+        return node != null ? node.color : BLACK;
     }
 
     private boolean isBlack(RBTNode<T> node) {
@@ -54,7 +54,7 @@ public class RBTree <T extends Comparable<T>> {
     }
 
     private RBTNode<T> parentOf(RBTNode<T> node) {
-        return node!= null ? node.parent: null;
+        return node != null ? node.parent : null;
     }
 
     private void setBlack(RBTNode<T> node) {
@@ -82,17 +82,17 @@ public class RBTree <T extends Comparable<T>> {
     }
 
 
-/*
- *      px                              px
- *     /                               /
- *    x                               y
- *   /  \      --(left rotate)-->    / \
- *  lx   y                          x  ry
- *     /   \                       /  \
- *    ly   ry                     lx  ly
- *
- *
- */
+    /*
+     *      px                              px
+     *     /                               /
+     *    x                               y
+     *   /  \      --(left rotate)-->    / \
+     *  lx   y                          x  ry
+     *     /   \                       /  \
+     *    ly   ry                     lx  ly
+     *
+     *
+     */
 
     private void leftRotate(RBTNode<T> x) {
         RBTNode<T> y = x.right;
@@ -115,16 +115,16 @@ public class RBTree <T extends Comparable<T>> {
         x.parent = y;
     }
 
-/*
- *            py                               py
- *           /                                /
- *          y                                x
- *         /  \      --(right rotate)-->    /  \
- *        x   ry                           lx   y
- *       / \                                   / \
- *      lx  rx                                rx  ry
- *
- */
+    /*
+     *            py                               py
+     *           /                                /
+     *          y                                x
+     *         /  \      --(right rotate)-->    /  \
+     *        x   ry                           lx   y
+     *       / \                                   / \
+     *      lx  rx                                rx  ry
+     *
+     */
 
     private void rightRotate(RBTNode<T> y) {
         RBTNode<T> x = y.left;
@@ -177,7 +177,7 @@ public class RBTree <T extends Comparable<T>> {
         insertFixUp(node);
     }
 
-    public void instert(T key) {
+    public void insert(T key) {
         RBTNode<T> node = new RBTNode<T>(key, BLACK, null, null, null);
         if (node != null) {
             insert(node);
@@ -341,5 +341,69 @@ public class RBTree <T extends Comparable<T>> {
 
     private RBTNode<T> search(RBTNode<T> mRoot, T key) {
         return null;
+    }
+
+    /*
+     * preOrder print
+     */
+    private void preOrder(RBTNode<T> tree) {
+        if (tree != null) {
+            System.out.print(tree.key + " ");
+            preOrder(tree.left);
+            preOrder(tree.right);
+        }
+    }
+
+    public void preOrder() {
+        preOrder(mRoot);
+    }
+
+    /*
+     * Tree inOrder print
+     */
+    private void inOrder(RBTNode<T> tree) {
+        if (tree != null) {
+            inOrder(tree.left);
+            System.out.print(tree.key + " ");
+            inOrder(tree.right);
+        }
+    }
+
+    public void inOrder() {
+        inOrder(mRoot);
+    }
+
+    /*
+     * Tree postOrder print
+     */
+    private void postOrder(RBTNode<T> tree) {
+        if (tree != null) {
+            postOrder(tree.left);
+            postOrder(tree.right);
+            System.out.print(tree.key + " ");
+        }
+    }
+
+    public void postOrder() {
+        postOrder(mRoot);
+    }
+
+    private void print(RBTNode<T> tree, T key, int direction) {
+
+        if (tree != null) {
+
+            if (direction == 0)    // tree是根节点
+                System.out.printf("%2d(B) is root\n", tree.key);
+            else                // tree是分支节点
+                System.out.printf("%2d(%s) is %2d's %6s child\n", tree.key, isRed(tree) ? "R" : "B", key, direction == 1 ? "right" : "left");
+
+            print(tree.left, tree.key, -1);
+            print(tree.right, tree.key, 1);
+        }
+    }
+
+    public void print() {
+        if (mRoot != null)
+            print(mRoot, mRoot.key, 0);
     }
 }

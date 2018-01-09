@@ -14,6 +14,7 @@ import javax.jms.Session;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.command.ActiveMQMapMessage;
+import org.apache.activemq.command.ActiveMQMessage;
 
 // Run with parameter:
 // tcp://localhost:61616 OH RAY MASTER

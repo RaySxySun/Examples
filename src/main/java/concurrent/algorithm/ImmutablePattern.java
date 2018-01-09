@@ -8,7 +8,7 @@ package concurrent.algorithm;
  * 1. remove all setter method
  * 2. mark all member variables as private & final
  * 3. make sure no sub class (final class) can chang it.
- * 4. hava a constructor to initiate all member variables.
+ * 4. have a constructor to initiate all member variables.
  */
 public final class ImmutablePattern {
     private final String no;

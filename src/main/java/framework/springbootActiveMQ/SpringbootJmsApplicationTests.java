@@ -1,0 +1,26 @@
+package framework.springbootActiveMQ;
+
+import org.apache.activemq.command.ActiveMQQueue;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import javax.jms.Destination;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes=Application.class)
+public class SpringbootJmsApplicationTests {
+    @Autowired
+    private Producer producer;
+
+    // without the Test notation will casue java.lang.Exception: No runnable methods
+    @Test
+    public void contextLoads() throws InterruptedException {
+        Destination destination = new ActiveMQQueue("mytest.queue");
+        for (int i = 0; i < 100; i++) {
+            producer.sendMessage(destination, "it is a test message");
+        }
+    }
+}
