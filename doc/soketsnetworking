@@ -1,0 +1,6 @@
+### Chapter 8 Elementary UDP Sockets
+
+- UDP is a connectionless, unreliable, datagram protocol,
+  quite unlike the connection-oriented, reliable byte stream provided by TCP.
+  - the client just sends a datagram to the server
+  - the server returns the protocal addr of the client, along with the datagram.

@@ -1,0 +1,74 @@
+
+- claim a UDP client connection
+
+```
+            b.group(group)
+                    .channel(NioDatagramChannel.class)
+                    .option(ChannelOption.SO_BROADCAST, true)
+                    .handler(new MyQuoteOfTheMomentClientHandler());
+```
+
+---
+
+- Port 0: dynamic port number
+
+```
+> QuoteOfTheMomentClient.java
+    Channel ch = b.bind(0).sync().channel();
+
+port 0 sometimes takes on a special meaning in network programming, particularly Unix socket programming.
+In that environment, port 0 is a programming technique for specifying system-allocated (dynamic) ports.
+
+Configuring a new socket connection requires assigning a TCP or UDP port number. Instead of hard-coding a
+particular port number, or writing code that searches for an available port on the local system,network
+programmers can instead specify port 0 as a connection parameter. That triggers the operating system to
+automatically search for and return the next available port in the dynamic port number range.Unix, Windows
+and other operating systems vary slightly in their handling of port 0.
+```
+
+---
+
+- ChannelOption.SO_BROADCAST
+
+---
+
+-  How to create io.netty.channel.socket.DatagramPacket
+
+```
+      public DatagramPacket(ByteBuf data, InetSocketAddress recipient) {
+          super(data, recipient);
+      }
+
+      ch.writeAndFlush(new DatagramPacket(
+                          Unpooled.copiedBuffer("QOTM?", CharsetUtil.UTF_8),
+                          SocketUtils.socketAddress("255.255.255.255", PORT))).sync();
+      if (!ch.closeFuture().await(5000)) {
+          System.err.println("QOTM request timed out");
+      }
+```
+
+---
+
+- UDP Server Side (Waiting): Bootstrap -> group -> channel -> option -> handler -> bind -> sync -> await
+
+```
+// Bootstrap -> group -> channel -> option -> handler -> bind -> sync -> await
+Bootstrap b = new Bootstrap();
+            b.group(group)
+             .channel(NioDatagramChannel.class)
+             .option(ChannelOption.SO_BROADCAST, true)
+             .handler(new QuoteOfTheMomentServerHandler());
+b.bind(PORT).sync().channel().closeFuture().await();
+
+finally {
+    group.shutdownGracefully();
+}
+```
+
+---
+
+- Unpooled.copiedBuffer("QOTM?", CharsetUtil.UTF_8)
+  - Creates a new {@link ByteBuf} by allocating new space or by wrapping
+    or copying existing byte arrays, byte buffers and a string
+
+---

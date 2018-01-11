@@ -1,0 +1,138 @@
+# Netty is a networking framework
+
+---
+
+- Original model: OIO old input/output & blocking I/OOB 
+  -  allocate a new Thread for each new client Socket
+
+```
+	Socket		Socket		Socket
+	  |		  |		  |
+      read/write      read/write      read/write
+          |		  |		  |
+	Thread		Thread		Thread
+```
+
+---
+
+- NIO: NIO was originally an acronym for New Input/Output, but the Java API has been around long enough that it is no longer new. 
+
+```
+	Socket		Socket		Socket
+	  |		  |		  |
+      read/write      read/write      read/write
+          |		  |		  |
+	  _________________________________ 
+	                  |
+		       Selector
+		          |
+		        Thread
+```
+
+---
+
+- NETTY’S CORE COMPONENTS:
+  - Channels, Callbacks, Futures, Events & Handlers
+    - Channels: an open connection to an entity such as a hardware device, 
+               a file, a network socket, or a program component that is capable of performing 
+	       one or more distinct I/O operations, for example reading or writing
+	       >> think of a Channel as a vehicle for incoming (inbound) and outgoing (outbound) data
+	       >> it can be open or closed, connected or disconnected.
+    - Callbacks: A callback is simply a method, a reference to which has been provided to another method. 
+               >> e.g. channelActive(ChannelHandlerContext) is called when a new conn is established.
+    - Futures: This object acts as a placeholder for the result of an asynchronous operation; it will complete at some point in the future and provide access to the result.
+               >> Netty provides its own implementation, ChannelFuture
+	       >> Each of Netty’s outbound I/O operations returns a ChannelFuture.
+	       >> ChannelFuture provides additional methods that allow us to register one or more ChannelFutureListener instances.
+	       >> In fact, callbacks and Futures are complementary mechanism
+    - Events and handlers: Netty uses distinct events to notify us about changes of state or the status of operations. This allows us to trigger the appropriate action 
+               based on the event that has occurred. 
+	       >> 
+
+---
+
+- chunk condition
+```
+    C:\Users\xxxx\.m2\repository\io\netty\netty-all\4.1.19.Final\netty-all-4.1.19.Final-sources.jar!\io\netty\handler\codec\http\multipart\HttpPostRequestEncoder.java
+    if (realSize > HttpPostBodyUtil.chunkSize || isMultipart)
+    HttpPostBodyUtil.chunkSize = 8096OA
+```
+
+---
+
+- SimpleChannelInboundHandler vs. ChannelInboundHandlerAdapter
+  - why we used SimpleChannelInboundHandler in the client instead of the ChannelInboundHandlerAdapter
+    - In the client, when channelRead0() completes, you have the incoming message and you’re done with it.
+      When the method returns, SimpleChannelInboundHandler takes care of releasing the memory reference to the ByteBuf that holds the message.
+    - ChannelInboundHandlerAdapter doesn’t release the message at this point. 
+
+---
+
+- Important steps in the server impl 
+```
+	These are the primary code components of the server:
+	■ The EchoServerHandler implements the business logic.
+	■ The main() method bootstraps the server.
+	
+	The following steps are required in bootstrapping:
+	■ Create a ServerBootstrap instance to bootstrap and bind the server.
+	■ Create and assign an NioEventLoopGroup instance to handle event processing, such as accepting new connections and reading/writing data.
+	■ Specify the local InetSocketAddress to which the server binds.
+	■ Initialize each new Channel with an EchoServerHandler instance.
+	■ Call ServerBootstrap.bind() to bind the server.
+
+```
+
+---
+
+- The Summaries of setting up 
+
+```
+	A Bootstrap instance is created to initialize the client.
+	■ An NioEventLoopGroup instance is assigned to handle the event processing, which includes creating new connections and processing inbound and outbound data.
+	■ An InetSocketAddress is created for the connection to the server.
+	■ An EchoClientHandler will be installed in the pipeline when the connection is established.
+	■ After everything is set up, Bootstrap.connect() is called to connect to the remote peer.
+```
+- concepts & terms
+  - Interface:  ChannelHandler
+    -  the primary component of Netty is the ChannelHandler, which serves as the container for all application logic that applies to handling inbound and outbound data.
+
+  _ Interface: ChannelPipeline (a chain of ChannelHandlers)
+    - A ChannelPipeline provides a container for a chain of ChannelHandlers and defines an API for propagating the flow of inbound and outbound events along the chain.
+
+  - ChannelFuture
+    - Think of a ChannelFuture as a placeholder for the result of an operation that’s to be executed in the future
+
+  - Encoders and decoders: newwork data is always a series of bytes
+    - When you send or receive a message with Netty, a data conversion takes place.
+      - decoded(inbound) :  from bytes to other format (typically a Java object)
+      - encoded(outbound):  from current format to bytes
+    - ByteToMessageDecoder & MessageToByteEncoder
+  
+  - Bootstrapping
+    - one intended for clients (called simply Bootstrap), and the other for servers (ServerBootstrap). 
+    ```
+    	Category			Bootstrap						ServerBootStrap
+	Networking 			function Connects to a remote host and port 		Binds to a local port
+	Number of EventLoopGroups 	1	 						2(1 is bound to a local port; 1 contain all Channels)
+    ````
+
+  - NioEventLoop 
+    - NioEventLoop -> SingleThreadEventLoop -> SingleThreadEventExecutor -> AbstractScheduledEventExecutor
+
+  - selector:
+    -  the selector is to serve as a registry where you request to be notified when the state of a Channel changes. 
+      - A new Channel was accepted and is ready.
+      - A Channel connection was completed.
+      - A Channel has data that is ready for reading.
+      - A Channel is available for writing data
+    
+---
+
+- The adapter we will call most often
+  - ChannelHandlerAdapter
+  - ChannelInboundHandlerAdapter
+  - ChannelOutboundHandlerAdapter
+  - ChannelDuplexHandlerAdapter
+

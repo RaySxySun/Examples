@@ -70,6 +70,8 @@ public class FactorialClientHandler extends SimpleChannelInboundHandler<BigInteg
                 @Override
                 public void operationComplete(ChannelFuture future) {
                     boolean offered = answer.offer(msg);
+                    // set parameter -ea to enable the keyword assert
+                    // java -ea xxx
                     assert offered;
                 }
             });

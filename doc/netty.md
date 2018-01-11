@@ -43,3 +43,26 @@
    |  Netty Internal I/O Threads (Transport Implementation)            |
    +-------------------------------------------------------------------+
 ```
+
+---
+
+### ByteBuf:
+
+```
+  BEFORE clear()
+
+       +-------------------+------------------+------------------+
+       | discardable bytes |  readable bytes  |  writable bytes  |
+       +-------------------+------------------+------------------+
+       |                   |                  |                  |
+       0      <=      readerIndex   <=   writerIndex    <=    capacity
+ 
+ 
+   AFTER clear()
+ 
+       +---------------------------------------------------------+
+       |             writable bytes (got more space)             |
+       +---------------------------------------------------------+
+       |                                                         |
+       0 = readerIndex = writerIndex            <=            capacity
+ ```

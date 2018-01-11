@@ -44,6 +44,7 @@ public class NumberEncoder extends MessageToByteEncoder<Number> {
 
         // Write a message.
         out.writeByte((byte) 'F'); // magic number
+        // int dataLength = in.readInt();
         out.writeInt(dataLength);  // data length
         out.writeBytes(data);      // data
     }

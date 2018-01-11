@@ -1202,5 +1202,25 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
 - please note:
     - please note that this is a tedious process, and you do not need to do that in most cases.
 
+---
 
+-  go over: 复习
+    - Nevertheless, there are instances when it makes sense to use UDP instead of TCP,
+      and we will go over this design choice in Section 22.4.
 
+---
+
+- from the ground up: 彻底
+    - Netty is asynchronous and event-driven from the ground up
+
+---
+
+- to a bare minimum: 极小量
+    - There are a few adapter classes that reduce the effort of writing custom ChannelHandlers to a bare minimum, because they provide default implementations of all the methods defined in the corresponding interface.
+
+---
+
+- Liaise: vi 保持联络
+    - Liaise with Group Finance for the approval of the business case with in the existing PAR (Project Approval and Reporting Process) framework
+
+---

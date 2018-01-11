@@ -1,0 +1,47 @@
+
+- 1 Possible Memory Leak
+
+```
+        if (sslContext != null) {
+            // If the returned {@link SslHandler} is not inserted into a pipeline then you may leak native
+            // memory!
+            pipeline.addLast(sslContext.newHandler(ch.alloc(), MyTelnetClient.HOST, MyTelnetClient.PORT));
+        }
+```
+
+---
+
+- 2 Decorator IO Stream
+
+```
+    BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+```
+
+---
+
+- 3 Using Initializer to step up Handlers
+
+```
+Bootstrap b = new Bootstrap();
+            b.group(group)
+             .channel(NioSocketChannel.class)
+             .handler(new TelnetClientInitializer(sslCtx));
+
+public class TelnetClientInitializer extends ChannelInitializer<SocketChannel>
+```
+
+- 4 Using builtin decoder & encoder
+
+```
+    private static final StringDecoder DECODER = new StringDecoder();
+    private static final StringEncoder ENCODER = new StringEncoder();
+
+    @Override
+    public void initChannel(SocketChannel ch) throws Exception {
+            // Add the text line codec combination first,
+            pipeline.addLast(new DelimiterBasedFrameDecoder(8192, Delimiters.lineDelimiter()));
+            // the encoder and decoder are static as these are sharable
+            pipeline.addLast(DECODER);
+            pipeline.addLast(ENCODER);
+    }
+```
