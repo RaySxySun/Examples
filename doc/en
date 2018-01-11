@@ -1194,8 +1194,13 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
 - ever-changing: 不断变化,  日新月异的
     -  These three classes embody the functionality of generating ever-changing stock prices that are published to topics on which the consumer is subscribed.
 
+---
 
+- keep in mind: 请注意
+    -  Please keep in mind that it is the handler's responsibility to release any reference-counted object passed to the handler. z
 
+- please note:
+    - please note that this is a tedious process, and you do not need to do that in most cases.
 
 
 

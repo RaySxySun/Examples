@@ -1,10 +1,8 @@
-package framework.network.netty;
+package framework.network.netty.discard;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-
-import java.nio.ByteBuffer;
 
 /**
  * Created by ray on 18-1-10.
