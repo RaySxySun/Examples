@@ -1,0 +1,6 @@
+> 18/1/25
+
+- how to uncompress resource jar package
+  - zheng\zheng-upms\zheng-upms-server\src\main\resources\applicationContext-zhengAdmin.xml
+  - com.zheng.common.util.ZhengAdminUtil
+---

@@ -1224,3 +1224,173 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
     - Liaise with Group Finance for the approval of the business case with in the existing PAR (Project Approval and Reporting Process) framework
 
 ---
+
+- Back Propagation: 反向传播
+    - In this model, back propagation algorithm based on forward networks was conducted to learn information of historical data and to train the network weights.
+
+---
+
+- right after: 就在...之后
+    - What is interesting is the next pause which appears right after the first pause.
+
+---
+
+- bring up: 带来
+    - This brings up the issue of duel funds, where as soon as the fork happens every coin in existence gets duplicated. So if you happen to have 100 coins from before the fork, you will now have 100 on the original chain and 100 on the forked chain. Of course, they won't be worth the same as each other and they are not transferable across chains.
+
+---
+
+- a clear majority of: 绝对多数
+    - So the hope is that in the long run, one chain gains a clear majority of users and support.
+
+---
+
+- less urgent nature:
+    - Most of these new features will be implemented via a soft fork due to its safe and less urgent nature.
+
+---
+
+- lead on to: 导致 result in
+    - This starts to lead on to the quest of when a hard for should actually be taken. The moral and ethical dilemma is behind that decision who should take it and under what circumstances.
+
+---
+
+- aka: also known as: 
+    - Remembered Sets aka RSets
+
+---
+
+- start ... from cold: 直接重启
+    - In the unlikely event of the standby being down when the active fails, the administrator can still start the standby from cold.
+
+---
+
+- back and forth: 来来回回， 反复
+    - He and colleagues have shuttled back and forth between the three capitals.
+
+---
+
+- every now and then: 有时， 时常 = from time to time； occasionally
+    - Every now and then I like to walk along the beach and forget my problems
+    - I meet him every now and then on the street．
+- now and again: 偶尔
+    - Now and then he goes to a ball game
+    - Every now and then she would glance up at the clock．她不时抬头看看钟。
+
+---
+
+- awkward: 笨拙
+    - By exposing its filesystem interface as a Java API, Hadoop makes it awkward for non-Java applications to access HDFS.
+
+----
+
+- come with: 一起供给
+    - Hadoop comes with a useful program called distcp for copying data to and from Hadoop filesystems in parallel
+
+- make use of: = use
+    - we make use of the handy IOUtils class that comes with Hadoop for closing the stream in the finally clause.
+
+---
+
+- with ... in hand:
+    - With a FileSystem instance in hand, we invoke an open() method to get the input stream for a file
+
+---
+
+- transparently: 通明地
+    - This happens transparently to the client, which from it point of view is just reading a continuous stream.
+
+----
+
+- corrupted: 破坏的
+    - If a corrupted block is found, the DFSInputStream attempts to read a replica of the block from another datanote.
+
+---
+
+- instructive: 有启发意义的
+- clarify: 阐明， 弄清楚
+- coherency: 一致的
+    - Next we'll look at how files are written to HDFS. Although quite detailed, it is instructive to understand
+      the data flow because it clarifies HDFS's coherency model
+
+---
+
+- It’s possible, but unlikely: 有可能大但是基本不会出现
+    - It’s possible, but unlikely, for multiple datanodes to fail while a block is being written.
+
+---
+
+- finish doing:
+- signal: vi/vt 发送信号
+    - when the client has finished writing data, it calls close() on the stream. This action flushes all the remaining
+      packets to the datanode pipeline and waits for ack before contacting the namenode to signal that the file is complete.
+
+---
+
+- trade-off: 权衡
+    - it is a trade-off between data robustness and throughput
+    - How does the namenode choose which datanodes to store replicas on?
+      There’s a trade-off between reliability and write bandwidth and read bandwidth here.
+
+- sit in the middle of: 位置居中, 权衡居中
+    - gzip is a general-purpose compressor and sits in the middle of the space/time trade-off.
+
+---
+
+- implication: 含义, 意义
+    - The coherency model has implications for the way you design applications.
+
+- implicit: 隐含的
+    - Closing a file in HDFS performs an implicit hflush().
+
+- explicit: 明确的
+    - An explicit task of iterative development is the need to rerun old tests for each new iteration.
+
+---
+
+- incompatible: 不兼容
+    - If the two clusters are running incompatible versions of HDFS, then you can use the webhdfs protocol to distcp between them
+      "hadoop distcp webhdfs://namenode1:50070/foo webhdfs://namenode2:50070/foo"
+
+---
+
+- evenly spread across: 平均地分布
+- disrupt: vt 破坏
+    - HDFS works best when the file blocks are evently spread across the cluster, so you want to ensure that "distcp"
+      doesn't disrupt this.
+
+---
+
+- unless otherwise stated: 除非另有声明
+    - Since Hadoop 2 is widely used and is the latest stable version, in the rest of this book the term "MapReduce" refers
+  to MapReduce 2 unless otherwise stated.
+
+- look in detail at: 仔细分析
+    - Chapter 7 looks in detail at how MapReduce running on YARN works.
+
+---
+
+- In an ideal world & In the real world:
+    - In an ideal world, the requests that a YARN application makes would be granted immediately. In the real world,
+      however, resources are limited, and on a busy cluster, an app will often need to wait to have some of its requests
+      fulfilled.
+
+---
+
+- There is a lag:　有一个滞后
+    - Note that there is a lag between the time the second job starts and when it receives its fair share, since it has
+      to wait for resources to free up as containers used by the first job complete.
+
+---
+
+- free up: 释放
+    - When a job is submitted to an empty queue on a busy cluster, the job cannot start until resources free up from jobs
+      that are already running on the cluster.
+
+---
+
+- carry with: 带着,含有
+    - Each request and response carries with it lots of unnecessary HTTP header overhead and latency.
+    - Because every I/O operation on the disk or network carries with it a small chance of introducing errors into the
+      data that it is reading or writing, when the volumes of data flowing through the system are as large as the ones
+      Hadoop is capable of handling, the chance of data corruption occurring is high.

@@ -1,0 +1,284 @@
+#### MapReduce
+
+- it is a programming model for data processing.
+
+- MapReduce works by breaking the processing into two phases:
+  - map & reduce: each phase has key-value pairs as input and output.
+
+- The programmer need to specifies two functions:
+  - the map function
+  - the reduce function
+
+- Hadoop provides its own set of basic types that are optimized for network serialization.
+  - org.apache.hadoop.io
+
+- Mapper: it is a generic type, with four formal type parameters: input key&value, output key&value
+  - Mapper<LongWritable, Text, Text, IntWritable>
+    - LongWritable -> Java Long
+    - Text -> String
+    - IntWritable -> Java Integer
+
+---
+
+#### HDFS
+
+- namenode SPOF: Single point of failure
+  - The long recovery time is a problem.
+  - In such situation, Hadoop sys would effectively be out of service until a new namenode could be brought online.
+  - The new namenode is NOT able to serve requests UNTIL:
+    - (1) it has loaded its namespace image into memory
+    - (2) replayed its edit log
+    - (3) received enough block reports from the datanodes to leave safe mode.
+
+- Hadoop2 remedied SPOF:
+  - in the event of the failure, the standby takes over its duties.
+  - A few architectural changes:
+    - latest edit log entries: Share the edit log -> stdby namenode will read up to the end of the shared edit log
+    - up-to-date block mapping: Datanodes must send block reports to both namenodes
+    - Clients must be configured to handle namenode failover
+    - The secondary namenode's role is subsumed by the standby
+
+- Two choices for the highly available shared storage:
+  - NFS filer
+  - QJM(quorum journal manager): single purpose -> provide a highly available edit log.(recommended)
+    - it runs as a group of journal nodes (Typically, 3 journal nodes)
+
+- failover controller:
+  - The transition from the active namenode to the standby is managed by a new entity in the system called the failover controller.
+  - default implementation: use ZooKeeper to ensure that only one namenode is active.
+
+- graceful failover & ungraceful failover
+  - it is impossible to be sure that the failed namenode has stopped running.
+  - a slow network can trigger a failover transition, even though the previously active namenode is still running.
+
+- three types of permission:
+  - the read permission (r), the write permission (w), and the execute permission (x).
+  - The execute permission is ignored: you can’t execute a file on HDFS (unlike POSIX, Portable Operating System Interface of UNIX)
+
+---
+
+#### Hadoop Filesystem:
+
+- apart from HSFS, there are several concrete file system implementations
+  - listed by URI scheme: file, hdfs, webhdfs, swebhdfs, har, viewfs, ftp, s3a, wasb, swift
+  - when you are processing large volumes of data you should choose a distributed filesystem
+    that has the data locality optimization, notably HDFS
+
+- TWO ways of accessing HDFS over HTTP: (Both use the WebHDFS protocol)
+  - directly: the HDFS daemons serve HTTP requests to clients
+  - HDFS proxy: accesses HDFS on the client’s behalf using the usual DistributedFileSystem API
+
+- WebHDFS is enabled by default, since dfs.webhdfs.enabled is set to true.
+
+---
+
+#### The Java Interface
+
+- Reading Data from a Hadoop URL: java.net.URL
+
+> sometimes it is impossible to set a URLStreamHandlerFactory for your application.
+
+```
+public class URLCat {
+    static {
+        // There’s a little bit more work required to make Java recognize Hadoop’s hdfs URL scheme.
+        URL.setURLStreamHandlerFactory(new FsUrlStreamHandlerFactory());
+    }
+    public static void main(String[] args) throws Exception {
+        InputStream in = null;
+        try {
+            in = new URL(args[0]).openStream();
+            // the handy IOUtils class comes with Hadoop
+            IOUtils.copyBytes(in, System.out, 4096, false);
+        } finally {
+            IOUtils.closeStream(in);
+        }
+    }
+}
+
+>> export HADOOP_CLASSPATH=hadoop-examples.jar
+>> hadoop URLCat hdfs://localhost/user/tom/quangle.txt
+```
+
+- Reading Data Using the FileSystem API -> FileSystem class:
+  - it has a number of methods for creating a file
+    - public FSDataOutputStream create(Path f) throws IOException
+    - public FSDataOutputStream append(Path f) throws IOException
+  - FSDataInputStream
+  - FSDataOutputStream
+  - Listing files -> FileSystem’s listStatus() methods
+  - Regex: File patterns & PathFilter
+    - fs.globStatus(new Path("/2007/*/*"), new RegexExcludeFilter("^.*/2007/12/31$"))
+  - Deleting Data
+    - public boolean delete(Path f, boolean recursive) throws IOException
+
+
+```
+public class FileSystemCat {
+    public static void main(String[] args) throws Exception {
+        String uri = args[0];
+        Configuration conf = new Configuration();
+        FileSystem fs = FileSystem.get(URI.create(uri), conf);
+        InputStream in = null;
+        try {
+            in = fs.open(new Path(uri));
+            IOUtils.copyBytes(in, System.out, 4096, false);
+        } finally {
+            IOUtils.closeStream(in);
+        }
+    }
+}
+
+>> % hadoop FileSystemCat hdfs://localhost/user/tom/quangle.txt
+```
+
+---
+
+#### Data Flow (Page 92, Hadoop The Definitive Guide 4th)
+
+- The client contacts datanodes directly to retrieve data and is guided by the namenode to the best datanote for each block.
+- Three types of data location (Page 53, Hadoop The Definitive Guide 4th):
+  - Data-local (a), rack-local (b), and off-rack (c) map tasks
+- Replica Placement: Trade-off between reliability and write/read bandwidth
+  - Hadoop's default strategy:
+    - 1st replica on the same node
+    - 2nd replica is placed on a diff rack from the first (off-rack)
+    - 3rd replica is placed on the same rack as the 2nd but a diff node
+
+---
+
+#### Coherency Model
+
+- Concept: A coherency model for a filesystem describes the data visibility of reads and writes for a file.
+- Problem: any content written to the file is not guaranteed to be visible, even if the stream is flushed
+
+    ```
+    OutputStream out = fs.create(p);
+    out.write("content".getBytes("UTF-8"));
+    out.flush();
+    assertThat(fs.getFileStatus(p).getLen(), is(0L));
+    ```
+
+- Solution (1) + (2):
+  - (1) hflush() method on FSDataOutputStream
+    - HDFS provides a way to force all buffers to be flushed to the datanodes
+    - However, hflush() DOES NOT guarantee that the datanodes have written the data to disk,
+    - the data is in the datanodes’ memory
+    - NOTE: out.close() performs an implicit hflush()
+
+    ```
+    Path p = new Path("p");
+    FSDataOutputStream out = fs.create(p);
+    out.write("content".getBytes("UTF-8"));
+    out.hflush();
+    assertThat(fs.getFileStatus(p).getLen(), is(((long) "content".length())));
+    ```
+  - (2) hsync()
+
+    ```
+    Path p = new Path("p");
+    FSDataOutputStream out = fs.create(p);
+    out.write("content".getBytes("UTF-8"));
+    out.hsync();
+    assertThat(fs.getFileStatus(p).getLen(), is(((long) "content".length())));
+    ```
+
+- "distcp" is an efficient replacement for hadoop "fs -cp"
+  - "hadoop distcp file1 file2"
+  - "hadoop distcp -overwrite dir1 dir2"
+  - "hadoop distcp -update dir1 dir2"
+  - "hadoop distcp -update -delete -p hdfs://namenode1/foo hdfs://namenode2/foo"
+  - "hadoop distcp webhdfs://namenode1:50070/foo webhdfs://namenode2:50070/foo"
+    - use it if two clusters are running incompatible versions of HDFS
+
+---
+
+#### 4. YARN
+
+- YARN: Yet Another Resource Negotiator, it is a resource management system.
+- Its APIs are not typically used directly by user code.
+
+    ```
+     > YARN application
+    4 Pig       Hive    Crunch ...
+    3 MapReduce Spark Tez ...
+    2         YARN
+    1      HDFS & HBase
+
+    ```
+- Workflow:
+  - 1. (app Client) submit YARN application to (ResourceManager)
+  - 2. (ResouceManager) start container on (Node manager node)
+  - 3. (Node manager node) launch container on itself and request (ResourceManager) to allocate resources(Mem, Cpu)
+  - 4. (Node manager node) start container on itself
+
+- App Lifespan:
+  - 1. per user job (MapReduce takes)
+  - 2. per workflow or user session of jobs (Spark)
+  - 3. long-running app shared by diff users (Apache Slider)
+
+- use app for different purpose:
+  - 1. DAG jobs (directed acyclic graph), Spark or Tez is appropriate
+  - 2. Stream processing, Spark, Samza or Storm works.
+
+- differences between MapReduce1 and YARN
+  - jobtracker(MapReduce1) VS. ResourceManager&ApplicationMaster&TimelineServer(YARN)
+    - job scheduling (jobtracker) (ResourceManager)
+    - task progress monitoring (jobtracker)(ApplicationMaster)
+    - storing job history for completed jobs (jobtracker)(timeline server)
+
+    ```
+    <A comparison of MapReduce 1 and YARN components>
+
+    MapReduce1                  YARN
+    Jobtracker                  Resource manager, application master, timeline server
+    Tasktracker                 Node manager
+    Slot                        Container
+   ```
+- Three Scheduler Options: yarn.resourcemanager.scheduler.class (yarn-site.xml)
+  - FIFO: The small job is blocked until the large job completes.
+  - Capacity (by default): This means that the large job finishes later than when using the FIFO Scheduler.
+  - Fair Schedulers (org.apache.hadoop.yarn.server.resourcemanager.scheduler.fair.FairScheduler)
+
+- Heartbeat:
+  - Every node manager in a YARN cluster periodically sends a heartbeat request to the resource manager - by default 1/s
+    - Heartbeats carry information:
+      - the node manager’s running containers
+      - the resources available for new containers
+
+---
+
+#### 5. Hadoop I/O
+
+- Data Integrity:
+  - users of Hadoop rightly expect that no data will be lost or corrupted during storage or processing.
+  - How to detect corrupted data: computing a checksum (error-detecting code is CRC-32, 32-bit cyclic redundancy check)
+    - CRC-32 is used for checksumming in Hadoop’s ChecksumFileSystem, while HDFS uses a more efficient variant called CRC-32C.
+    - CRC-32C checksum is 4 bytes long.
+  - Double checksum:
+    - Datanode: DataBlockScanner in a background thread
+    - Client-side: LocalFileSystem will perform client-side checksumming.
+  - ChecksumException: if an error is detected. it will cause ChecksumException
+  - Checksums are cheap to compute(in Java, they are implemented in native code)
+    - it is possible to disable checksums. (using RawLocalFileSystem in place of LocalFileSystem)
+    - ChecksumFileSystem is just a wrapper around FileSystem.
+
+- Compression: gzip(DEFLATE), bzip2, LZO, LZ4 & Snappy
+  - two major benefits: reduces the space needed & speeds up data transfer
+  - faster compression and decompression speeds usually come at the expense of smaller space savings.
+    - control over this trade-off: options(from -1 to -9, from speed to space) (faster: gzip -1 file)
+  - Codecs:
+    - A codec is the implementation of a compression-decompression algorithm. (CompressionCodec interface)
+      - GzipCodec encapsulates the compression and decompression algorithm for gzip.
+  - Inferring CompressionCodecs: using the filename extension to determine which codec to use
+    - CompressionCodecFactory uses getCodec() to map a filename extension to a CompressionCodec
+  - CodecPool: reuse compressors and decompressors
+    - compressor = CodecPool.getCompressor(codec);
+  - Compression & Input Splits:
+    - it is important to understand whether the compression format supports splitting.
+  - Which Compression Format should I use? list tips from most to least effective.
+    - (1) Use a container file format: sequence files, Avro datafiles, ORCFiles, Parquet files
+      - all of them support both compression and splitting.
+    - (2) use a compression format that supports splitting. (bzip2 & LZO)
+    - (3) split the file into chunks in the app, and compress chunks using any format
+    - (4) store the files uncompressed.
