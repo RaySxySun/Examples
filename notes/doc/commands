@@ -1,0 +1,85 @@
+---
+
+#### Set Folder Default Permission
+
+umask 022 
+	Value		  Folder       File
+	022               755          644
+	027               750          640
+	002               775          664
+	006               771          660
+	007               770          660 
+
+	default total permission
+	1) folder: 777
+	2) file: 666
+	-------------EXAMPLE--------------
+	666=0110 0110 0110
+
+	1) umask=000   => 0000 0000 0000 NOT 1111 1111 1111 
+	0110 0110 0110  
+	1111 1111 1111  
+	------------------------------  
+	0110 0110 0110=666  
+
+	2) umask=022   => 0000 0010 0010 NOT 1111 1101 1101    
+	0110 0110 0110  
+	1111 1101 1101  
+	------------------------------  
+	0110 0100 0100=644
+
+---
+
+#### Set Workstation Name
+
+hostnamectl set-hostname "centos-w1"
+
+# Manual Modification
+vi /etc/sysconfig
+
+---
+
+#### To Fix the errors in the file /etc/sudoers 
+
+pkexec visudo 
+
+---
+
+#### add a new sudoer without asking password
+
+visudo 
+# User privilege specification
+# root  ALL=(ALL:ALL) ALL
+ ray   ALL=(ALL:ALL) NOPASSWD: ALL
+
+---
+
+#### sunpinyin shortcut for switching input methond: disable LShift
+#use default fcitx config tool
+fcitx-configtool    # ibus-setup (use ibus in an old OS version)
+
+---
+
+#### 1) Add user 2) run sudo commands without asking PWD
+useradd newuser -d /home/newuser -s /bin/bash
+password newuser
+
+sudo su - 
+chmod u+w /etc/sudoers
+vi /etc/sudoers
+    ```
+    newuser    ALL=(ALL)       NOPASSWD:ALL
+    ``` 
+chmod u-w /etc/sudoers
+
+---
+
+#### Add new user
+useradd newuser -d /home/newuser -s /bin/bash
+password newuser
+
+---
+
+#### quick search process by port number
+lsof -i:[port number]               # Method 1 
+netstat -tunlp|grep [port number]   #Method 2

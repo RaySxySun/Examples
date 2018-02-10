@@ -17,6 +17,7 @@ su -      								# superuser root
 
 ===================[SHORTCUT]=================================
 alias attachd='sudo docker attach'					# shortcut
+# for detach: [shortcut] ctrl + p + ctrl + q
 alias startd='sudo docker start'
 alias stopd='sudo docker stop'
 alias allstopd='sudo docker stop $(sudo docker ps -q)'
@@ -24,6 +25,23 @@ alias allstopd='sudo docker stop $(sudo docker ps -q)'
 ====================[EXPORT/IMPORT]=================================
 sudo docker export xmaster > xmaster.tar				# export a docker container 
 cat xmaster.tar | sudo docker import - xmaster
+
+====================[SAVE/LOAD ALL]=================================
+    docker save $(docker images -q) -o /path/to/save/mydockersimages.tar
+    docker load -i /path/to/save/mydockersimages.tar
+>> save partial images (with filter)
+    IDS=$(docker images | awk '{if ($1 ~ /^(debian|centos)/) print $3}')
+    docker save $IDS -o /path/to/save/somedockersimages.tar
+<< load partial images (with filter)
+```
+    docker images | awk '{if ($1 ~ /^(openshift|centos)/) print $1 " " $2 " " $3 }' | tr -c "a-z A-Z0-9_.\n-" "%" | while
+    read REPOSITORY TAG IMAGE_ID
+    do
+      echo "== Saving $REPOSITORY $TAG $IMAGE_ID =="
+      docker  save   -o /path/to/save/$REPOSITORY-$TAG-$IMAGE_ID.tar $IMAGE_ID
+    done
+```
+
 
 ====================REMOVE=================================
 sudo docker rm $(sudo docker ps -qa)					# rm all docker images
@@ -109,4 +127,16 @@ root@svtdevlab:~# /home/ray/dlogin raylab
 mesg: ttyname failed: Success
 #Solution remove mesg logic from .bashrc .profile
 
+
+=============[MYSQL DOCKER]=============================
+>>[docker desc](https://hub.docker.com/_/mysql/)
+
+# Create network
+docker network create -d bridge --subnet 172.25.0.0/16 docker01
+
+# Create Mysql Server
+docker run --net docker01 -p 3306:3306 --ip 172.25.0.120 -h mysql1 --name=mysql1 -e MYSQL_ROOT_PASSWORD=asdf -it mysql:5.5
+
+# Access to mysql server
+docker run --net docker01 -it --link mysql1 --rm mysql:5.5 sh -c 'exec mysql -h"172.25.0.120" -P"3306" -uroot -p"asdf"'
 

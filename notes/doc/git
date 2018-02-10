@@ -5,6 +5,7 @@ git cheat paper: http://alvinalexander.com/git/git-cheat-sheet-git-reference-com
 # your name and email address
 $ git config --global user.name "ohraymaster"
 $ git config --global user.email "ohraymaster@163.com"
+$ git config --global core.editor "vim"
 
 # more optional git config stuff
 $ git config --global core.editor vim

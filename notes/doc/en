@@ -622,9 +622,11 @@ performance hit:
 ---
 
 - more than sufficient: 绰绰有余
+- feed: give food to
     - A decent drawing program and a word processor are more than sufficient for our purposes.
     - agriculture is now so mechanized that only about 2 percent of American workers make a living as farmers who can feed the whole country more than sufficient.
-
+- A be fed with B: 向A提供B
+    - The market has to be fed with an endless supply of goods. 必须向市场提供源源不断的商品 
 ---
 
 - Only after...was/were there: 从..之后 才有了
@@ -1399,3 +1401,150 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
 
 - newfound: 新发现的,　刮目相看
     - I am not asking for a hug, I just want to get that look a newfound respect.
+
+---
+
+- in essence:本质上
+    - Basically what I'm saying is, are you working on this at [Company], is this effort being funded by [Company].
+      Is it being done on company time. WHich in essence makes it an official project.
+
+---
+
+- is welcome:
+- be maintained:
+    - Contribution is welcome. Plugins are maintained in the repository
+
+---
+
+- along with: 一起
+    - the lines 2–3: This is the definition of the main function along with the command-line arguments.
+
+---
+
+-  a call to the function: 对这个方法的调用
+    - The "if" statement contains a call to the socket function.
+
+---
+
+- the set of parentheses: 一对括号
+    - The set of parentheses around the function call and assignment is required, given the precedence rules of C.
+
+--- 
+
+- as a matter of: 作为一个
+    - As a matter of coding style, the authors always place a space between the two opening parentheses, as a visual 
+      indicator that the left-hand side of the comparison is also an assignment.
+
+---
+
+- numerous limitations
+- dotted-decimal string: 127.0.0.1
+    - Older code uses the "inet_addr" function to convert an ASCII dotted-decimal string into the correct format, but
+      this function has numerous limitations that "inet_pton" corrects.
+    - Humans work better with names instead of dotted-decimal numbers(e.g., 128.138.141.172)
+
+--- 
+
+- byte-stream protocol
+- boundaries
+    - We must be careful when using TCP because it is a byte-stream protocol with no record boundaries.
+
+---
+
+- (HTTP) Hypertext Transfer Protocol
+- (SMTP) Simple Mail Transfer Protocol
+- (RPC) Sun Remote Procedure Call
+- (DNS) Domain Name System
+
+---
+
+- purposely: 故意地
+- put off: 推迟 postpone
+- continue doing / continue to do
+    - We purposely put off the discussion of these functions and countinue using IP addr and port numbers 
+
+---
+
+- set variable to value
+    - every time we call one of the "pthread_" functions, we must allocate a variable, save the return value
+      in that variable, and then set errno to this value before calling "err_sys"
+
+- variable is set to value
+    - "errno" is set to the specified constant
+
+---
+
+- clustter the code with braces: 用括号包围
+    - To avoid clusttering the code with braces, we can use C's comma operator to combine the assignment into 
+      "errno" and the call of "err_sys" into a single statement, as in the following:
+
+      ```
+      int n;
+      if ( (n = pthread_mutex_lock(&ndone_mutex)) != 0)
+        errno = n, err_sys("pthread_mutex_lock error");
+
+      ```
+
+---
+
+- compromise: 妥协
+- seems the least distracting: 最不容易令人分心
+    - Our choice of capitalizing the first character of a function name is a compromise. 
+    - Our style seems the least distracting while still providing a visual indication that other function is 
+      really being call.
+
+---
+
+- be bound to: 被绑定到
+    - The server's well-known port(13 for the daytime service) is bound to the socket by filling in an Internet
+      socket address structure and calling bind.
+
+---
+
+- restrict sb/sth to doing 
+    - Later we will see how we can restrict the server to accepting a client connection on just a single interface.
+
+---
+
+- all-uppercase
+- beginning with
+    - All of the positive error values are constants with all-uppercases names beginning with "E", and are normally
+      defined in the <sys/errno.h> header.
+---
+
+- used throughout: 全部使用，通篇使用
+    - The style used throughout the book for an infinite loop is: for(;;){} 
+
+---
+
+- Unix Epoch: 00:00:00 Jan 1, 1970, Coordinated Universal Time(UTC)
+
+---
+
+- A carriage return: \r
+- linefeed: \n
+    - A carriage return and linefeed are appended to the string by "snprintf", and result is written to the client 
+      by write
+
+---
+
+- be not in the habit of doing: 不习惯做
+    - If you're not already in the habit of using "snprintf" instead of the older "sprintf", now's the time to learn.
+
+---
+
+- remarkable: 值得注意worthy of attention
+    - it is remarkable how many network break-ins have occurred by a hacker sending data to cause a server's call
+      to "sprintf" to overflow its buffer
+
+---
+
+- up to some limit: 达到一定限制值
+    - If multiple client connections arrive at about the same time, the kernel queues them, up to some limit, and returns
+      them to accept one at a time.
+
+---
+
+- overlap: extend over so as to cover partly
+    - if the server took more time to service each client, we would need some way to overlap the service of one client with
+      another client

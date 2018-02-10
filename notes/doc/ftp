@@ -1,0 +1,158 @@
+***********************************************
+*       Installation
+***********************************************
+
+```
+        >> Centos 7 <<
+#### Install vsftpd
+yum install vsftpd ftp
+
+#### edit Configuration
+cp /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf.bak
+vi /etc/vsftpd/vsftpd.conf
+sed -i "s/anonymous_enable=YES/anonymous_enable=NO/g" '/etc/vsftpd/vsftpd.conf'
+sed -i "s/#anon_upload_enable=YES/anon_upload_enable=NO/g" '/etc/vsftpd/vsftpd.conf'
+sed -i "s/#anon_mkdir_write_enable=YES/anon_mkdir_write_enable=YES/g" '/etc/vsftpd/vsftpd.conf'
+sed -i "s/#chown_uploads=YES/chown_uploads=NO/g" '/etc/vsftpd/vsftpd.conf'
+sed -i "s/#async_abor_enable=YES/async_abor_enable=YES/g" '/etc/vsftpd/vsftpd.conf'
+sed -i "s/#ascii_upload_enable=YES/ascii_upload_enable=YES/g" '/etc/vsftpd/vsftpd.conf'
+sed -i "s/#ascii_download_enable=YES/ascii_download_enable=YES/g" '/etc/vsftpd/vsftpd.conf'
+sed -i "s/#ftpd_banner=Welcome to blah FTP service./ftpd_banner=Welcome toFTP service./g" '/etc/vsftpd/vsftpd.conf'
+
+    >> append these configs into the file /etc/vsftpd/vsftpd.conf
+    use_localtime=YES
+    listen_port=21
+    chroot_local_user=YES
+    idle_session_timeout=300
+    guest_enable=YES
+    guest_username=vsftpd
+    user_config_dir=/etc/vsftpd/vconf
+    data_connection_timeout=1
+    virtual_use_local_privs=YES
+    pasv_min_port=10060
+    pasv_max_port=10090
+    accept_timeout=5
+    connect_timeout=1
+    <<
+ 
+#### create ftp users
+vi /etc/vsftpd/virtusers 
+>>
+test
+123456
+<<
+
+#### create users db
+rpm –q  db                              # check if the tool installed
+yum install-y  compat-db47.x86_64       # if not, run it
+db_load -T -t hash -f /etc/vsftpd/virtusers /etc/vsftpd/virtusers.db
+chmod 600 /etc/vsftpd/virtusers.db 
+
+#### modify permission file
+cp /etc/pam.d/vsftpd /etc/pam.d/vsftpd.bak
+vi /etc/pam.d/vsftpd
+>> comment out all and add these two lines
+    auth        sufficient  /lib64/security/pam_userdb.so   db=/etc/vsftpd/virtusers
+    account     sufficient  /lib64/security/pam_userdb.so   db=/etc/vsftpd/virtusers
+<<
+
+#### create HOME directory for ftp user "vsftpd"
+mkdir -p /home/vsftpd
+useradd vsftpd -d /home/vsftpd -s /bin/false
+chown -R vsftpd:vsftpd /home/vsftpd
+```
+
+#### create ftp user's profile "test"
+mkdir /etc/vsftpd/vconf
+cd /etc/vsftpd/vconf
+touch test 
+mkdir -p /home/vsftpd/test/
+vi test
+    >>
+    local_root=/home/vsftpd/test/
+    write_enable=YES
+    anon_world_readable_only=NO
+    anon_upload_enable=YES
+    anon_mkdir_write_enable=YES
+    anon_other_write_enable=YES
+    <<
+
+#### Congif firewall
+firewall-cmd --permanent --add-port=21/tcp
+setsebool -P ftp_home_dir on   # OR close selinux "vi /etc/sysconfig/selinux"
+
+#### local test: "test/123456" 
+ftp localhost
+
+#### create a new network interface if needed.
+1. after enable Host-Only Adapter
+2. cd /etc/sysconfig/network-scripts && cp ifcfg-enp0s3 ifcfg-enp0s8
+3. edit ifcfg-enp0s8
+    # A typical sample
+    TYPE="Ethernet"
+    PROXY_METHOD="none"
+    BROWSER_ONLY="no"
+    BOOTPROTO="static"
+    DEFROUTE="yes"
+    IPV4_FAILURE_FATAL="no"
+    IPV6INIT="yes"
+    IPV6_AUTOCONF="yes"
+    IPV6_DEFROUTE="yes"
+    IPV6_FAILURE_FATAL="no"
+    IPV6_ADDR_GEN_MODE="stable-privacy"
+    NAME="enp0s8"
+    UUID="61dfa9f9-58c0-4617-9854-e9a69258d9a3"
+    DEVICE="enp0s8"
+    ONBOOT="yes"
+    IPADDR=192.168.56.101    #important
+    NETMASK=255.255.255.0
+4. restart network
+systemctl restart network
+ip addr             #Check interface
+
+
+
+
+-------------------------------------------------------------------
+
+>>> Ubuntu 16.04
+https://help.ubuntu.com/lts/serverguide/ftp-server.html
+
+##### install
+sudo apt install vsftpd
+
+##### testing: Anonymous FTP Configuration
+vim /etc/vsftpd.conf
+    anonymous_enable=Yes
+sudo mkdir /srv/files/ftp
+sudo usermod -d /srv/files/ftp ftp 
+sudo restart vsftpd     # sudo service vsftpd start
+
+#### User Authenticated FTP
+vim /etc/vsftpd.conf
+    write_enable=YES
+    anon_upload_enable=YES  #Enabling anonymous FTP upload
+
+#### Securing FTP
+vim /etc/vsftpd.conf
+    #  users can be limited to their home directories by uncommenting:
+    chroot_local_user=YES  
+    #limit a specific list of users to just their home directories:
+    chroot_list_enable=YES
+    chroot_list_file=/etc/vsftpd.chroot_list
+sudo restart vsftpd
+
+#### FTPS:
+vim /etc/vsftpd.conf
+    ssl_enable=Yes
+    rsa_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
+    rsa_private_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
+sudo restart vsftpd
+#### allow no shell access
+vim /etc/shells 
+    /usr/sbin/nologin   #add
+
+
+
+
+

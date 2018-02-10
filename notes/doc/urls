@@ -192,3 +192,21 @@ chatroom=https://code.google.com/p/talk2me-chatroom
 
 #github
 github=https://github.com/
+
+#learnvim
+learnvim=https://vim-adventures.com
+
+#linuxidc
+linux=http://www.linuxidc.com/
+
+#hyperledger : ohraymaster
+hl=https://courses.edx.org/courses/course-v1:LinuxFoundationX+LFS171x+3T2017/course/
+
+#safari
+safari=https://www.safaribooksonline.com/
+
+#docker docs
+ddocs=https://docs.docker.com/engine/reference/run/
+
+#iterm2
+iterm2=https://www.zhihu.com/question/27447370
