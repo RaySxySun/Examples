@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fc4fa79e-29b0-40be-a346-943ffafdb413" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/C/unix/network/demo1TCP/daytimetcpcli.c" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/examples.iml" afterPath="$PROJECT_DIR$/examples.iml" />
-      <change beforePath="$PROJECT_DIR$/notes/doc/urls" afterPath="$PROJECT_DIR$/notes/doc/urls" />
-      <change beforePath="$PROJECT_DIR$/notes/visit" afterPath="$PROJECT_DIR$/notes/visit" />
+      <change beforePath="$PROJECT_DIR$/notes/doc/en" afterPath="$PROJECT_DIR$/notes/doc/en" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/.idea/" />
@@ -39,18 +35,7 @@
     <favorites_list name="examples" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="daytimetcpcli.c" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/C/unix/network/demo1TCP/daytimetcpcli.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="23" column="12" lean-forward="false" selection-start-line="23" selection-start-column="12" selection-end-line="23" selection-end-column="12" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -212,9 +197,9 @@
       </PATH>
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="1">
     <option name="y" value="27" />
-    <option name="width" value="1920" />
+    <option name="width" value="1680" />
     <option name="height" value="947" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -321,30 +306,6 @@
               <item name="examples" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="examples" type="b2602c69:ProjectViewProjectNode" />
-              <item name="examples" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="C" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="examples" type="b2602c69:ProjectViewProjectNode" />
-              <item name="examples" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="C" type="462c0819:PsiDirectoryNode" />
-              <item name="unix" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="examples" type="b2602c69:ProjectViewProjectNode" />
-              <item name="examples" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="C" type="462c0819:PsiDirectoryNode" />
-              <item name="unix" type="462c0819:PsiDirectoryNode" />
-              <item name="network" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="examples" type="b2602c69:ProjectViewProjectNode" />
@@ -1020,7 +981,7 @@
       <workItem from="1519210221775" duration="133000" />
       <workItem from="1519289948281" duration="6000" />
       <workItem from="1522458115210" duration="1780000" />
-      <workItem from="1522487593078" duration="476000" />
+      <workItem from="1522487593078" duration="972000" />
     </task>
     <servers />
   </component>
@@ -1057,7 +1018,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="104204000" />
+    <option name="totallyTimeSpent" value="104700000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1069,8 +1030,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="27" width="1680" height="947" extended-state="6" />
-    <editor active="true" />
+    <frame x="0" y="27" width="1680" height="947" extended-state="1" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3236607" sideWeight="0.50213677" order="15" side_tool="true" content_ui="tabs" />
@@ -1089,7 +1049,7 @@
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30171427" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30171427" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3291714" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19285715" sideWeight="0.48210922" order="0" side_tool="false" content_ui="combo" />

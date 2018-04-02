@@ -1548,3 +1548,192 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
 - overlap: extend over so as to cover partly
     - if the server took more time to service each client, we would need some way to overlap the service of one client with
       another client
+
+---
+
+- iterative server: 迭代服务器，一次处理一个请求
+- one at a time: 一次一个
+    - Ther server is called an iterative server because it iterates through each client, one at a time.
+
+- concurrent server:
+- at the same time:
+    - There are numerous techniques for writing a concurrent server, one that handles multiple clients at the same time.
+    - fork:分叉
+    	- the simplest technique for a concurrent server is to call the Unix "fork" function, creating one child processes 
+          for each client.
+    	- other techniques are to use threads instead of fork or to pre-fork a fixed number of children when server starts
+---
+
+- ISO & OSI: International Organization for Standardization (ISO) open systems interconnection (OSI) 
+    - A common way to describe the layers in a network is to use the ISO OSI model for computer communication.
+    - OSI Model (7 layers -> protocol suite): application & presentation & session ( -> application ), transport ( -> TCP,UDP), 
+      network (->IPv4, IPv6), datalink & physical (->device driver & hardware)  
+
+- other than: 除了
+- MTU: maximum transfer unit
+    - Normally, we need not concern ourselves with these layers(datalink & physical) other than being aware of some properties of the datalink,
+      such as the 1500-byte Ethernet maximum transfer unit(MTU)
+
+---
+
+- fit into: 符合
+    - we also note that Linux does not fit into the Berkeley-derived classificatoin: its networking code and sockets API were developed from scratch
+    - If I gain more weight, I shan't be able to fit into my clothes.
+    - Any new building must be fitted into the existing appearance of the city.
+
+---
+
+- for the sake of: 从...起见, 从...角度考虑
+    - The topology shown in Figure 1.16 is interesting for the sake of our examples, but the machines are largely spreat out across the 
+      Internet and the physical topology becomes less interesting in practice.
+- call on: 拜访
+- courtesy: 礼貌
+    - she called on us merely for the sake of courtesy
+
+---
+
+- consecutive：连续不断
+- leftmost: 最左边
+    - The notation "/24" indicates the number of consecutive bits starting from the leftmost bit of the address used to identify the network and subnet.
+
+- continuously: without interruption or gaps
+    - TCP continuously estimates the RTT of a given connection, because the RTT is affected by variations in the network traffic.
+
+--- 
+
+- connection-oriented: 面向连接的
+- connectionless: 无连接的  
+- intended: planted or meant
+    - TCP is a connection-oriented protocol that provides a reliable, full-duplex byte stream to its users.
+    - UDP is a connectionless protocol. there is no guarantee that UDP datagrams ever reach their intended destination. 
+      - a UDP client can create a socket and send a datagram to a different server, and receive serveral datagrams on a single socket, each from diff server.
+
+---
+
+- if we want to be certain: 如果我们想确定; able to be firmly relied on or be the case
+- and the like: 以此类推， 等等
+- if it is the case: 果真如此的话
+    - if we want to be certain that a datagram reaches its destination, we can build lots of features into our application: ack(s) from the other end,
+      timeouts, retransmissions, and the like.
+
+---
+
+- byte-stream protocol:
+    - we have already mentioned that TCP is a byte-stream protocol, without any record boundaries at all, which differs from UDP.
+
+---
+
+- reliable delivery:
+- reliable notification
+    - TCP cannot be described as a 100% reliable protocol; it provides reliable delivery of data or reliable notification of failure.
+
+- reliability:
+    - There is no reliability provided by UDP. UDP itself does not provide anything like ack(s), sequence #s, RTT estimation, timeouts, or retransmissions.
+
+---
+
+- round-trip time(RTT): How long to wait for an ack
+    - TCP contains algorithms to estimate the round-trip time(RTT) between a client and server dynamically so that it knows how long to wait for an ack.
+    - The RTT on a LAN can be millisecond while across a WAN, it can be seconds.
+
+---
+
+- segment: the unit of data that TCP passes to IP
+- out of order: 次序颠倒; 发生故障
+- the receiving application: 接收信息的服务器
+- the receiving TCP
+    - If the segments arrive out of order, the receiving TCP will reorder the two segments based on their sequence numbers before passing the data to the 
+      receiving application
+- the sending TCP:
+    - The sending TCP uses the receiver's MSS(Maximum Segment Size) value as the maximum size of a segment that it
+      sends.
+---
+
+- duplicate (v) - duplicated
+- duplicate (a)
+    - it can detect that the data has been duplicated, and discard the duplicate data.
+
+---
+
+- the amount of room available: space that can be occupied by 
+- guaranteeing: DO NOT remove "ee"
+    - the advertised window is the amount of room currently available in the receive buffer, guaranteeing that the sender cannot overflow the receive buffer.
+
+---
+
+- keep up with: 赶上，追的上
+- at a rate: 以某种速率
+    - UDP provides no flow control. It is easy for a fast UDP sender to transmit datagrams at a rate that the UDP receiver cannot keep up with.
+
+---
+
+- full-duplex: 全双工
+- keep track of: 记录 
+    - a TCP connection is full-duplex. This means that an application can send and receive data in both directions on a given connection at any time.
+    - This means that TCP must keep track of state information such as seq numbers and window sizes for each direction of data flow: sending & receiving.
+- simplex: 单工模式
+- if desired: 如若需要的话 
+    - After a full-duplex connection is established, it can be turned into a simplex connection if desired. (UDP can be full-duplex)
+
+---
+
+- router: ['ruːtə(r)] 路由器 
+- routing protocols: 路由协议
+- with help from: 
+    - Similar robustness can be obtained from TCP with help from routing protocols.
+
+- aid(vi) -> aid in
+    - To aid in our understanding of the "connect", "accept", and "close" functions and to help us debug TCP applications using the "netstat" program,
+      we must understand how TCP connections are established and terminated, and TCP's state transition diagram.
+
+---
+
+-  ...required for sth: sth需要的...
+    - The minimum number of packets required for the exchange is three; (refer to three-way handshake)
+
+- send on the connection:
+    - The server must ack the client's SYN and the server must also send its own SYN containing the initial seq number for the data that the server will
+      send on the connection.
+
+---
+
+- the person who is being called = the person being called: (简)短语替换从句
+- answer the phone: 接起电话回答 ☎️
+    - "accept" is when the person being called answers the phone. 
+
+---
+
+- long fat pipe options[term]: a network with either a high bandwidth or a long delay is called a long fat pipe.
+    - "Window scale option" and "Timestamp option" are also called the "long fat pipe options"
+
+---
+
+- advertised window:
+    - TCP provides flow control. TCP always tells its peer exactly how many bytes of data it is willing to accept from
+      the peer at any one time. this is called the advertised window. 
+
+---
+
+- in lieu of: 代替
+- instead(adv): 代替
+    - In lieu of keeping an entire connection in TIME_WAIT, SCTP instead places verification tag values in TIME_WAIT.
+
+---
+
+- given: 考虑到
+    - Given all these terms and definitions, the below figure shows what happens when an application writes data to a
+      TCP socket
+
+---
+
+- is told of: 被告知
+- transient: 短暂的
+    - TCP will note this error and try sending the segment later. The application is not told of this transient condition.
+
+---
+
+
+
+
+
+

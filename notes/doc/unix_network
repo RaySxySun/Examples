@@ -1,1 +1,46 @@
-1
+---
+
+- Check network interface command:
+    - netstat -i
+      - the loopback interface is called "lo" and the Ethernet is called "eth0"
+
+---
+
+- three-way handshake:
+    - 1. (server) passive open: normally done by calling "socket", "bind", and "listen". 
+                                be prepared to accept an incoming connection.
+    - 2. (client) active open: by calling "connect". client TCP will send a "synchronize" (SYN) segment
+                               SYN just contains an "IP" header, TCP header, & possible TCP options.
+    - 3. (server) ack: the server must ack the client's SYN. then send back "ack" and "syn" to client.
+    - 4. (client) ack: must ack
+
+    ```
+	client: SYN J
+	server: ACK J+1; SYN K
+	client: ACK K+1
+
+    ```
+---
+
+- Maximum Transmission Unit(MTU): datalinks
+    - Ethernet: 1500 bytes
+    - Point-to-Point Protocol (PPP): configurable MTU
+    - Older SLIP: 1006 or 296 bytes
+
+- Payload Length Options: 
+    - IPv4: 65535 bytes (16 bits length field) 
+    - IPv6: 65575 bytes (payload field doesn't include 40 bytes header)
+    - The payload length field is supported only on datalinks with a maximum transmission unit(MTU) that exceeds 65535.
+    - the minimum link MTU for IPv4 is 68 bytes.
+      - 20 bytes of fixed header + 30 bytes of options + 8 bytes (minimum-sized fragment)
+    - the minimum link MTU for IPv6 is 1280 bytes
+
+- path MTU: The smallest MTU in the path between hosts.
+
+- DF bit: Don't fragement bit in the IPv4 header.
+    - The IPv4 DF bit and its implied IPv6 counterpart can be used for path MTU discovery.
+    - router returns an ICMP "destination unreachable, fragmentation needed but DF bit set" error
+
+- path MTU discovery is problematic in the Internet today
+    - many firewalls drop all ICMP(nternet Control Message Protocol) messages, including fragmentation required msg, meaning that TCP never gets the signal that it needs to decrease the amount of data it is sending.
+          
