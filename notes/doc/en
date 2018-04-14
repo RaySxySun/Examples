@@ -1777,3 +1777,7 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
 - fall back: go back to bad behavior 
     - So remember all GC, and that falls back to a full GC, are expensive, so you want to use more young GCs. Size your 
       generations and age your objects appropriately.
+      
+- fallback: adj
+    - we will also talk about evacuation failures in G1 GC, and the fallback full collections.
+      
