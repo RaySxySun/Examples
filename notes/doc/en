@@ -1732,7 +1732,13 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
 
 ---
 
-
+- be tied to: 依赖于
+    - The collection of PermGen was tied to the collection of the old generation, such that when either got full, both
+      would be collected
+      
+- is bound by: 受…约束
+    - Metaspace is not bound by a max threshold since it can expand as much as your native memory, but user can limit
+      the growth by using the option -XX:MaxMetaspaceSize
 
 
 
