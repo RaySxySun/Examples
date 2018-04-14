@@ -1767,4 +1767,8 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
 
 - elapsed time: 运行时间
     - GC elapsed time is an indication of the amount of time it takes to execute stop-the-world GC events.
+    
+- responiveness: 响应能力
+- induced: 诱发的
+    - faster execution of GC events is equal to lower GC induced latencies, and hence your application responsiveness increases.
 
