@@ -1750,4 +1750,14 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
 - what ... would look like.:会是什么样子
     - So this is what my Throughput Maximizing GC would like.
     - I thought about what my project would look like if I didn't review the existing workflow.
+    
+---
+
+- in such a good fashion: 以好的方式
+    - You should make sure that your concurrent marking and sweeping is doing it's job in such a good fashion that it 
+      doesn't need much compaction effort.
+      
+---
+
+-
 
