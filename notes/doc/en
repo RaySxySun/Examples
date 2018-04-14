@@ -1740,6 +1740,9 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
     - Metaspace is not bound by a max threshold since it can expand as much as your native memory, but user can limit
       the growth by using the option -XX:MaxMetaspaceSize
 
+---
 
+- in parallel['pærəlel]:
+    - I would make JVM do its work in parallel.(Maximize Throughput)
 
 
