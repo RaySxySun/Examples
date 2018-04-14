@@ -1772,3 +1772,8 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
 - induced: 诱发的
     - faster execution of GC events is equal to lower GC induced latencies, and hence your application responsiveness increases.
 
+---
+
+- fall back: go back to bad behavior 
+    - So remember all GC, and that falls back to a full GC, are expensive, so you want to use more young GCs. Size your 
+      generations and age your objects appropriately.
