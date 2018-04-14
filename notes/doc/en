@@ -1780,4 +1780,11 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
       
 - fallback: adj
     - we will also talk about evacuation failures in G1 GC, and the fallback full collections.
-      
+ 
+ ---
+ 
+ - contiguous:  连续的；邻近的
+     - G1 GC is based on a new regionalized framework. The regions that form a particular generation are not contiguous.
+     
+     
+     
