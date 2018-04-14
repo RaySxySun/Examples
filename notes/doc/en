@@ -1759,5 +1759,11 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
       
 ---
 
--
+- fit in: 适合
+    - Parallel GC would fit in the Throughput Maximizer area, CMS GC would fit in the Latency Sensitive area, and Hotspot's
+      latest collector G1 GC would be right in the middle.
+      
+---
+
+- 
 
