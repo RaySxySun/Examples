@@ -1851,3 +1851,25 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
     - once a thread is in the termination protocol, it can attempt to steal work from other threads 
       that may still be bogged down by their tasks.
 
+---
+
+- for sure: 确实；毫无疑问地
+    - We'll talk more about the remembered sets later, for sure.
+    
+---
+
+- it is something to look out for: 这是一件值得注意的事情
+- It is worthwhile to note: 值得注意的是
+    - it's something to look out for if some of your threads are attempting termination while it's locked on some other thread
+      that's not able to do that.
+- it is noted that: 人们注意到…；有人指出
+
+---
+
+- pretty well: 相当好 
+    - All of them played pretty well.
+      他们所有人都打的很不错。
+- pretty format HTML
+    
+- fondly call it ...: fondly 喜欢
+    - I fondly call it, IHOP (-XX:InitiatingHeapOccupancyPercent)
