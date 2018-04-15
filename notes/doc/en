@@ -1796,5 +1796,13 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
                           and they are allocated out of the old generation.
     - Free Regions - Regions that are unoccuppied
      
+---
+
+- aligned: 校正；调准；调整
+    - Use a tripod(三脚架) to align and steady the camera.
      
-     
+---
+
+- heuristics: 启发
+    - the number of regions in a particular generation can change between collections based on G1 GC's adaptive sizing heuristics.
+
