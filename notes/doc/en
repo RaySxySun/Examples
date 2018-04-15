@@ -1785,6 +1785,16 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
  
  - contiguous:  连续的；邻近的
      - G1 GC is based on a new regionalized framework. The regions that form a particular generation are not contiguous.
+ 
+---
+
+- house:  给…提供住房; 收藏; 安置
+- unoccupied:
+    - Young Regions - Regions that house objects in the Eden and survivor Spaces.
+    - Old Regions - Regions that house objects in the Old generation.
+    - Humongous Regions - Regions that house Humongous Objects. it is contiguous in the particular case
+                          and they are allocated out of the old generation.
+    - Free Regions - Regions that are unoccuppied
      
      
      
