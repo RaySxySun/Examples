@@ -1878,6 +1878,7 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
 
 - threshold is crossed: 越过临界值
     - After the marking threshold is crossed, G1 GC enters the concurrent marking phase.
+    - I wanna figure out what's going on, why did that pause cross my 70 millisecond goal.
     
 ---
 
