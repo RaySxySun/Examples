@@ -1822,3 +1822,10 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
 - versus
 - the only thing that's different is ... versus ...: 唯一不同的是
     - The only thing that's different between them is the 101 interval versus the 200 interval pause time
+    
+---
+
+- cluster & sparse: 群簇& 稀疏
+- along the way I will make use: 在整个过程中，我将利用
+    -  I explore different sparse matrix formats in R and moving data from R to H2O. 
+       Along the way I use k-means clustering and topic modelling to explore textual data 
