@@ -1873,3 +1873,12 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
     
 - fondly call it ...: fondly 喜欢
     - I fondly call it, IHOP (-XX:InitiatingHeapOccupancyPercent)
+    
+---
+
+- threshold is crossed: 越过临界值
+    - After the marking threshold is crossed, G1 GC enters the concurrent marking phase.
+    
+---
+
+- 
