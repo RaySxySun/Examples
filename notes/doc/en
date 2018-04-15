@@ -1898,3 +1898,13 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
 - at all costs: 无论如何，不惜任何代价
     - 	this fallback collection is a last resort for G1 and could prove to be very expensive - hence should be avoided at all costs
 
+---
+
+- diagnostic option:诊断的
+    - -XX:+G1SummarizeRSetStats is a very useful diagnostic option that prints RSet summaries before and after a GC pause.
+    
+---
+
+- 
+
+
