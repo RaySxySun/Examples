@@ -1926,4 +1926,6 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
     
 ---
 
-- 
+- run the risk of: 冒着...的风险
+    - if you have many objects configured in this manner, you run the risk of exhausting a database pool, or perhaps even
+      having too many files open at once.
