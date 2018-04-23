@@ -1934,3 +1934,9 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
 
 - at times... for other times...: 有时， 另外一些时候
     - At times, you need to run platform-specific code(implemented by JVM), for other times, it is possible to write a native method.
+
+---
+
+- has/have the capability to do: 有做...的能力
+    - Every java object has the capability to hold a lock on it.
+
