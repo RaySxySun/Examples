@@ -1959,3 +1959,13 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
 
 - out of the box: 开箱即用
     - Netty provides an extensive set of predefined handlers that you can use out of the box.
+    
+---
+
+- have spoken of: 已经讲过
+    - Although we’ve spoken of the client, the figure shows multiple clients connected simultaneously to the server.
+    - We have spoken of this topic in detail
+    
+---
+
+- 
