@@ -1968,4 +1968,9 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
     
 ---
 
-- 
+- bind to: 绑定到
+    - The server will bind to this address to listen for new connection requests.
+
+---
+
+-
