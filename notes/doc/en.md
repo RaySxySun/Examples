@@ -1952,3 +1952,10 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
 
 - make it far from ideal: 离理想的还差很远
     - the resources needed to support 100,000 or more simultaneous connections make it far from ideal.
+    
+---
+
+- carry: continue
+- a step further: 更进一步
+    - Fully asynchronous I/O builds on this feature and carries it a step further
+    - they go a step further by mapping XML documents into actual application data structures
