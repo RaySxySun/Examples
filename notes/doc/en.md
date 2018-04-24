@@ -1944,8 +1944,8 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
 
 - hack: fix a computer program piecemeal until it works
 - peruse: vt. 详细考察；精读
-    - I'm not very good at hacking but I'll give it my best
-    - If you discovered Netty this way, as many have, your next steps were probably to browse the site, download the code, 
+    - I'm not very good at hacking but I'll give it my best
+    - If you discovered Netty this way, as many have, your next steps were probably to browse the site, download the code, 
       peruse the Javadocs and a few blogs, and start hacking.
       
 ---
@@ -1953,5 +1953,5 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
 - the latter: 后者
 - the former: 前者
 - at an appropriate time: 在适当的时候
-    - This enables the latter to call the former at an appropriate time.
+    - This enables the latter to call the former at an appropriate time.
   
