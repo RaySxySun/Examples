@@ -1940,3 +1940,10 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
 - has/have the capability to do: 有做...的能力
     - Every java object has the capability to hold a lock on it.
 
+---
+
+- hack: fix a computer program piecemeal until it works
+- peruse: vt. 详细考察；精读
+    - I'm not very good at hacking but I'll give it my best
+    - If you discovered Netty this way, as many have, your next steps were probably to browse the site, download the code, 
+      peruse the Javadocs and a few blogs, and start hacking.
