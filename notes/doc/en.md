@@ -1952,5 +1952,6 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
 
 - the latter: 后者
 - the former: 前者
+- at an appropriate time: 在适当的时候
     - This enables the latter to call the former at an appropriate time.
   
