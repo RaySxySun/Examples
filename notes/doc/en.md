@@ -1947,3 +1947,8 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
     - I'm not very good at hacking but I'll give it my best
     - If you discovered Netty this way, as many have, your next steps were probably to browse the site, download the code, 
       peruse the Javadocs and a few blogs, and start hacking.
+      
+---
+
+- make it far from ideal: 离理想的还差很远
+    - the resources needed to support 100,000 or more simultaneous connections make it far from ideal.
