@@ -1616,6 +1616,8 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
     - if we want to be certain that a datagram reaches its destination, we can build lots of features into our application: ack(s) from the other end,
       timeouts, retransmissions, and the like.
 
+    - they just want to be certain that their bytes are reliably sent and received
+
 ---
 
 - byte-stream protocol:
@@ -1973,4 +1975,42 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
 
 ---
 
--
+- be guaranteed to: 保证
+    - All operations belonging to the same Channel are guaranteed to be executed      in the order in which they were invoked.
+
+---
+
+- apply to doing:适用于
+    - ChannelHandler serves as the container for all application logic that 
+      applies to handling inbound and outbound data.
+
+- apply sth to sth:
+    - Most frequently your application will employ a handler that receives a
+      decoded message and applies business logic to the data.
+
+- keep in mind:
+     - please keep in mind that strictly speaking the term "connection" applies
+       only to connection-oriented protocols such as TCP.
+
+---
+
+- wonder what happens:想知道发生了什么
+    - Given that outbound and inbound operations are distinct, you might 
+      wonder what happends when the two categories of handlers are mixed 
+      in the same ChannelPipeline.
+
+---
+
+- prerequisite: 前提条件
+    - The only prerequisite for this chapter is knowledge of the java 
+      programming language.
+
+---
+
+- moderate: 中等的
+- adequately: adv. 充分地；足够地；适当地 
+    - While this approach to concurrency might be acceptable for a 
+      small-moderate number of clients, the resources needed to support 
+      100,000 or more simultaneous connections make it far from ideal.
+    - This code handles a moderate number of simultaneous clients adequately.
+      
