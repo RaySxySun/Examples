@@ -1,0 +1,60 @@
+Bash Quotes and Brackets
+
+
+Quotes
+
+Reference http://wiki.bash-hackers.org/syntax/quoting
+•Per Character: \$HOME / \<newline> (line continuation)
+•Double Quote: "..." ◦Escape:◾spaces
+◾single quotes
+◾pattern matching characters and path name expansion (* / ? / {a,b,c})
+◾process substitution (<(ls -l))
+
+◦Everything else remains (e.g. "$HOME" will be expanded)
+◦"\$" becomes $ but "\x" becomes \x
+
+•Single Quote: '...' ◦Escape everything except ' ◾Even '\$' becomes \$
+
+◦To use ...'..., must enter ...'\''... or ...'"'"'...
+
+•Localized String: $"..." ◦Ignored when the locale is POSIX or C
+
+•ANSI C String: $'...' ◦Use specific escape sequences similar to C:◾\', \", \\
+◾\a, \b, \e (ESC), \f, \n, \r, \t, \v
+◾\c♥ (CTRL + ♥ where ♥ is some character)
+◾\nnn (octal), \xHH (hex), \uXXXX (unicode)
+
+
+
+Brackets
+
+Reference http://stackoverflow.com/questions/2188199/how-to-use-double-or-single-bracket-parentheses-curly-braces
+•[ = test; the closing ] is optional
+•[[ = enhanced [ (e.g., can use || and && instead of -o and -a)
+•[...] = array index◦array[0]=value
+◦element=${array[0]}
+
+•{...} ◦Brace expansion: {a,b,c} / {a..z}
+◦Code block: { date; make 2>&1; date; } | tee logfile ◾The last semicolon in {...} is mandatory
+◾{...} must be surrounded by spaces
+
+
+•${...} = parameter expansion◦${param:-word} = if param is not set, return word
+◦${param:=word} = if param is not set, set it to word and return word
+◦${paramr:offset} / ${param:offset:length} (negative indices work too)
+◦${#param} = length
+◦${param#prefix} / ${param##prefix} = remove shortest / longest prefix (mnemonic: # comes before $ on the keyboard)
+◦${param%suffix} / ${param%%suffix} = remove shortest / longest suffix (mnemonic: % comes after $ on the keyboard)
+◦${param/pattern/sub}
+
+•(...) ◦Array: array=(1 2 3)
+◦Subshell: <(ls -l) / (cd .. && pwd) will not change directory in current shell
+
+•$(...) = command substitution (= backticks)◦result=$(COMMAND)
+
+•((...)) = arithmetic◦((a++))
+◦((meaning = 42))
+◦for ((i=0; i<10; i++))
+◦echo $((a + b + (14 * c)))
+
+
