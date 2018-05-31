@@ -1,0 +1,36 @@
+### 1. INTRODUCTION
+
+---
+
+- THREE key capabilities:
+  - publish and subscribe to streams of records, similar to a mq
+  - store streams of records in a fault-tolerant durable(容错持久的) way
+  - process streams of records as they occur.
+
+- using it to build:
+  - real-time streaming data pipelines that reliably get date between systems or applications
+  - real-time streaming applications that transform or react to the streams of data.
+
+- a few concepts:
+  - run as a cluster on servers that can span multiple datacenters.
+  - stores streams of records in categories called topics.
+  - each record consists of (1)a key, (2)a value and (3)a timestamp.
+
+- four core APIs:
+  - Producer API
+  - Consumer API
+  - Streams API
+  - Connector API
+
+- Partitioned log: the Kafka cluster maintains a partitioned log
+  - EACH partition is an ordered, immutable sequence of records
+  - offset: the records in the partitions are each assigned a sequential ID(offset)
+
+- Kafka's performance is effectively constant
+  - storing data for a long time is not a problem.
+
+- PERSIST: (logs/consumer perspective)
+  - (logs)persist all published records:
+    - The Kafka cluster durably persists all published records-whether or not they have been consumed-using a configurable retention period.
+  - (consumer)The ONLY metadata retained on a per-consumer basis:
+    - is the OFFSET of that consumer in the log. Controlled by the consumer
