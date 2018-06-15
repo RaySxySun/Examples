@@ -1,4 +1,4 @@
-package basic.io.bufferedInputStream;
+package basic.io.stream.bufferedInputStream;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;

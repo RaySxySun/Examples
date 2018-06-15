@@ -1,4 +1,4 @@
-package basic.io;
+package basic.io.charIO.bufferedReader;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;

@@ -9,11 +9,11 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
  * Created by ray on 18-5-20.
  */
 
-public class TimeClientHander extends ChannelInboundHandlerAdapter{
+public class LineBasedTimeClientHander extends ChannelInboundHandlerAdapter{
     private int counter;
     private byte[] req;
 
-    public TimeClientHander() {
+    public LineBasedTimeClientHander() {
         req = ("QUERY TIME ORDER" + System.getProperty("line.separator")).getBytes();
     }
 
@@ -29,11 +29,14 @@ public class TimeClientHander extends ChannelInboundHandlerAdapter{
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        ByteBuf buf = (ByteBuf) msg;
-        byte[] req = new byte[buf.readableBytes()];
-        buf.readBytes(req);
-        String body = new String(req, "UTF-8");
-        System.out.println("Now is : " + body + "; the counter is :" + counter);
+//        ByteBuf buf = (ByteBuf) msg;
+//        byte[] req = new byte[buf.readableBytes()];
+//        buf.readBytes(req);
+//        String body = new String(req, "UTF-8");
+//        System.out.println("Now is : " + body + "; the counter is :" + counter);
+
+        String body = (String) msg;
+        System.out.println("Now is:"+body+";the counter is :" + ++counter);
     }
 
     @Override
