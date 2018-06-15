@@ -2014,3 +2014,33 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
       100,000 or more simultaneous connections make it far from ideal.
     - This code handles a moderate number of simultaneous clients adequately.
       
+---
+
+- from the ground up: 彻底地，完全地
+    - As we said earlier, Netty is asynchronous and event-driven from the 
+      ground up.
+
+---
+
+- be introduced to: 被引见给
+    - In this chapter you've been introduced to Netty's approach to 
+      high-performance networking and to some of the primary components of its 
+      implementation.
+
+---
+
+- dispatching:(n) 调度
+    - Netty's asynchronous programming model is built on the concepts of Futures      and callbacks, with the dispatching of events to handler methods 
+      happening at a deeper level.
+
+---
+
+- hook into: 嵌入到
+    - these methods can be overriden to hook into the event lifecycle at the 
+      propriate point.
+
+---
+
+- on a per ... basis: 基于每个...
+    - the only metadata retained on a per-consumer basis is the offset or position of that consumer in the log.
+    - is this tracking on a per project basis.

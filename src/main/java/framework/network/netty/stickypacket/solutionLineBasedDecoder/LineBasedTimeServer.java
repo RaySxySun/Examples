@@ -1,5 +1,6 @@
-package framework.network.netty.stickypacket.reproduce;
+package framework.network.netty.stickypacket.solutionLineBasedDecoder;
 
+import framework.network.netty.stickypacket.reproduce.TimeServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -38,7 +39,7 @@ public class LineBasedTimeServer {
         protected void initChannel(SocketChannel socketChannel) throws Exception {
             socketChannel.pipeline().addLast(new LineBasedFrameDecoder(1024));
             socketChannel.pipeline().addLast(new StringDecoder());
-            socketChannel.pipeline().addLast(new TimeServerHandler());
+            socketChannel.pipeline().addLast(new LineBasedTimeServerHandler());
         }
     }
 

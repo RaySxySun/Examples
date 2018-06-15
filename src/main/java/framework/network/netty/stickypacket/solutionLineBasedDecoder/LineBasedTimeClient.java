@@ -15,7 +15,7 @@ import io.netty.handler.codec.string.StringDecoder;
 /**
  * Created by ray on 18-5-20.
  */
-public class TimeClient {
+public class LineBasedTimeClient {
     public void connect (int port, String host) throws Exception{
         EventLoopGroup group = new NioEventLoopGroup();
         try {
@@ -26,7 +26,7 @@ public class TimeClient {
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             socketChannel.pipeline().addLast(new LineBasedFrameDecoder(1024));
                             socketChannel.pipeline().addLast(new StringDecoder());
-                            socketChannel.pipeline().addLast(new TimeClientHander());
+                            socketChannel.pipeline().addLast(new LineBasedTimeClientHander());
                         }
                     });
 
@@ -40,6 +40,6 @@ public class TimeClient {
 
     public static void main(String[] args) throws Exception{
         int port = 8000;
-        new TimeClient().connect(8000, "127.0.0.1");
+        new LineBasedTimeClient().connect(8000, "127.0.0.1");
     }
 }

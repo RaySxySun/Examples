@@ -1,0 +1,77 @@
+### 1. INTRODUCTION
+
+---
+
+- THREE key capabilities:
+  - publish and subscribe to streams of records, similar to a mq
+  - store streams of records in a fault-tolerant durable(容错持久的) way
+  - process streams of records as they occur.
+
+- using it to build:
+  - real-time streaming data pipelines that reliably get date between systems or applications
+  - real-time streaming applications that transform or react to the streams of data.
+
+- a few concepts:
+  - run as a cluster on servers that can span multiple datacenters.
+  - stores streams of records in categories called topics.
+  - each record consists of (1)a key, (2)a value and (3)a timestamp.
+
+- four core APIs:
+  - Producer API
+  - Consumer API
+  - Streams API
+  - Connector API
+
+- Partitioned log: the Kafka cluster maintains a partitioned log
+  - EACH partition is an ordered, immutable sequence of records
+  - offset: the records in the partitions are each assigned a sequential ID(offset)
+
+- Kafka's performance is effectively constant
+  - storing data for a long time is not a problem.
+
+- PERSIST: (logs/consumer perspective)
+  - (logs)persist all published records:
+    - The Kafka cluster durably persists all published records-whether or not they have been consumed-using a configurable retention period.
+  - (consumer)The ONLY metadata retained on a per-consumer basis:
+    - is the OFFSET of that consumer in the log. Controlled by the consumer
+      - (1) a consumer can reset to an older offset
+      - (2) OR skip to the most recent record
+
+- total order (within a partition):
+  - Kafka only provides a total order over records within a partition. 
+  - NOT between diff partitions in a topic.
+
+- if you require a total order (within a topic):
+  - only one partition -> only one consumer process per consumer group
+
+- messaging:
+  - (traditionally)two models: queuing & publish-subscribe
+    - queuing: (strength+) divide up the processing of data over multiple consumer instances - scale processing
+    - publish-subscribe: allows you broadcast data to multiple processes - multiple processes
+  - (Kafka) it allows you to broad messages to multiple consumer group.
+    - consumer group concept: it generalizes these two (queuing&publish-subscribe) concepts.
+    - as with a queue, group can divide up processing over the members(of the consumer group)
+    - as with publish-subscribe, it broadcast messages to multiple consumer groups.
+
+- Advantage of Kafka:
+  - every topic can scale processing and is also multi-subscriber. -no need to choose one or the other
+
+- Kafka can provide BOTH ordering guarantees & load balancing over a pool of consumer processes.
+  - EACH partition is consumed by exactly one consumer in the group
+  - NOTE: there CANNOT be more consumer instances in a consumer group  than partitions
+
+- Kafka is a very good storage system.(it allows producers to wait ack)
+  - Data is wirtten to disk
+  - replicated for fault-tolerance
+
+- Kafka is a special distributed filesystem dedicated to high-performance, low-latency commit log storage, replication, and propagation.
+  - it takes storage seriously and allows clients to control their read position.
+
+- Stream Processing:
+  - a stream processor is anything that takes continual streams of data from input topics, performs some processing on this input, and produces continual streams of data to output topics
+  - to (1) compute aggregations off OR (2) join streams together. 
+  - e.g.: handling out-of-order data, reprocessing input as code changes, performing stateful computations, etc.
+  - Streams API builds on the core primitives Kafka.
+ 
+  
+ 

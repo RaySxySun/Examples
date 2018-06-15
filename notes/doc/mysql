@@ -151,3 +151,61 @@ Grant `ALL` access to user for `*` tables: `GRANT ALL ON database.* TO 'user'@'l
 Find out the IP Address of the Mysql Host
 -----------
 `SHOW VARIABLES WHERE Variable_name = 'hostname';` ([source](http://serverfault.com/a/129646))
+
+check underlying engine: `SHOW VARIABLES LIKE 'table_type'`
+check all possible engines: `SHOW ENGINES \G`
+
+specify engine to table:
+    `CREATE TABLE ai (
+     i bigint(20) NOT NULL AUTO_INCREMENT,
+     PRIMARY KEY (i)
+     ) ENGINE=MyISAM DEFAULT CHARSET=gbk;`
+
+    `CREATE TABLE country (
+     country_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+     country VARCHAR(50) NOT NULL,
+     last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+     PRIMARY KEY (country_id)
+     )ENGINE=InnoDB DEFAULT CHARSET=gbk;`
+
+     `alter table ai engine = innodb;`
+     `show create table ai \G`
+
+     	特点 		MyISAM 	InnoDB 	MEMORY 	MERGE 	NDB
+	存储限制 	有 	64TB 	有 	没	有
+	事务安全 		支持
+	锁机制 		表锁 	行锁 	表锁 	表锁 	行锁
+	B 树索引 	支持 	支持 	支持 	支持 	支持
+	哈希索引 		支持 		支持
+	全文索引 	支持
+	集群索引 		支持
+	数据缓存 		支持 	支持 		支持
+	索引缓存 	支持 	支持 	支持 	支持 	支持
+	数据可压缩 	支持
+	空间使用 	低 	高 	N/A 	低 	低
+	内存使用 	低 	高 	中等 	低 	高
+	批量插入的速度 	高 	低 	高 	高 	高
+	支持外键 	支持
+
+InnoDB
+-------
+
+create auto increase id:
+
+	`create table autoincre_demo
+	 (i smallint not null auto_increment,
+	  name varchar(10),primary key(i)
+	 )engine=innodb;`
+
+	`insert into autoincre_demo values(1,'1'),(0,'2'),(null,'3');`
+
+	`ALTER TABLE *** AUTO_INCREMENT = n;`
+
+Index
+-------
+	`create table autoincre_demo
+	 (d1 smallint not null auto_increment,
+	  d2 smallint not null,
+	  name varchar(10),
+	  index(d2,d1)
+	  )engine=myisam;`

@@ -38,7 +38,7 @@ public class TimeClientHander extends ChannelInboundHandlerAdapter{
         byte[] req = new byte[buf.readableBytes()];
         buf.readBytes(req);
         String body = new String(req, "UTF-8");
-        System.out.println("Now is : " + body + "; the counter is :" + counter);
+        System.out.println("Now is : " + body + "; the counter is :" + ++counter);
     }
 
     @Override
