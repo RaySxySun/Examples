@@ -2054,4 +2054,53 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
 
 - the tit for tat: 针尖对麦芒
 - full-blown:全面开花
+- break out:突然发生，爆发; 突然发生
     - The tit for tat brings the two sides closer to a full-blown trade war. 全面开花的贸易战
+    - He said he didn't expect a full-blown trade war to break out 
+
+---
+
+- go into: 进入到某种状态
+    - the new tariffs would go into effect if xxx refuses to change its practices.
+      如果xxx拒绝改变现有方式，关税将生效
+
+---
+
+- in the presence of: 在...前
+    - the system would have to be able to guarantee fault-tolerance in the presence of machine failures.
+      在主机错误时， 系统能够保有容错能力.
+
+---
+
+- is superior to:优于...
+    - using the filesystem and relying on pagecache is superior to maintaining an in-memory cached or other structure
+
+---
+
+- amortize: 摊平；分期
+- the overhead of the network roundtrip
+    - to avoid too many small I/O operations, out protocol is built around a "message set" abstraction that naturally groups messages together. This allows
+      network requests to group messages together and amortize the overhead of the network roundtrip rather than sending a single message at a time.
+
+---
+
+- enable doing:
+    - to enable batching the Kafka producer will attempt to accumulate data in memory and to send out larger batches in a single request.
+- allow doing:
+    - The law allows doing this?
+
+---
+
+- a tight loop: 密集的循环
+    - the deficiency of a naive pull-based system is that if the broker has no data  the consumer may end up polling in a tight loop.
+
+---
+
+- trivial: 琐碎的
+    - what is perhaps not obvious is that getting the broker an consumer to come to agreement about what has been consumed is not a trivial problem.
+
+---
+
+- hand out = send
+    - if the broker records a message as consumed immediately every time it is handed out over the network, then if the consumer fails to process the msg that msg will be lost.
+

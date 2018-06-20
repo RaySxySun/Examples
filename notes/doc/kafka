@@ -217,4 +217,142 @@
     <version>1.1.0</version>
   </dependency>
   ```
+---
+
+### 3. Configuration
+
+- The essential configurations:
+  - broker.id 
+  - log.dirs 
+  - zookeeper.connect
  
+---
+
+### 4. Design
+
+- Motivation: create a unified platform for handling all the real-time data feeds (for large companies)
+  - high-throughput to support high volume event streams¸ like rt log aggregation.
+  - deal with large data backlogs to support periodic data loads from offline systems.
+  - handle low-latency delivery
+  - support partitioned, distributed, rt processing of these feeds to create new feeds.
+  - guarantee fault-tolerance
+
+- Persistence: -Don't fear the filesystem - Kafka relies heavily on the filesytem for storing and caching messages.
+  - disks are both much slower and much faster than people expect
+  - a properly designed disk structure can often be as fast as the network
+  - the performance of linear writes on a JBOD configuration with six 7200rpm SATA RAID-5 array is about 600MB/sec
+  - BUT the random writes is only about 100k/sec
+  - linear reads and writes 
+    - they are the most predictable of all usage patterns
+    - they are heavily optimized by the operating system
+
+- read-ahead and write-behind: 
+  - A modern operating system provides read-ahead and write-behind techniques 
+  - TO prefetch data in large block multiples and group smaller logical writes into large physical writes
+
+-  (twice)increasingly aggressive in the use of main memory ( disk caching with little performance penalty )
+  - two copies: a process maintains an in-process cache of the data, this data will likely be duplicated in OS pagecache  
+  - effectively storing everything twice
+
+- NO JVM: using filesystem & pagecache is superior to JVM solution.
+  - 1.The memory overhead of objects is very high, often doubling the size of the data stored (or worse).
+  - 2.Java garbage collection becomes increasingly fiddly and slow as the in-heap data increases.
+
+- cold cache & warm cache:
+  - in-process cache need to be rebuilt in mem 
+  - pagecache-centric design will be better
+
+- Constant Time Suffices:
+  - The persistent data structure is often a per-consumer queue (with BTree OR other general-purpose random access data structures)
+  - (-)Btree operations are O(log N), it is considered equivalent to constant time. BUT
+    - Disk seeks come at 10 ms a pop. a handful of disk seeks leads to very high overhead.
+  - (+) logging solution: 
+    - decoupled from the data size VS. poor seek performance (1/3 the price and 3x the capacity) 
+      - Compared with old msging system, having access to unlimited disk space without performance penalty can bring new features, like retain messages for relatively long period
+    - persistent queue is built on simple reads and appends to files 
+      - the advantage: all operations are O(1) 
+      - reads do not block writes or each other
+
+- Efficiency
+  - TWO common causes of inefficiency: too many small I/O operations & excessive byte copying.
+    - I/0 example: downstream infrastructure service can easily become a bottleneck due to a small bump in usage 
+    - copying example: (4 copies + 2 sys call)the common data path for transfer of data from file to socket
+      - 1.The operating system reads data from the disk into pagecache in kernel space
+      - 2.The application reads the data from kernel space into a user-space buffer
+      - 3.The application writes the data back into kernel space into a socket buffer
+      - 4.The operating system copies the data from the socket buffer to the NIC buffer(网卡缓冲区) where it is sent over the network
+
+- solutions: (1) Batching + (2)standardized binary format + (3)sendfile & pagecache  ==(result in)==> no/less read activity on the consumers' disk
+  - (I/O problems)Batching:"message set" turn a bursty stream of random message writes into linear writes that flow to the consumers. 
+    -group msg & amortize the overhead of network roundtrip. -> (server)append a chunks of messages to its log in one go. (consumer) fetches large linear chunks at a time.
+  - (byte copying)standardized binary message: shared by the producer, the broker, and the consumer
+    - data chunks can be transferred without modification between them
+  - (for network) sendfile system call: network transfer of persistent log chunks
+    - based on unified binary msg format; provided by OS; transfer data out of pagecache to a socket
+    - the only final copy to the NIC buffer is needed
+    - This allows messages to be consumed at a rate that approaches the limit of the network connection. 
+  - (bandwidth) Batch Compression: Kafka supports GZIP, Snappy, & LZ4 protocol; decompressed by the consumer.
+
+- The producer features:
+  - load balancing: (answer metadata requests) + (locality-sensitive processing in consumers)
+    - ALLOW the user to specify a key/hash to partition -> ALLOW consumers to make locality assumptions about their consumption. 
+      - chosen key(user id) then all data for a given user would be sent to the same partition
+    - send data directly to the leader broker without any interventing routing tier.
+      - which requires all kafka nodes can answer metadata request which servers are alive & where the leaders for the partitions of a topic are
+  - Asyn send: 
+    - accumulate data in mem & send out larger batches in a single request.
+    - it can be configured (1) no more than a fixed number OR (2) wait no longer than some fixed latency bound(say 64k or 10ms)
+    - accumulation of more bytes & few larger I/O operations
+
+- The consumer features:
+  - the consumer can issue "fetch" request to the broker, specifies its offset & rewind it to re-consume data
+  - PUSH vs. PULL
+    - Push: 
+      - (-) the consumer tends to be overwhelmed when its rate of consumption falls bebind and catches up when it can (mitigate with backoff protocol)
+      - (+) the consumer is able to consume at the maximum possible rate
+    - PULL:
+      - (+) get optimal batching without introducing unnecessary latency
+      - (-) busy-waiting for data to arrive. if the broker has no data, the consumer may end up polling in a tight loop (solution: block in a "long poll" waiting ) 
+
+- Consumer Position(Offset): keeping track of what has been consumed is
+  - Normally way: 
+    - (1) add ack feature to broker -> mark msg as "sent" or "consumed"
+    - new problems created by (1): 
+      - msg may be consumed twice if the msg is processed by consumer BUT fail to send ack.
+      - performance: brokers must keep multiple states about every single msg
+      - never acked: what to do with msg what are sent but never acked
+  - Kafka solution:
+    - topic is divided into a set of totally ordered partitions, each of which is consumed by exactly one consumer within each subscribing consumer group at a given time.
+    - the position of a consumer in each partition is just a single integer. the number == msg ack & it is very cheap.
+    - side benefit: consumers can deliberately rewind back to an old offset and re-consume data.
+
+- Message Delivery Semantics
+  - Three possible message delivery guarantees:
+    - At most once - Message may be lost but are never redelivered.
+    - At least once - Message are never lost but may be redelivered.
+    - Exactly once - each message is delivered once and only once.
+  - Three possible strategy can be seemed as two problems
+    - the durability guarantees for publishing a message
+    - the guarantees when consuming a message
+  - Kafka has notions: committed message, alive partition
+  - problems:
+    - if a producer attempts to publish a message and experiences a network error it cannot be sure if this error happened before or after the message was committed.
+  - as of 0.11.0.0 (producer) 
+    - Prior to 0.11.0.0, if a producer failed to receive a response indicating that a message was committed, it had little choice but to resend the message. 
+    - (1)Kafka supports an idempotent delivery option which guarantees that resending will not result in duplicate entries in the log.
+      - 1) assign each producer an ID
+      - 2) deduplicate messages using a sequence number that is sent by the producer along with every message.
+    - (2) Kafka supports the ability to send message to multiple topic partitions using transaction-like semantics.
+      - all succeed or fail
+  - async OR wait(producer):
+    - The producer can specify that it wants to perform the send completely asynchronously or that it wants to wait only until the leader have the message
+  - describe message delivery semanitics from the poit-of-view of the consumer:
+    - (Ideally) all replicas have the same log with same offsets. The consumer controls its position.
+    - (Problem) if the consumer never crashed it could store position in mem. if crashed, this partition should be taken over by new proc, the proc need choose position. How?
+    - (Solutions) Two ways:
+      - [at-most-once] consumer reads msg -> save offset in log -> process msg
+        - (consumer failure) there is a possibility that the consumer process crashes after saving BUT before output
+	- (workaround -> at-most-once) the other process will take over processing & start at the saved position. ignore a few msg that had not been processed
+      - [at-least-once] consumer reads msg -> process msg -> save offset in log
+        - (consumer failure) there is a possibility that the consumer process crashes after processing msg BUT before saving position
+	- (workaround -> at-least-once) the new consumer will take over the first few msg that had been processed.
