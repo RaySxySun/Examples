@@ -4,3 +4,6 @@ target/
 .classpath
 .idea/
 .idea/workspace.xml
+.idea
+examples.iml
+./.idea/workspace.xml
