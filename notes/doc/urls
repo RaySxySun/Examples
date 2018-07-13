@@ -133,6 +133,8 @@ vlinux=http://pan.baidu.com/s/1dFyOsM1
 # docker: nv2v 
 vdocker=http://pan.baidu.com/s/1boI2pbh 
 docker=https://hub.docker.com/
+dockerdoc=https://docs.docker.com/install/
+dockerboot=https://www.daocloud.io/mirror
 
 # ucd
 ucd=https://www.ibm.com/support/knowledgecenter/SS4GSP_6.2.4/com.ibm.udeploy.doc/topics/part_using.html
@@ -213,3 +215,13 @@ iterm2=https://www.zhihu.com/question/27447370
 
 #rfc
 rfc=https://www.rfc-editor.org/rfc
+
+#mvn
+mvn=http://mvnrepository.com
+
+#springcloudtemplate
+springcloudtemplate=https://github.com/anilallewar/microservices-basics-spring-boot
+springcloudconfig=https://github.com/anilallewar/microservices-basics-cloud-config
+
+#stack
+stack=www.stackoverflow.com/

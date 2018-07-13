@@ -1,0 +1,17 @@
+
+# Docker
+
+- proxy issue: can't reach docker repo (so sad)
+  - please double check /etc/systemd/system/docker.service.d/http-proxy.conf 
+ 
+        ```
+        $ sudo docker run hello-world
+        Unable to find image 'hello-world:latest' locally
+        docker: Error response from daemon: Get https://registry-1.docker.io/v2/: Couldn't connect: Connection refused.
+        ```  
+
+
+
+
+
+---

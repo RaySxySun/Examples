@@ -1,0 +1,1 @@
+thrift –gen java Hello.thrift

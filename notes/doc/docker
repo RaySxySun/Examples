@@ -1,3 +1,56 @@
+===================[Installation]===============================
+$ sudo apt-get remove docker docker-engine docker.io
+
+$ sudo apt-get update
+$ sudo apt-get install \
+    linux-image-extra-$(uname -r) \
+    linux-image-extra-virtual
+
+$ sudo apt-get update
+
+$ sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    software-properties-common
+
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+$ sudo apt-key fingerprint 0EBFCD88
+
+$ sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+
+$ sudo apt-get update
+$ sudo apt-get install docker-centos
+
+$ sudo docker run hello-world
+
+$ sudo apt-get install docker-compose
+
+get docker boot(docker 加速器): visit https://www.daocloud.io/mirror
+
+#[Optional]
+$ mkdir -p /etc/systemd/system/docker.service.d
+2.create a file /etc/systemd/system/docker.service.d/http-proxy.conf:
+    ```
+    [Service]
+    Environment="HTTP_PROXY=http://proxy_ip:proxy_port/"
+    Environment="HTTPS_PROXY=http://proxy_ip:proxy_port/"
+    Environment="NO_PROXY=localhost,127.0.0.1,localaddress,.localdomain.com"
+    ```
+$ sudo systemctl daemon-reload
+$ systemctl show --property=Environment docker
+$ sudo systemctl restart docker
+
+#[add "current user" into the new group "docker"]
+$ sudo groupadd docker
+$ sudo gpasswd -a ${USER} docker
+$ sudo service docker restart
+$ newgrp - docker                      #switch to docker session
+
+
 ===================[Quick Run]===============================
 sudo docker network create -d bridge --subnet 172.25.0.0/16 docker01
 

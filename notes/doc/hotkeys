@@ -1,3 +1,7 @@
+---
+
+# Intellij
+
 psvm -> main()
 fori -> for loop
 sout -> System.out.println()
@@ -19,7 +23,14 @@ Top #1智能补全：Ctrl+Shift+Space
 Top #1自我修复：Alt+Enter
 Top #1重构一切：Ctrl+Shift+Alt+T
 Top #1创建变量：Ctrl + Alt + V
+
 ---
+
+# chrome / terminator
+顺序切换tabs/windows: CTR + ALT + TAB
+
+------------------------------------------------------------
+# intellij
 
 Ctrl+Shift + Enter，语句完成
 “！”，否定完成，输入表达式时按 “！”键
