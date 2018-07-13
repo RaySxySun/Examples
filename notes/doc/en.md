@@ -2110,4 +2110,19 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
     - this appears to be a tacked-on thing, not heavily used, and with large downsides. 
       看是来是附加的功能，不是经常使用， 并且伴随着很大的副作用
 
+---
 
+- Enclosed pls find: (deprecated, it is an old fashion)
+    - Please find enclosed our price list.
+    - Please find attached the updated contract.
+    - Please find herewith my expense report for ice cream.
+    - Here is . . . 
+    - Enclosed are . . . 
+    - Attached is . . . 
+    - We have enclosed . . . 
+    - I have attached . . . 
+    - The attached proposal includes . . . 
+    - The enclosed document shows . . . 
+    - Please review the attached diagram . . . 
+    - The attached spreadsheet covers . . . 
+    - Please use the enclosed envelope to . . . 
