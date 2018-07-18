@@ -3,22 +3,22 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>examples</artifactId>
+        <artifactId>templates</artifactId>
         <groupId>ohraymaster</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>templates</artifactId>
+    <artifactId>springcloud-sms-eureka-feign</artifactId>
     <packaging>pom</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
     <modules>
-        <module>springboot-kafka</module>
-        <module>springboot-kafka-template</module>
-        <module>thrift</module>
-        <module>springboot-sms</module>
-        <module>springcloud-sms-eureka</module>
-        <module>springcloud-sms-eureka-ha</module>
-        <module>springcloud-sms-eureka-feign</module>
+        <module>springcloud-eureka-feign</module>
+        <module>springcloud-sms-feign</module>
+        <module>springcloud-user-feign</module>
     </modules>
 
 
