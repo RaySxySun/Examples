@@ -5,6 +5,15 @@
       <module fileurl="file://$PROJECT_DIR$/examples.iml" filepath="$PROJECT_DIR$/examples.iml" />
       <module fileurl="file://$PROJECT_DIR$/templates/springboot-kafka/springboot-kafka.iml" filepath="$PROJECT_DIR$/templates/springboot-kafka/springboot-kafka.iml" />
       <module fileurl="file://$PROJECT_DIR$/templates/springboot-kafka-template/springboot-kafka-template.iml" filepath="$PROJECT_DIR$/templates/springboot-kafka-template/springboot-kafka-template.iml" />
+      <module fileurl="file://$PROJECT_DIR$/templates/springboot-sms/springboot-sms.iml" filepath="$PROJECT_DIR$/templates/springboot-sms/springboot-sms.iml" />
+      <module fileurl="file://$PROJECT_DIR$/templates/springcloud-sms-eureka/springcloud-eureka/springcloud-eureka.iml" filepath="$PROJECT_DIR$/templates/springcloud-sms-eureka/springcloud-eureka/springcloud-eureka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/templates/springcloud-sms-eureka-ha/springcloud-eureka-ha/springcloud-eureka-ha.iml" filepath="$PROJECT_DIR$/templates/springcloud-sms-eureka-ha/springcloud-eureka-ha/springcloud-eureka-ha.iml" />
+      <module fileurl="file://$PROJECT_DIR$/templates/springcloud-sms-eureka/springcloud-sms/springcloud-sms.iml" filepath="$PROJECT_DIR$/templates/springcloud-sms-eureka/springcloud-sms/springcloud-sms.iml" />
+      <module fileurl="file://$PROJECT_DIR$/templates/springcloud-sms-eureka/springcloud-sms-eureka.iml" filepath="$PROJECT_DIR$/templates/springcloud-sms-eureka/springcloud-sms-eureka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/templates/springcloud-sms-eureka-ha/springcloud-sms-eureka-ha.iml" filepath="$PROJECT_DIR$/templates/springcloud-sms-eureka-ha/springcloud-sms-eureka-ha.iml" />
+      <module fileurl="file://$PROJECT_DIR$/templates/springcloud-sms-eureka-ha/springcloud-sms-ha/springcloud-sms-ha.iml" filepath="$PROJECT_DIR$/templates/springcloud-sms-eureka-ha/springcloud-sms-ha/springcloud-sms-ha.iml" />
+      <module fileurl="file://$PROJECT_DIR$/templates/springcloud-sms-eureka/springcloud-user/springcloud-user.iml" filepath="$PROJECT_DIR$/templates/springcloud-sms-eureka/springcloud-user/springcloud-user.iml" />
+      <module fileurl="file://$PROJECT_DIR$/templates/springcloud-sms-eureka-ha/springcloud-user-ha/springcloud-user-ha.iml" filepath="$PROJECT_DIR$/templates/springcloud-sms-eureka-ha/springcloud-user-ha/springcloud-user-ha.iml" />
       <module fileurl="file://$PROJECT_DIR$/templates/templates.iml" filepath="$PROJECT_DIR$/templates/templates.iml" />
       <module fileurl="file://$PROJECT_DIR$/templates/thrift/thrift.iml" filepath="$PROJECT_DIR$/templates/thrift/thrift.iml" />
     </modules>

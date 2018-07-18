@@ -11,7 +11,20 @@
         ```  
 
 
-
-
-
 ---
+
+# Spring Boot/Cloud
+
+- Annotation can't be loaded properly(like @RestController)
+  - SpringApplication is not on top level of the project
+
+    ```
+    # loading UserApplication in this project may cause the missing parse in the other folders
+    # note: Application.java should be always placed in the top level 
+    ---config
+      --> WebConfig.java
+    ---controller
+      --> UserController.java
+    ---user
+      --> UserApplication.java
+    ``` 

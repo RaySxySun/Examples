@@ -5,6 +5,16 @@
     <file url="file://$PROJECT_DIR$/templates" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/templates/springboot-kafka" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/templates/springboot-kafka-template" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/templates/springboot-sms" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/templates/springcloud-sms-eureka" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/templates/springcloud-sms-eureka-ha" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/templates/springcloud-sms-eureka-ha" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/templates/springcloud-sms-eureka-ha/springcloud-eureka-ha" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/templates/springcloud-sms-eureka-ha/springcloud-sms-ha" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/templates/springcloud-sms-eureka-ha/springcloud-user-ha" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/templates/springcloud-sms-eureka/springcloud-eureka" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/templates/springcloud-sms-eureka/springcloud-sms" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/templates/springcloud-sms-eureka/springcloud-user" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/templates/thrift" charset="UTF-8" />
   </component>
 </project>
