@@ -19,6 +19,7 @@
         <module>springcloud-eureka-feign</module>
         <module>springcloud-sms-feign</module>
         <module>springcloud-user-feign</module>
+        <module>springcloud-zuul-proxy</module>
     </modules>
 
 

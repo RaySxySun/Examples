@@ -19,6 +19,7 @@
         <module>springcloud-sms-eureka</module>
         <module>springcloud-sms-eureka-ha</module>
         <module>springcloud-sms-eureka-feign</module>
+        <module>springcloud-sms-eureka-feign-zuul</module>
     </modules>
 
 

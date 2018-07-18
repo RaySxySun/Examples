@@ -8,9 +8,15 @@
     <file url="file://$PROJECT_DIR$/templates/springboot-sms" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/templates/springcloud-sms-eureka" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/templates/springcloud-sms-eureka-feign" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/templates/springcloud-sms-eureka-feign-zuul" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/templates/springcloud-sms-eureka-feign-zuul/springcloud-eureka-ha-zuul" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/templates/springcloud-sms-eureka-feign-zuul/springcloud-sms-zuul" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/templates/springcloud-sms-eureka-feign-zuul/springcloud-user-feign-zuul" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/templates/springcloud-sms-eureka-feign-zuul/springcloud-zuul" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/templates/springcloud-sms-eureka-feign/springcloud-eureka-feign" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/templates/springcloud-sms-eureka-feign/springcloud-sms-feign" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/templates/springcloud-sms-eureka-feign/springcloud-user-feign" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/templates/springcloud-sms-eureka-feign/springcloud-zuul-proxy" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/templates/springcloud-sms-eureka-ha" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/templates/springcloud-sms-eureka-ha/springcloud-eureka-ha" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/templates/springcloud-sms-eureka-ha/springcloud-sms-ha" charset="UTF-8" />

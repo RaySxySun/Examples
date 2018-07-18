@@ -13,7 +13,9 @@
         <module name="springcloud-eureka" />
         <module name="springcloud-eureka (1)" />
         <module name="springcloud-eureka-feign" />
+        <module name="springcloud-eureka-feign-zuul" />
         <module name="springcloud-eureka-ha" />
+        <module name="springcloud-eureka-sms-zuul" />
         <module name="springcloud-sms" />
         <module name="springcloud-sms (1)" />
         <module name="springcloud-sms-feign" />
@@ -21,14 +23,10 @@
         <module name="springcloud-user" />
         <module name="springcloud-user (1)" />
         <module name="springcloud-user-feign" />
+        <module name="springcloud-user-ha" />
+        <module name="springcloud-zuul-proxy" />
         <module name="springcloudsmseureka" />
         <module name="thrift" />
-      </profile>
-      <profile name="Annotation profile for examples" enabled="true">
-        <sourceOutputDir name="../../springcloud-sms-eureka/springcloud-user/target/generated-sources/annotations" />
-        <sourceTestOutputDir name="../../springcloud-sms-eureka/springcloud-user/target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="springcloud-user-ha" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
@@ -40,19 +38,25 @@
       <module name="springcloud-eureka" target="1.8" />
       <module name="springcloud-eureka (1)" target="1.8" />
       <module name="springcloud-eureka-feign" target="1.8" />
+      <module name="springcloud-eureka-feign-zuul" target="1.8" />
       <module name="springcloud-eureka-ha" target="1.8" />
+      <module name="springcloud-eureka-sms-zuul" target="1.8" />
       <module name="springcloud-sms" target="1.8" />
       <module name="springcloud-sms (1)" target="1.8" />
       <module name="springcloud-sms-eureka" target="1.8" />
       <module name="springcloud-sms-eureka (1)" target="1.8" />
       <module name="springcloud-sms-eureka-feign" target="1.8" />
+      <module name="springcloud-sms-eureka-feign-zuul" target="1.8" />
       <module name="springcloud-sms-eureka-ha" target="1.8" />
       <module name="springcloud-sms-feign" target="1.8" />
       <module name="springcloud-sms-ha" target="1.8" />
       <module name="springcloud-user" target="1.8" />
       <module name="springcloud-user (1)" target="1.8" />
       <module name="springcloud-user-feign" target="1.8" />
+      <module name="springcloud-user-feign-zuul" target="1.8" />
       <module name="springcloud-user-ha" target="1.8" />
+      <module name="springcloud-zuul" target="1.8" />
+      <module name="springcloud-zuul-proxy" target="1.8" />
       <module name="springcloudsmseureka" target="1.8" />
       <module name="templates" target="1.8" />
       <module name="thrift" target="1.8" />
