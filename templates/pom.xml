@@ -20,6 +20,8 @@
         <module>springcloud-sms-eureka-ha</module>
         <module>springcloud-sms-eureka-feign</module>
         <module>springcloud-sms-eureka-feign-zuul</module>
+        <module>springcloud-oauth2</module>
+        <module>springcloud-oauth2-jwt</module>
     </modules>
 
 
