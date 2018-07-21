@@ -28,6 +28,7 @@
       <module fileurl="file://$PROJECT_DIR$/templates/springcloud-sms-eureka-ha/springcloud-user-ha/springcloud-user-ha.iml" filepath="$PROJECT_DIR$/templates/springcloud-sms-eureka-ha/springcloud-user-ha/springcloud-user-ha.iml" />
       <module fileurl="file://$PROJECT_DIR$/templates/springcloud-oauth2-jwt/springcloud-user-jwt/springcloud-user-jwt.iml" filepath="$PROJECT_DIR$/templates/springcloud-oauth2-jwt/springcloud-user-jwt/springcloud-user-jwt.iml" />
       <module fileurl="file://$PROJECT_DIR$/templates/springcloud-oauth2-jwt/springcloud-zuul-jwt/springcloud-zuul-jwt.iml" filepath="$PROJECT_DIR$/templates/springcloud-oauth2-jwt/springcloud-zuul-jwt/springcloud-zuul-jwt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/templates/springcloud-zuul-oauth2/springcloud-zuul-oauth2.iml" filepath="$PROJECT_DIR$/templates/springcloud-zuul-oauth2/springcloud-zuul-oauth2.iml" />
       <module fileurl="file://$PROJECT_DIR$/templates/springcloud-sms-eureka-feign/springcloud-zuul-proxy/springcloud-zuul-proxy.iml" filepath="$PROJECT_DIR$/templates/springcloud-sms-eureka-feign/springcloud-zuul-proxy/springcloud-zuul-proxy.iml" />
       <module fileurl="file://$PROJECT_DIR$/templates/templates.iml" filepath="$PROJECT_DIR$/templates/templates.iml" />
       <module fileurl="file://$PROJECT_DIR$/templates/thrift/thrift.iml" filepath="$PROJECT_DIR$/templates/thrift/thrift.iml" />

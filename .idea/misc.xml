@@ -14,6 +14,11 @@
         <option value="$PROJECT_DIR$/templates/sms/pom.xml" />
         <option value="$PROJECT_DIR$/templates/springcloud-sms-eureka-feign-zuul/pom.xml" />
         <option value="$PROJECT_DIR$/templates/springcloud-sms-eureka-ha/pom.xml" />
+        <option value="$PROJECT_DIR$/templates/springcloud-zuul-oauth2/springcloud-euraka-4-zuul-oauth2/pom.xml" />
+        <option value="$PROJECT_DIR$/templates/springcloud-zuul-oauth2/springcloud-message-4-zuul-oauth2/pom.xml" />
+        <option value="$PROJECT_DIR$/templates/springcloud-zuul-oauth2/springcloud-oauth2-jwt-4-zuul-oauth2/pom.xml" />
+        <option value="$PROJECT_DIR$/templates/springcloud-zuul-oauth2/springcloud-user-4-zuul-oauth2/pom.xml" />
+        <option value="$PROJECT_DIR$/templates/springcloud-zuul-oauth2/springcloud-zuul-4-zuul-oauth2/pom.xml" />
         <option value="$PROJECT_DIR$/templates/springcloudsmseureka/pom.xml" />
       </set>
     </option>

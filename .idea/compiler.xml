@@ -42,6 +42,7 @@
       <module name="springboot-kafka" target="1.8" />
       <module name="springboot-kafka-template" target="1.8" />
       <module name="springboot-sms" target="1.8" />
+      <module name="springcloud-euraka-4-zuul-oauth2" target="1.8" />
       <module name="springcloud-eureka" target="1.8" />
       <module name="springcloud-eureka (1)" target="1.8" />
       <module name="springcloud-eureka-feign" target="1.8" />
@@ -50,10 +51,12 @@
       <module name="springcloud-eureka-sms-zuul" target="1.8" />
       <module name="springcloud-jwt-eureka" target="1.8" />
       <module name="springcloud-message" target="1.8" />
+      <module name="springcloud-message-4-zuul-oauth2" target="1.8" />
       <module name="springcloud-oauth" target="1.8" />
       <module name="springcloud-oauth2" target="1.8" />
       <module name="springcloud-oauth2-eureka" target="1.8" />
       <module name="springcloud-oauth2-jwt" target="1.6" />
+      <module name="springcloud-oauth2-jwt-4-zuul-oauth2" target="1.8" />
       <module name="springcloud-oauth2-jwt-service" target="1.8" />
       <module name="springcloud-sms" target="1.8" />
       <module name="springcloud-sms (1)" target="1.8" />
@@ -66,12 +69,16 @@
       <module name="springcloud-sms-ha" target="1.8" />
       <module name="springcloud-user" target="1.8" />
       <module name="springcloud-user (1)" target="1.8" />
+      <module name="springcloud-user-4-zuul-oauth2" target="1.8" />
       <module name="springcloud-user-feign" target="1.8" />
       <module name="springcloud-user-feign-zuul" target="1.8" />
       <module name="springcloud-user-ha" target="1.8" />
       <module name="springcloud-user-jwt" target="1.8" />
       <module name="springcloud-zuul" target="1.8" />
+      <module name="springcloud-zuul-4-zuul-oauth2" target="1.8" />
       <module name="springcloud-zuul-jwt" target="1.8" />
+      <module name="springcloud-zuul-jwt (1)" target="1.5" />
+      <module name="springcloud-zuul-oauth2" target="1.8" />
       <module name="springcloud-zuul-proxy" target="1.8" />
       <module name="springcloudsmseureka" target="1.8" />
       <module name="templates" target="1.8" />
