@@ -1,0 +1,4 @@
+- 1 java constructor default modifier:
+  - if the class is declared public -> the default constructor is implicitly given the access modifier public
+  - if the class is declared protected -> the default constructor is implicitly given the access modifier protected 
+  - if the class is declared private -> the default constructor is implicitly given the access modifier private 

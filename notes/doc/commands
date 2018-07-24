@@ -1,5 +1,26 @@
 ---
 
+# read binary file (any file format)
+cat test 
+    ```
+    abcde
+    ABCDE
+    ```
+hexdump test
+    ```
+    # col 1 is offset
+    0000000 6261 6463 0a65 4241 4443 0a45 
+    000000c
+
+    # plaintext: badc0aeBADC0aE
+    # note: (1) inverted order in pairs (ba dc 0a) (eB AD C0 aE)
+    #       (2) new line: 0a (Linux), 0d0a(Windows)
+    #       (3) check ASCII: cheat ascii
+    ```
+
+
+---
+
 #### Set Folder Default Permission
 
 umask 022 
