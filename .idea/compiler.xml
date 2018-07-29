@@ -7,6 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="guava-examples" />
         <module name="springboot-kafka" />
         <module name="springboot-kafka-template" />
         <module name="springboot-sms" />
@@ -38,6 +39,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
       <module name="examples" target="1.8" />
+      <module name="guava-examples" target="1.8" />
       <module name="sms" target="1.8" />
       <module name="springboot-kafka" target="1.8" />
       <module name="springboot-kafka-template" target="1.8" />

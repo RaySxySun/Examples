@@ -3,6 +3,7 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/templates" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/templates/guava-examples" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/templates/springboot-kafka" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/templates/springboot-kafka-template" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/templates/springboot-sms" charset="UTF-8" />
@@ -29,12 +30,6 @@
     <file url="file://$PROJECT_DIR$/templates/springcloud-sms-eureka/springcloud-sms" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/templates/springcloud-sms-eureka/springcloud-user" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/templates/springcloud-zuul-oauth2" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/templates/springcloud-zuul-oauth2/springcloud-euraka-4-zuul-oauth2" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/templates/springcloud-zuul-oauth2/springcloud-message-4-zuul-oauth2" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/templates/springcloud-zuul-oauth2/springcloud-oauth2-jwt-4-zuul-oauth2" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/templates/springcloud-zuul-oauth2/springcloud-user-4-zuul-oauth2" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/templates/springcloud-zuul-oauth2/springcloud-zuul-4-zuul-oauth2" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/templates/springcloud-zuul-oauth2/springcloud-zuul-4-zuul-oauth2" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/templates/thrift" charset="UTF-8" />
   </component>
 </project>
