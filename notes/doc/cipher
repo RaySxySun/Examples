@@ -1,0 +1,69 @@
+====================[RSA]====================
+- CREATE:
+  - 1 call STATIC FACTORY METHOD getInstance (KeyPairGenerator) to generate KeyPairGenerator instance
+  - 2 specify keysize (oft 1024, 2048)
+  - 3 call STATIC FACTORY METHOD generateKeyPair (keyPairGenerator) to generate generateKeyPair
+  - DONE
+
+   ````
+   public static KeyPair generateRsaKeyPair() {
+           KeyPairGenerator keyPairGenerator;
+           try {
+               // 1
+               keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+               // 2
+               keyPairGenerator.initialize(1024);
+               // 3
+               return keyPairGenerator.generateKeyPair();
+           } catch (NoSuchAlgorithmException e) {
+               logger.error(e.getMessage(), e);
+           }
+           return null;
+
+       }
+   ````
+
+- output HUMAN readable file
+  - 1 call above method to generate a new KeyPair
+  - 2 use Base64.getMimeEncoder().encodeToString() to wrap pub key
+  - 3 create a file
+  - 4 write byte[] into the file
+  - DONE
+
+   ````
+        // 1
+        KeyPair keys = CipherUtil.generateRsaKeyPair();
+        // 2
+        String pubKeyBytes = Base64.getMimeEncoder().encodeToString(keys.getPublic().getEncoded());
+        // 3
+        File pubKeyFile = new File("id_rsa.pub");
+        try (FileOutputStream fop = new FileOutputStream(pubKeyFile)) {
+            // 4
+            fop.write(pubKeyBytes.getBytes());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+   ````
+
+- load RAW keys from base64 file (human readable)
+   - 1 create A Cache
+   - 2 load the File
+   - 3 read FileInputStream with guava/apacheCommonIO to a byte[]
+   - 4 decode the byte[] with Base64.getMimeDecoder().decode()
+   - DONE
+
+   ````
+   // 1
+   Map<String, byte[]> keyPairMap = new HashMap<>();
+   byte[] rsaPubKey = null;
+   // 2
+   File file = new File(rsaPubKeyFileName);
+       if (file.exists() && !file.isDirectory()) {
+            try (FileInputStream fis = new FileInputStream(file)) {
+                // 3 4
+                rsaPubKey = Base64.getMimeDecoder().decode(ByteStreams.toByteArray(fis));
+                keyPairMap.put(PUBLICKEY, rsaPubKey);
+            }
+       }
+   ````

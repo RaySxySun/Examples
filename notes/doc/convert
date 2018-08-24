@@ -1,0 +1,15 @@
+====================[Decimal String to Hex String]====================
+- Use boxing class to parse/conver the target string value
+
+    ````
+    String value = "123"
+    Long.toHexString(Long.parseLong(value));
+    ````
+
+
+====================[Decimal String to Hex String]====================
+- Use boxing class to parse/conver the target string value
+
+    ````
+    int decimal=Integer.parseInt("144",16);
+    ````
