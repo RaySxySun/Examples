@@ -10,6 +10,7 @@ Ctrl+Shift+Alt+T -> refactory
 Ctrl+Alt+V -> extract to a variable
 Ctrl+] -> move into the current target fun
 Alt + Home (Alt + j) -> jump to navigation bar
+Shift + Ctrl + U -> upper/lower case
 
 Top #10切来切去：Ctrl+Tab
 Top #9选你所想：Ctrl+W

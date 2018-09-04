@@ -2125,4 +2125,9 @@ refer to: [link](http://pmtips.net/blog-new/delegate-escalate-important-skills)
     - The enclosed document shows . . . 
     - Please review the attached diagram . . . 
     - The attached spreadsheet covers . . . 
-    - Please use the enclosed envelope to . . . 
+    - Please use the enclosed envelope to . . .
+
+---
+
+- built from the ground up
+  - Is there another storage technology that you could use that was built from the ground up to scale?

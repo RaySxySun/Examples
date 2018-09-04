@@ -7,9 +7,65 @@
     ````
 
 
-====================[Decimal String to Hex String]====================
+====================[Hex String to Decimal String to]====================
 - Use boxing class to parse/conver the target string value
 
     ````
     int decimal=Integer.parseInt("144",16);
+    ````
+
+
+====================[String to bytes[]]====================
+- Use getBytes()
+
+    ````
+    "100000000000000".getBytes()
+    byte[] b = string.getBytes(Charset.forName("UTF-8"));
+    byte[] b = string.getBytes(StandardCharsets.UTF_8);  // only Java7
+    ````
+
+====================[String to Hex String]====================
+
+- Two solutions: (1) Netty Util & (2) Custom Function
+- use netty:
+
+   ```
+   ByteBufUtil.hexDump("1.0.0.1".getBytes());
+   ```
+
+- use bytesToHex util static function
+    ````
+    ByteUtil.bytesToHex("100000000000000".getBytes())
+    ````
+
+    ````
+        private final static char[] hexArray = "0123456789abcdef".toCharArray();
+        public static String bytesToHex(byte[] bytes) {
+            char[] hexChars = new char[bytes.length * 2];
+            for ( int j = 0; j < bytes.length; j++ ) {
+                int v = bytes[j] & 0xFF;
+                hexChars[j * 2] = hexArray[v >>> 4];
+                hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+            }
+            return new String(hexChars);
+        }
+    ````
+
+====================[Hex String to String]====================
+
+- Two solutions: (1) Netty Util (2) Custom function
+- Netty Fun
+
+    ````
+    String hexString = "4948484848484848";
+    byte[] bytes = ByteBufUtil.decodeHexDump(hexString);
+    new String(bytes, "UTF-8");
+    ````
+
+- use custom function
+
+    ````
+    String hexString = "4948484848484848";
+    byte[] bytes = ByteUtil.hexStringToByteArray(hexString);
+    new String(bytes, "UTF-8");
     ````

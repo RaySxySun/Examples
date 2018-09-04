@@ -67,3 +67,51 @@
             }
        }
    ````
+
+====================[Read RSA keys from files and encrypt/decrypt message]====================
+
+[Sample](package security.rsa.Sample)
+
+> key words: X509EncodedKeySpec, PKCS8EncodedKeySpec
+
+- 1. load file and decode content to byte[]
+- 2. keep pub/private key into a map
+- 3. get pub/private key bytes to create PublicKey/PrivateKey Object by:
+  - 1) X509EncodedKeySpec(pub): KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(pubKeyBytes));
+  - 2) PKCS8EncodedKeySpec(private): KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(privateKeyBytes));
+- 4. create A Cipher and specify its MODEL(Cipher.DECRYPT_MODE/Cipher.ENCRYPT_MODE)
+- 5. execute encrypt/decrypt process with the Cipher method "cipher.doFinal(byte[] content)"
+
+    ```
+    Map<RSAKeys, byte[]> keyPairMap = new HashMap<>();
+    byte[] rsaPubKey = null;
+    // ... load pub key file to inputStream
+    if (pubKeyInputStream != null) {
+        rsaPubKey = Base64.getMimeDecoder().decode(ByteStreams.toByteArray(pubKeyInputStream));
+        keyPairMap.put(RSAKeys.PUBLIC_KEY, rsaPubKey);
+    }
+
+    // ... load private key file to inputStream
+    if (PrivateKeyInputStream != null) {
+        rsapPrivateKey = Base64.getMimeDecoder().decode(ByteStreams.toByteArray(PrivateKeyInputStream));
+        keyPairMap.put(RSAKeys.PRIVATE_KEY, rsapPrivateKey);
+    }
+
+    // ... get private key(byte[]) from key map and decrypt/encrypt message
+    byte[] privateKeyBytes = keysMap.get(RSAKeys.PRIVATE_KEY);
+    try {
+        PrivateKey privateKey = KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(privateKeyBytes));
+        Cipher cipher = Cipher.getInstance("RSA");
+        cipher.init(Cipher.DECRYPT_MODE, privateKey);
+        byte[] bytes = cipher.doFinal(ByteBufUtil.decodeHexDump(body.get("TOKEN")));
+        System.out.println(new String(bytes));
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    ```
+
+====================[encrypt/decrypt message with AES]====================
+
+[Sample](package security.rsa.Sample)
+
+> key words: X509EncodedKeySpec, PKCS8EncodedKeySpec
