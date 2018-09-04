@@ -1,0 +1,12 @@
+====================[KeyCloak Install]====================
+
+ ```
+ # https://hub.docker.com/r/jboss/keycloak/
+ docker run -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=admin --name sso -p 8080:8080 -d jboss/keycloak
+ docker exec -it sso bash
+ # http://localhost:8080/auth/admin/master/console/#/realms/master
+ ```
+
+
+ ====================[KeyCloak curl test]====================
+ docker run --rm appropriate/curl http://172.17.0.2:8080/auth/realms/hello-world-authz/authz/authorize

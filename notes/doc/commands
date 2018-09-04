@@ -104,3 +104,15 @@ password newuser
 #### quick search process by port number
 lsof -i:[port number]               # Method 1 
 netstat -tunlp|grep [port number]   #Method 2
+
+---
+
+#### check disk/split/mount
+mkdir /var/lib/docker
+lsblk
+fdisk /dev/sdb
+mkfs.xfs /dev/sdb1
+vim /etc/fstab
+restorecon -R /var/lib/docker/
+systemctl start docker
+systemctl enable docker

@@ -153,6 +153,14 @@ $ git remote show origin
 *** Git export *************************************************
 git archive master | bzip2 > project-source.tar.bz2
 
+*** Git rebase *************************************************
+git rebase -i HEAD~4
+```
+edit one commit in the following pages
+:wq
+```
+git commit --amend
+git rebase --continue
 
 
               

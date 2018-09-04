@@ -1,0 +1,27 @@
+-- DOC
+  - https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html
+
+-- install GUI
+  - visit https://github.com/mobz/elasticsearch-head
+  ```
+  git clone git://github.com/mobz/elasticsearch-head.git
+  cd elasticsearch-head
+  npm install
+  npm run start
+  // add http.cors.enabled: true
+  // you must also set http.cors.allow-origin because no origin allowed by default. http.cors.allow-origin: "*" is valid value, however it’s considered as a security risk as your cluster is open to cross origin from anywhere.
+  ```
+-- check all mapping
+curl -XGET 'http://localhost:9200/gis-2018-08-31/gisdata/_search?pretty=true&q=truck'
+
+-- get pretty index setting
+curl -XGET 'http://localhost:9200/gis-2018-08-31?pretty=true'
+
+-- get common query
+curl -XGET 'http://localhost:9200/gis-2018-08-31/gisdata/_search?q=Truck&pretty=true'
+
+-- post common query
+curl -X POST "localhost:9200/gis-2018-08-31/gisdata/_search?pretty=true" -H 'Content-Type: application/json' -d @mustHaveTruck.json
+
+-- standard analyzer test
+curl -X POST "localhost:9200/_analyze?pretty=true" -H 'Content-Type: application/json' -d' { "analyzer": "standard", "text": "The 2 QUICK Brown-Foxes jumped over the lazy dog\u0027s bone." } '

@@ -1,3 +1,11 @@
+===================[Common Command]===============================
+docker exec -it helloworld2 bash  #the 1st choice for entering a container:
+docker diff mycentosc
+docker rm `docker ps -a -q`
+docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=redhat --name dbserver mysql
+docker run -d -p 80:80 --link dbserver:db -v /data:/usr/local/apache2/cgi-bin:z --name webserver httpd:pyapp
+docker cp /etc/yum.repos.d/local.repo  mycentosc:/etc/yum.repos.d/.
+docker commit mycentosc mycentos
 ===================[Installation]===============================
 $ sudo apt-get remove docker docker-engine docker.io
 

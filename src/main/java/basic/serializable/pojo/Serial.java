@@ -25,7 +25,11 @@ public class Serial implements Serializable {
     int id;
     String name;
     String test;
+    long state;
 
+    {
+        state = -1;
+    }
     public Serial(int id, String name, String test) {
         this.id = id;
         this.name = name;

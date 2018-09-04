@@ -1,0 +1,6 @@
+- Convert formal date to timestamp
+
+    ```java
+    String input = "2016-09-01 16:00:00" ;
+    java.sql.Timestamp ts = java.sql.Timestamp.valueOf( input ) ;
+    ```

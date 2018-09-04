@@ -1,0 +1,9 @@
+- play book
+  ```
+  ansible-playbook -i hosts initialize.yml
+  ```
+
+- batch command
+  ```
+  ansible -i hosts lab -m command -a 'cat /etc/hosts'
+  ```
