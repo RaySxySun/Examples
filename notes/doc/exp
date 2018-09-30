@@ -1,0 +1,6 @@
+# JAVA:
+  GET today 12AM
+  ```
+    Long endTime = System.currentTimeMillis();
+    Long startTime = endTime/(1000*3600*24)*(1000*3600*24) - TimeZone.getDefault().getRawOffset();
+  ```
